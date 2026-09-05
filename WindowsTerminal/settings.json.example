@@ -1,0 +1,37 @@
+{
+  "$schema": "https://aka.ms/terminal-profiles-schema",
+  "profiles": {
+    "defaults": {
+      "colorScheme": "Spider Purple",
+      "font": {
+        "face": "JetBrainsMonoNL Nerd Font Propo",
+        "size": 12
+      }
+    }
+  },
+  "schemes": [
+    {
+      "name": "Spider Purple",
+      "background": "#160B2C",
+      "foreground": "#D8DEE9",
+      "black": "#26143E",
+      "red": "#E58C9B",
+      "green": "#8BD49C",
+      "yellow": "#E7C787",
+      "blue": "#7060FF",
+      "purple": "#A189FF",
+      "cyan": "#42ADFF",
+      "white": "#D8DEE9",
+      "brightBlack": "#525A6B",
+      "brightRed": "#E58C9B",
+      "brightGreen": "#8BD49C",
+      "brightYellow": "#E7C787",
+      "brightBlue": "#9B8CFF",
+      "brightPurple": "#C8B8FF",
+      "brightCyan": "#65D9FF",
+      "brightWhite": "#F1EDFF",
+      "cursorColor": "#A189FF",
+      "selectionBackground": "#4A3278"
+    }
+  ]
+}

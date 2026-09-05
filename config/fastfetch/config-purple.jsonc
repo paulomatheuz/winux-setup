@@ -1,0 +1,163 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+
+  "logo": {
+    "type": "file",
+    "source": "%USERPROFILE%/.config/fastfetch/Spider2-ascii.txt",
+    "color": {
+      "1": "#a189ff"
+    },
+    "padding": {
+      "top": 1,
+      "left": 1,
+      "right": 5
+    },
+    "printRemaining": true
+  },
+
+  "display": {
+    "separator": " ",
+    "color": {
+      "keys": "#8BD49C",
+      "title": "#9BE5D8",
+      "output": "#D8DEE9",
+      "separator": "#525A6B"
+    },
+    "key": {
+      "width": 15
+    },
+    "bar": {
+      "width": 13,
+      "char": {
+        "elapsed": "■",
+        "total": "·"
+      },
+      "border": {
+        "left": "[",
+        "right": "]"
+      },
+      "color": {
+        "elapsed": "#6835c6",
+        "total": "#454D5D",
+        "border": "#626B7D"
+      }
+    },
+    "percent": {
+      "type": ["num"],
+      "color": {
+        "green": "#8BD49C",
+        "yellow": "#E7C787",
+        "red": "#E58C9B"
+      }
+    }
+  },
+
+  "modules": [
+    {
+      "type": "title",
+      "key": " ",
+      "format": "{##D8DEE9}Hey, {##a260ff}{user-name}{#}"
+    },
+    "break",
+
+    {
+      "type": "custom",
+      "format": "{##525A6B}┌────────────────{##6835c6} Hardware {##525A6B}────────────────┐{#}"
+    },
+    {
+      "type": "host",
+      "key": "├─ PC",
+      "keyColor": "#6835c6",
+      "format": "{name} // {version}"
+    },
+    {
+      "type": "cpu",
+      "key": "├─ CPU",
+      "keyColor": "#6835c6",
+      "format": "{name} ({cores-physical}C / {cores-logical}T) @ {freq-max}"
+    },
+    {
+      "type": "gpu",
+      "key": "├─ GPU",
+      "keyColor": "#6835c6",
+      "format": "{name} [{type}] {?dedicated-total}// {dedicated-total}{?}"
+    },
+    {
+      "type": "memory",
+      "key": "├─ RAM",
+      "keyColor": "#6835c6",
+      "format": "{used} / {total} {percentage-bar} {percentage}",
+      "percent": {
+        "type": ["bar", "num"]
+      }
+    },
+    {
+      "type": "swap",
+      "key": "├─ SWAP",
+      "keyColor": "#6835c6",
+      "format": "{used} / {total} {percentage-bar} {percentage}",
+      "percent": {
+        "type": ["bar", "num"]
+      }
+    },
+    {
+      "type": "disk",
+      "key": "├─ DRIVE",
+      "keyColor": "#6835c6",
+      "format": "{mountpoint} {size-used} / {size-total} {size-percentage-bar} {size-percentage}",
+      "percent": {
+        "type": ["bar", "num"]
+      }
+    },
+    {
+      "type": "custom",
+      "format": "{##525A6B}└──────────────────────────────────────────┘{#}"
+    },
+    "break",
+
+    {
+      "type": "custom",
+      "format": "{##525A6B}┌─────────────────{##7060ff} Session {##525A6B}────────────────┐{#}"
+    },
+    {
+      "type": "users",
+      "key": "├─ LOGIN",
+      "keyColor": "#7060ff",
+      "format": "{name} // {login-time}",
+      "myselfOnly": true
+    },
+    {
+      "type": "custom",
+      "format": "{##525A6B}└──────────────────────────────────────────┘{#}"
+    },
+    "break",
+
+    {
+      "type": "custom",
+      "format": "{##525A6B}┌──────────────{##42adff} Uptime / Date {##525A6B}──────────────┐{#}"
+    },
+    {
+      "type": "uptime",
+      "key": "├─ UPTIME",
+      "keyColor": "#42adff",
+      "format": "{formatted}"
+    },
+    {
+      "type": "datetime",
+      "key": "├─ DATE",
+      "keyColor": "#42adff",
+      "format": "{year}-{month-pretty}-{day-pretty} {hour-pretty}:{minute-pretty}:{second-pretty}"
+    },
+    {
+      "type": "custom",
+      "format": "{##525A6B}└──────────────────────────────────────────┘{#}"
+    },
+    "break",
+
+    {
+      "type": "colors",
+      "symbol": "circle",
+      "paddingLeft": 1
+    }
+  ]
+}

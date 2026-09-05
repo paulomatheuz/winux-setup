@@ -1,0 +1,20 @@
+# Local backups and private material
+/archive/
+/fastfetch/
+*.backup
+*.bak
+*.tmp
+
+# Operating system and editor metadata
+desktop.ini
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
+
+# Keep the directory, but do not version screenshots accidentally
+screenshots/*.png
+screenshots/*.jpg
+screenshots/*.jpeg
+!screenshots/.gitkeep
+!screenshots/terminal-preview.png
