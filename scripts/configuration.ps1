@@ -99,6 +99,9 @@ function Invoke-WinuxConfiguration {
             $original = [IO.File]::ReadAllBytes($destination)
             $originalHash = Get-WinuxBytesHash -Bytes $original
         }
+        if ($file.ContainsKey('ExpectedSHA256') -and $originalHash -ne $file.ExpectedSHA256) {
+            throw "O destino mudou desde o planejamento: $destination"
+        }
         $desiredHash = Get-WinuxBytesHash -Bytes $desired
         if ($existed -and $originalHash -eq $desiredHash) { continue }
         $changes += [pscustomobject]@{
@@ -190,3 +193,4 @@ function Invoke-WinuxConfiguration {
     }
     [pscustomobject]@{ Status = 'Applied'; ChangedFiles = $changes.Count; BackupPath = $runDirectory }
 }
+

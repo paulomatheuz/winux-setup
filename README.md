@@ -8,11 +8,11 @@ O projeto começou como `custom-windows-terminal`, com a personalização do meu
 
 ## Estado atual
 
-Por enquanto, o repositório contém as configurações do terminal e um setup com seleção de componentes, verificação de pré-requisitos e simulação. Ele copia os arquivos do Fastfetch e integra o perfil do PowerShell. A instalação opcional dos programas está disponível via WinGet. A importação das configurações personalizadas do desktop será implementada nas próximas etapas.
+O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas preferências do Windows Terminal, com backup. A instalação opcional dos programas está disponível via WinGet. A importação das configurações personalizadas do desktop será implementada nas próximas etapas.
 
 ## O que já está incluído
 
-- tema roxo para o Windows Terminal;
+- temas, fonte, transparência e atalhos pessoais do Windows Terminal;
 - Fastfetch com logo ASCII personalizada;
 - perfil do PowerShell com os comandos pessoais dos dois perfis locais;
 - integração com Starship;
@@ -52,7 +52,7 @@ Simule a aplicação:
 powershell -ExecutionPolicy Bypass -File .\setup.ps1 -WhatIf
 ```
 
-Aplique os componentes disponíveis:
+Aplique Fastfetch e PowerShell:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\setup.ps1
@@ -80,7 +80,14 @@ O esquema de cores está em:
 config/windows-terminal/settings.json.example
 ```
 
-Copie o esquema `Spider Purple` para o `settings.json` do seu Windows Terminal. Faça um backup antes de editar o arquivo.
+Para aplicar as preferências automaticamente, com backup e preservação dos perfis locais:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\setup.ps1 -Components WindowsTerminal -Check
+powershell -ExecutionPolicy Bypass -File .\setup.ps1 -Components WindowsTerminal
+```
+
+Esse componente é opcional e não exige Fastfetch. Veja os [destinos, a seleção da edição e as preferências preservadas](docs/windows-terminal.md). A fonte precisa estar instalada no dispositivo.
 
 ## Estrutura atual
 
@@ -98,16 +105,19 @@ winux-setup/
 │   ├── inventario.md
 │   ├── powershell.md
 │   ├── programas.md
-│   └── setup.md
+│   ├── setup.md
+│   └── windows-terminal.md
 ├── scripts/
 │   ├── configuration.ps1
 │   ├── install-modules.ps1
 │   ├── install-programs.ps1
-│   └── install.ps1
+│   ├── install.ps1
+│   └── windows-terminal.ps1
 ├── tests/
 │   ├── configuration.tests.ps1
 │   ├── modules.tests.ps1
-│   └── powershell.tests.ps1
+│   ├── powershell.tests.ps1
+│   └── windows-terminal.tests.ps1
 ├── modules.psd1
 ├── packages.psd1
 ├── setup.ps1
@@ -126,6 +136,7 @@ As mudanças serão feitas aos poucos, em commits separados:
 - [x] Automatizar a instalação dos programas do catálogo via WinGet.
 - [x] Aplicar as configurações com backup dos arquivos anteriores e registro das alterações.
 - [x] Incorporar os comandos dos perfis pessoais do PowerShell e a instalação opcional dos módulos.
+- [x] Incorporar as preferências pessoais do Windows Terminal e sua aplicação com backup.
 - [ ] Incorporar as configurações do Starship.
 - [ ] Adicionar Komorebi, YASB e whkd, com suas integrações e atalhos.
 - [ ] Adicionar btop e Chuva.
@@ -138,3 +149,4 @@ As mudanças serão feitas aos poucos, em commits separados:
 ## Personalização
 
 As configurações refletem meu uso pessoal. Você pode usá-las como base e adaptar temas, atalhos e ferramentas ao seu ambiente.
+

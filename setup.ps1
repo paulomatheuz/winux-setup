@@ -9,12 +9,15 @@ Aplica os componentes disponiveis do winux-setup.
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [ValidateNotNullOrEmpty()]
-    [ValidateSet('Fastfetch', 'PowerShell')]
+    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal')]
     [string[]]$Components = @('Fastfetch', 'PowerShell'),
 
     [switch]$Check,
 
     [switch]$SkipProfile,
+
+    [ValidateNotNullOrEmpty()]
+    [string]$TerminalSettingsPath,
 
     [switch]$InstallPrograms,
 
@@ -51,18 +54,31 @@ if ($AcceptAgreements -and -not ($InstallPrograms -or $InstallModules)) {
 }
 
 # O perfil usa a configuracao e a logo do Fastfetch.
-$selectedComponents = @('Fastfetch')
+$selectedComponents = @()
+if ($Components -contains 'Fastfetch' -or $Components -contains 'PowerShell') {
+    $selectedComponents += 'Fastfetch'
+}
 if ($Components -contains 'PowerShell') {
     $selectedComponents += 'PowerShell'
+}
+if ($Components -contains 'WindowsTerminal') { $selectedComponents += 'WindowsTerminal' }
+if ($TerminalSettingsPath -and $selectedComponents -notcontains 'WindowsTerminal') {
+    throw 'Use -Components WindowsTerminal junto com -TerminalSettingsPath.'
 }
 
 $installer = Join-Path $PSScriptRoot 'scripts\install.ps1'
 $requiredFiles = @(
     $installer
     (Join-Path $PSScriptRoot 'scripts\configuration.ps1')
-    (Join-Path $PSScriptRoot 'config\fastfetch\config-purple.jsonc')
-    (Join-Path $PSScriptRoot 'config\fastfetch\Spider2-ascii.txt')
 )
+if ($selectedComponents -contains 'Fastfetch') {
+    $requiredFiles += Join-Path $PSScriptRoot 'config\fastfetch\config-purple.jsonc'
+    $requiredFiles += Join-Path $PSScriptRoot 'config\fastfetch\Spider2-ascii.txt'
+}
+if ($selectedComponents -contains 'WindowsTerminal') {
+    $requiredFiles += Join-Path $PSScriptRoot 'scripts\windows-terminal.ps1'
+    $requiredFiles += Join-Path $PSScriptRoot 'config\windows-terminal\settings.json.example'
+}
 if ($selectedComponents -contains 'PowerShell') {
     $requiredFiles += Join-Path $PSScriptRoot 'config\powershell\profile.ps1'
 }
@@ -82,8 +98,15 @@ if ($missingFiles.Count -gt 0) {
     throw ('Arquivos do projeto nao encontrados: ' + ($missingFiles -join ', '))
 }
 
+if ($selectedComponents -contains 'WindowsTerminal') {
+    . (Join-Path $PSScriptRoot 'scripts\configuration.ps1')
+    . (Join-Path $PSScriptRoot 'scripts\windows-terminal.ps1')
+    $terminalDestination = Resolve-WinuxTerminalSettingsPath -Path $TerminalSettingsPath
+    New-WinuxTerminalConfiguration -SourcePath (Join-Path $PSScriptRoot 'config\windows-terminal\settings.json.example') -Destination $terminalDestination | Out-Null
+    Write-Host ('Windows Terminal: ' + $terminalDestination)
+}
 $hasFastfetch = [bool](Get-Command fastfetch -CommandType Application -ErrorAction SilentlyContinue)
-if (-not $hasFastfetch -and (-not $InstallPrograms -or ($Programs -and $Programs -notcontains 'Fastfetch'))) {
+if ($selectedComponents -contains 'Fastfetch' -and -not $hasFastfetch -and (-not $InstallPrograms -or ($Programs -and $Programs -notcontains 'Fastfetch'))) {
     throw 'Fastfetch nao foi encontrado no PATH. Instale-o ou use -InstallPrograms com Fastfetch selecionado.'
 }
 
@@ -109,7 +132,7 @@ if ($InstallModules) {
     & (Join-Path $PSScriptRoot 'scripts\install-modules.ps1') @moduleArguments
 }
 
-if (-not $Check -and -not $WhatIfPreference -and -not (Get-Command fastfetch -CommandType Application -ErrorAction SilentlyContinue)) {
+if ($selectedComponents -contains 'Fastfetch' -and -not $Check -and -not $WhatIfPreference -and -not (Get-Command fastfetch -CommandType Application -ErrorAction SilentlyContinue)) {
     throw 'Fastfetch ainda nao esta disponivel no PATH. Abra uma nova sessao e execute o setup novamente. As configuracoes nao foram aplicadas.'
 }
 
@@ -120,7 +143,10 @@ if ($Check) {
     return
 }
 
-$target = Join-Path $HOME '.config\fastfetch'
+$target = $selectedComponents -join ', '
 if ($PSCmdlet.ShouldProcess($target, 'Aplicar os componentes selecionados')) {
-    & $installer -Components $selectedComponents -SkipProfile:$SkipProfile -Confirm:$false
+    $arguments = @{ Components = $selectedComponents; SkipProfile = $SkipProfile; Confirm = $false }
+    if ($TerminalSettingsPath) { $arguments.TerminalSettingsPath = $TerminalSettingsPath }
+    & $installer @arguments
 }
+
