@@ -9,7 +9,7 @@ Aplica os componentes disponiveis do winux-setup.
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [ValidateNotNullOrEmpty()]
-    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship', 'Komorebi', 'Yasb')]
+    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship', 'Komorebi', 'Yasb', 'Whkd')]
     [string[]]$Components = @('Fastfetch', 'PowerShell'),
 
     [switch]$Check,
@@ -65,6 +65,7 @@ if ($Components -contains 'WindowsTerminal') { $selectedComponents += 'WindowsTe
 if ($Components -contains 'Starship') { $selectedComponents += 'Starship' }
 if ($Components -contains 'Komorebi') { $selectedComponents += 'Komorebi' }
 if ($Components -contains 'Yasb') { $selectedComponents += 'Yasb' }
+if ($Components -contains 'Whkd') { $selectedComponents += 'Whkd' }
 if ($TerminalSettingsPath -and $selectedComponents -notcontains 'WindowsTerminal') {
     throw 'Use -Components WindowsTerminal junto com -TerminalSettingsPath.'
 }
@@ -112,6 +113,10 @@ if ($selectedComponents -contains 'Yasb') {
     $requiredFiles += Join-Path $PSScriptRoot 'config\yasb\YASB.LICENSE'
 }
 
+if ($selectedComponents -contains 'Whkd') {
+    $requiredFiles += Join-Path $PSScriptRoot 'scripts\whkd.ps1'
+    $requiredFiles += Join-Path $PSScriptRoot 'config\whkd\whkdrc'
+}
 $missingFiles = @($requiredFiles | Where-Object { -not (Test-Path -LiteralPath $_ -PathType Leaf) })
 if ($missingFiles.Count -gt 0) {
     throw ('Arquivos do projeto nao encontrados: ' + ($missingFiles -join ', '))
@@ -141,6 +146,11 @@ if ($selectedComponents -contains 'Yasb') {
     . (Join-Path $PSScriptRoot 'scripts\yasb.ps1')
     Get-WinuxYasbFiles -SourceDirectory (Join-Path $PSScriptRoot 'config\yasb') | Out-Null
     Write-Host ('YASB: ' + (Resolve-WinuxYasbDirectory))
+}
+if ($selectedComponents -contains 'Whkd') {
+    . (Join-Path $PSScriptRoot 'scripts\whkd.ps1')
+    Get-WinuxWhkdFiles -SourceDirectory (Join-Path $PSScriptRoot 'config\whkd') | Out-Null
+    Write-Host ('whkd: ' + (Join-Path (Resolve-WinuxWhkdDirectory) 'whkdrc'))
 }
 $hasFastfetch = [bool](Get-Command fastfetch -CommandType Application -ErrorAction SilentlyContinue)
 if ($selectedComponents -contains 'Fastfetch' -and -not $hasFastfetch -and (-not $InstallPrograms -or ($Programs -and $Programs -notcontains 'Fastfetch'))) {

@@ -1,7 +1,7 @@
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [ValidateNotNullOrEmpty()]
-    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship', 'Komorebi', 'Yasb')]
+    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship', 'Komorebi', 'Yasb', 'Whkd')]
     [string[]]$Components = @('Fastfetch', 'PowerShell'),
 
     [switch]$SkipProfile,
@@ -83,12 +83,17 @@ if ($Components -contains 'Yasb') {
     . (Join-Path $PSScriptRoot 'yasb.ps1')
     $files += @(Get-WinuxYasbFiles -SourceDirectory (Join-Path $repositoryRoot 'config\yasb'))
 }
+if ($Components -contains 'Whkd') {
+    . (Join-Path $PSScriptRoot 'whkd.ps1')
+    $files += Get-WinuxWhkdFiles -SourceDirectory (Join-Path $repositoryRoot 'config\whkd')
+}
 $result = Invoke-WinuxConfiguration -Files $files -BackupRoot $backupRoot -WhatIf:$WhatIfPreference
 if ($result.Status -eq 'Applied') {
     Write-Host ('Configuracao aplicada. Backup e registro: ' + $result.BackupPath) -ForegroundColor Green
     Write-Host 'Feche e abra o Windows Terminal.'
     if ($Components -contains 'Komorebi') { Write-Host 'Recarregue a configuracao ou reinicie o Komorebi pelos seus controles habituais.' }
     if ($Components -contains 'Yasb') { Write-Host 'O YASB pode recarregar os arquivos automaticamente se estiver em execucao.' }
+    if ($Components -contains 'Whkd') { Write-Host 'Reinicie o whkd pelos seus controles habituais para carregar os atalhos.' }
 } elseif ($result.Status -eq 'Unchanged') {
     Write-Host 'As configuracoes selecionadas ja estao atualizadas.'
 }

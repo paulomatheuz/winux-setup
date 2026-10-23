@@ -12,8 +12,9 @@ O ponto de entrada do projeto é `setup.ps1`, na raiz do repositório.
 | `Starship` | Base do prompt, aplicada no caminho padrão ou em `STARSHIP_CONFIG`, com backup. |
 | `Komorebi` | Configuração pessoal, regras de aplicativos e barra alternativa, com backup. |
 | `Yasb` | Configuração e CSS pessoais, com backup e preservação do `.env` local. |
+| `Whkd` | Arquivo pessoal de atalhos, com backup e respeito a `WHKD_CONFIG_HOME`. |
 
-Sem `-Components`, Fastfetch e PowerShell são selecionados. WindowsTerminal, Starship, Komorebi e Yasb são opcionais. As configurações do whkd, btop4win e matrix-rain serão incorporadas nas etapas seguintes; ainda não são opções de `-Components`. A instalação dos programas tem uma seleção separada, descrita em [Instalação dos programas](programas.md).
+Sem `-Components`, Fastfetch e PowerShell são selecionados. WindowsTerminal, Starship, Komorebi, Yasb e Whkd são opcionais. As configurações do btop4win e matrix-rain serão incorporadas nas etapas seguintes; ainda não são opções de `-Components`. A instalação dos programas tem uma seleção separada, descrita em [Instalação dos programas](programas.md).
 
 ## Verificar antes de aplicar
 
@@ -81,6 +82,10 @@ O perfil reúne os comandos dos dois perfis locais, incluindo `btop`, `rain` e `
 Os modos `-Check` e `-WhatIf` também se aplicam aos módulos. Para instalar programas e módulos na mesma execução, combine `-InstallPrograms -InstallModules -AcceptAgreements`. Os catálogos e as instalações são separados da seleção de configurações em `-Components`.
 
 Veja o [perfil do PowerShell e suas dependências](powershell.md) para exemplos, requisitos e limitações.
+
+## Atalhos do whkd
+
+Use `-Components Whkd` para aplicar os atalhos pessoais com backup. O componente aceita `-Check` e `-WhatIf` e respeita `WHKD_CONFIG_HOME`. Dentro do PowerShell, `-Components Komorebi, Yasb, Whkd` aplica as três configurações em uma execução, sem iniciar aplicativos. Veja [whkd](whkd.md).
 
 ## Configuração do YASB
 
