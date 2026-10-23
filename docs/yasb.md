@@ -46,7 +46,7 @@ O modelo sem valores está em `config/yasb/.env.example`. Ele não é aplicado a
 
 O caminho absoluto da origem foi substituído por `$env:USERPROFILE/Pictures/wallpaper`, expandido pelo YASB para a pasta do usuário atual. O componente não copia imagens nem cria essa pasta. Para usar a galeria, coloque suas imagens nesse local; a distribuição dos recursos visuais fica para uma etapa própria.
 
-O CSS mantém JetBrainsMono NFP, Segoe UI e Segoe Fluent Icons. A instalação de fontes continua prevista. O visual em outro dispositivo precisa ser conferido depois que as fontes e os recursos estiverem disponíveis.
+O CSS mantém JetBrainsMono NFP, Segoe UI e Segoe Fluent Icons. A Nerd Font pode ser instalada pelo catálogo; as fontes do Windows são verificadas separadamente. Veja [Fontes](fontes.md). O visual em outro dispositivo precisa ser conferido depois que as fontes e os recursos estiverem disponíveis.
 
 Os comandos de integração com Komorebi e whkd são preservados. O setup não os executa. Para usá-los, os programas e suas configurações precisam estar preparados; os [atalhos do whkd](whkd.md) podem ser aplicados com `-Components Whkd`.
 

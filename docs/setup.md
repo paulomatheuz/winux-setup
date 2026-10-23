@@ -84,6 +84,10 @@ Os modos `-Check` e `-WhatIf` também se aplicam aos módulos. Para instalar pro
 
 Veja o [perfil do PowerShell e suas dependências](powershell.md) para exemplos, requisitos e limitações.
 
+## Fontes
+
+Para instalar a fonte usada pelo Terminal e pelo YASB, selecione `-InstallPrograms -Programs JetBrainsMonoNerdFont`. Sem `-Programs`, ela faz parte do catálogo completo. Execute `scripts/check-fonts.ps1` para uma verificação somente leitura das famílias e dos aliases. Veja [Fontes](fontes.md) para instalações existentes, dependências do Windows e a barra alternativa.
+
 ## Instalação do Chuva
 
 Use `-InstallRain` para instalar matrix-rain na pasta reconhecida pelo perfil. A opção pode ser combinada com `-InstallPrograms` e `-InstallModules` e aceita `-Check` e `-WhatIf`. Não existe componente `Rain`: os parâmetros já estão na função `rain` do perfil. Veja [Chuva](chuva.md).

@@ -49,6 +49,14 @@ if ($Check) {
 }
 
 foreach ($package in $selected) {
+    if ($package.Name -eq 'JetBrainsMonoNerdFont') {
+        . (Join-Path $PSScriptRoot 'fonts.ps1')
+        $fontReport = @(Get-WinuxFontReport | Where-Object { $_.Package -eq $package.Name })
+        if ($fontReport.Count -gt 0 -and @($fontReport | Where-Object { -not $_.Available }).Count -eq 0) {
+            Write-Host 'JetBrainsMonoNerdFont: familias necessarias ja disponiveis; fontes existentes preservadas.'
+            continue
+        }
+    }
     $target = $package.Id
     if ($package.Version) {
         $target += ' ' + $package.Version
@@ -97,3 +105,4 @@ if (-not $WhatIfPreference) {
     )
     $env:PATH = (((($paths -join ';') -split ';') | Where-Object { -not [string]::IsNullOrWhiteSpace($_) } | Select-Object -Unique) -join ';')
 }
+

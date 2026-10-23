@@ -46,6 +46,10 @@ Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são in
 | `tests/windows-terminal.tests.ps1` | Verificações isoladas do componente Windows Terminal. |
 | `setup.ps1` | Entrada principal com seleção de componentes, verificação de pré-requisitos, instalação opcional de programas e simulação. |
 | `packages.psd1` | Catálogo dos programas instaláveis via WinGet. |
+| `fonts.psd1` | Famílias, aliases e dependência opcional da barra alternativa. |
+| `scripts/fonts.ps1` | Leitura das famílias instaladas e comparação com as dependências. |
+| `scripts/check-fonts.ps1` | Relatório somente leitura da disponibilidade das fontes. |
+| `tests/fonts.tests.ps1` | Verificações de aliases e instalação simulada da Nerd Font. |
 | `portable-programs.psd1` | URLs e SHA-256 do matrix-rain 1.1.0 para x64 e ARM64. |
 | `scripts/install-rain.ps1` | Instalação portátil do matrix-rain, com verificação e preservação de instalações existentes. |
 | `tests/rain.tests.ps1` | Instalação, falhas e integração com arquivos e downloads simulados. |

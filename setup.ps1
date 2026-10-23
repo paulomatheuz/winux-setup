@@ -103,6 +103,10 @@ if ($selectedComponents -contains 'Starship') {
 if ($InstallPrograms) {
     $requiredFiles += Join-Path $PSScriptRoot 'packages.psd1'
     $requiredFiles += Join-Path $PSScriptRoot 'scripts\install-programs.ps1'
+    if (-not $Programs -or $Programs -contains 'JetBrainsMonoNerdFont') {
+        $requiredFiles += Join-Path $PSScriptRoot 'fonts.psd1'
+        $requiredFiles += Join-Path $PSScriptRoot 'scripts\fonts.ps1'
+    }
 }
 if ($selectedComponents -contains 'Komorebi') {
     $requiredFiles += Join-Path $PSScriptRoot 'scripts\komorebi.ps1'

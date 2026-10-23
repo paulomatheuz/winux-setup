@@ -51,7 +51,7 @@ Os arquivos existentes são substituídos após [backup completo](backups.md), s
 
 O [YASB e seu CSS](yasb.md) podem ser aplicados pelo componente `Yasb`, e os [atalhos do whkd](whkd.md), pelo componente `Whkd`. A diferença entre os sete espaços de trabalho e os oito atalhos encontrados no whkd é preservada e documentada; a aplicação não cria nem remove espaços.
 
-A configuração mantém o monitor do ambiente de origem, sem identificadores físicos. Outros dispositivos podem precisar de ajustes na lista de monitores e nos espaços de trabalho. A separação de ajustes por dispositivo continua prevista; o setup ainda não detecta nem reorganiza monitores automaticamente. A fonte JetBrains Mono usada pela barra fica para a etapa de fontes.
+A configuração mantém o monitor do ambiente de origem, sem identificadores físicos. Outros dispositivos podem precisar de ajustes na lista de monitores e nos espaços de trabalho. A separação de ajustes por dispositivo continua prevista; o setup ainda não detecta nem reorganiza monitores automaticamente. A família original JetBrains Mono usada pela barra é diferente da Nerd Font do catálogo e precisa estar disponível antes de usar essa alternativa; veja [Fontes](fontes.md).
 
 Depois de aplicar, recarregue a configuração ou reinicie o Komorebi pelos seus controles habituais. A conferência visual em outro dispositivo continua pendente.
 
