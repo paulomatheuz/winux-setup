@@ -8,7 +8,7 @@ O projeto começou como `custom-windows-terminal`, com a personalização do meu
 
 ## Estado atual
 
-O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas configurações do Windows Terminal, Starship e Komorebi, com backup. A instalação opcional dos programas está disponível via WinGet. YASB, whkd e os demais componentes do desktop serão incorporados nas próximas etapas.
+O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas configurações do Windows Terminal, Starship, Komorebi e YASB, com backup. A instalação opcional dos programas está disponível via WinGet. whkd e os demais componentes do desktop serão incorporados nas próximas etapas.
 
 ## O que já está incluído
 
@@ -19,6 +19,7 @@ O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica 
 - comandos como `clear`, `cls`, `Clear-Terminal`, `ls`, `ll`, `la`, `cd`, `btop` e `rain`;
 - instalação opcional dos módulos z e PSReadLine.
 - configurações pessoais do Komorebi, com layouts, regras de aplicativos e barra alternativa.
+- configuração e CSS pessoais do YASB, com os valores privados do clima separados.
 
 ## Requisitos atuais
 
@@ -77,6 +78,8 @@ Para aplicar a base do prompt Starship com backup, use `-Components Starship`. O
 
 Para aplicar as configurações pessoais do Komorebi, use `-Components Komorebi`. Veja os [destinos, a barra alternativa e os ajustes de monitores](docs/komorebi.md). O componente copia os arquivos sem iniciar o gerenciador de janelas.
 
+Para aplicar a barra e o CSS do YASB, use `-Components Yasb`. Veja os [destinos, clima, wallpapers e fontes](docs/yasb.md). O arquivo `.env` local é preservado.
+
 ## Tema do Windows Terminal
 
 O esquema de cores está em:
@@ -105,7 +108,8 @@ winux-setup/
 │   ├── komorebi/
 │   ├── powershell/
 │   ├── starship/
-│   └── windows-terminal/
+│   ├── windows-terminal/
+│   └── yasb/
 ├── docs/
 │   ├── backups.md
 │   ├── estrutura.md
@@ -115,7 +119,8 @@ winux-setup/
 │   ├── programas.md
 │   ├── starship.md
 │   ├── setup.md
-│   └── windows-terminal.md
+│   ├── windows-terminal.md
+│   └── yasb.md
 ├── scripts/
 │   ├── configuration.ps1
 │   ├── install-modules.ps1
@@ -123,14 +128,16 @@ winux-setup/
 │   ├── install.ps1
 │   ├── komorebi.ps1
 │   ├── starship.ps1
-│   └── windows-terminal.ps1
+│   ├── windows-terminal.ps1
+│   └── yasb.ps1
 ├── tests/
 │   ├── configuration.tests.ps1
 │   ├── komorebi.tests.ps1
 │   ├── modules.tests.ps1
 │   ├── powershell.tests.ps1
 │   ├── starship.tests.ps1
-│   └── windows-terminal.tests.ps1
+│   ├── windows-terminal.tests.ps1
+│   └── yasb.tests.ps1
 ├── modules.psd1
 ├── packages.psd1
 ├── setup.ps1
@@ -152,7 +159,8 @@ As mudanças serão feitas aos poucos, em commits separados:
 - [x] Incorporar as preferências pessoais do Windows Terminal e sua aplicação com backup.
 - [x] Registrar a base atual do Starship e sua aplicação opcional com backup.
 - [x] Incorporar as configurações pessoais do Komorebi, regras e barra alternativa.
-- [ ] Adicionar YASB e whkd, com suas integrações e atalhos.
+- [x] Incorporar a configuração e o CSS pessoais do YASB, preservando o visual.
+- [ ] Adicionar os atalhos do whkd e concluir as integrações.
 - [ ] Adicionar btop e Chuva.
 - [ ] Incluir fontes, temas e os recursos visuais necessários.
 - [ ] Configurar a inicialização automática dos componentes.

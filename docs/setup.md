@@ -11,8 +11,9 @@ O ponto de entrada do projeto é `setup.ps1`, na raiz do repositório.
 | `WindowsTerminal` | Preferências visuais e atalhos, combinados com os perfis locais e aplicados com backup. |
 | `Starship` | Base do prompt, aplicada no caminho padrão ou em `STARSHIP_CONFIG`, com backup. |
 | `Komorebi` | Configuração pessoal, regras de aplicativos e barra alternativa, com backup. |
+| `Yasb` | Configuração e CSS pessoais, com backup e preservação do `.env` local. |
 
-Sem `-Components`, Fastfetch e PowerShell são selecionados. WindowsTerminal, Starship e Komorebi são opcionais. As configurações do YASB, whkd, btop4win e matrix-rain serão incorporadas nas etapas seguintes; ainda não são opções de `-Components`. A instalação dos programas tem uma seleção separada, descrita em [Instalação dos programas](programas.md).
+Sem `-Components`, Fastfetch e PowerShell são selecionados. WindowsTerminal, Starship, Komorebi e Yasb são opcionais. As configurações do whkd, btop4win e matrix-rain serão incorporadas nas etapas seguintes; ainda não são opções de `-Components`. A instalação dos programas tem uma seleção separada, descrita em [Instalação dos programas](programas.md).
 
 ## Verificar antes de aplicar
 
@@ -80,6 +81,10 @@ O perfil reúne os comandos dos dois perfis locais, incluindo `btop`, `rain` e `
 Os modos `-Check` e `-WhatIf` também se aplicam aos módulos. Para instalar programas e módulos na mesma execução, combine `-InstallPrograms -InstallModules -AcceptAgreements`. Os catálogos e as instalações são separados da seleção de configurações em `-Components`.
 
 Veja o [perfil do PowerShell e suas dependências](powershell.md) para exemplos, requisitos e limitações.
+
+## Configuração do YASB
+
+Use `-Components Yasb` para aplicar YAML e CSS pessoais com backup. O componente aceita `-Check` e `-WhatIf`, respeita `YASB_CONFIG_HOME` e preserva o `.env` existente. Veja [YASB](yasb.md) para clima, wallpapers, fontes e integrações.
 
 ## Configuração do Komorebi
 
