@@ -14,6 +14,7 @@ New-Item -ItemType Directory -Path $global:taskProfileRoot -Force | Out-Null
 $global:taskActualHome=$HOME
 $global:taskOptional=$false
 $global:taskTools=$false
+$global:taskNativeBtop=$false
 $global:taskZFails=$false
 $global:taskFastfetchCalls=New-Object 'System.Collections.Generic.List[object]'
 $global:taskLsdCalls=New-Object 'System.Collections.Generic.List[object]'
@@ -31,6 +32,7 @@ function global:Get-Command{
     [CmdletBinding()]param([string[]]$Name,[System.Management.Automation.CommandTypes]$CommandType)
     if($Name -contains 'gh'){return [pscustomobject]@{Source='gh-test-only'}}
     if($Name -contains 'btop4win'){if($global:taskTools){return [pscustomobject]@{Source='Invoke-TestBtop'}};return}
+    if($Name -contains 'btop'){if($global:taskNativeBtop){return [pscustomobject]@{Source='Invoke-TestBtop'}};return}
     if($Name -contains 'matrix-rain'){if($global:taskTools){return [pscustomobject]@{Source='Invoke-TestRain'}};return}
     if($Name[0] -in @('fastfetch','starship','lsd','z','Set-PSReadLineOption','Set-PSReadLineKeyHandler')){
         if($global:taskOptional){return [pscustomobject]@{Source=$Name[0]}}
@@ -94,6 +96,12 @@ try{
 $global:taskTools=$true
 btop '--help'
 Assert-Test ($global:taskBtopArguments -contains '--help') 'btop lost arguments.'
+$global:taskTools=$false
+$global:taskNativeBtop=$true
+btop '--alias'
+Assert-Test ($global:taskBtopArguments -contains '--alias') 'WinGet btop alias was not used.'
+$global:taskNativeBtop=$false
+$global:taskTools=$true
 rain
 Assert-Test ($global:taskRainArguments[-1] -eq 0.3) 'rain default speed changed.'
 foreach($value in @('-color','white','-charset','matrix','-density',25,'-fps',60,'-speed')){
@@ -113,3 +121,4 @@ Assert-Test ((Find-WinuxExecutable -Command btop4win -SearchRoot $portableRoot -
 $global:taskTools=$true
 Assert-Test ((Find-WinuxExecutable -Command btop4win -Candidates @($candidate)) -eq 'Invoke-TestBtop') 'PATH did not take priority.'
 [pscustomobject]@{PowerShell=$PSVersionTable.PSVersion.ToString();OptionalDependencies='passed';Navigation='passed';TerminalCommands='passed';PortableTools='passed';RainParameters='passed'}|ConvertTo-Json -Compress
+

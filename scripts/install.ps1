@@ -1,13 +1,16 @@
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [ValidateNotNullOrEmpty()]
-    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship', 'Komorebi', 'Yasb', 'Whkd')]
+    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship', 'Komorebi', 'Yasb', 'Whkd', 'Btop')]
     [string[]]$Components = @('Fastfetch', 'PowerShell'),
 
     [switch]$SkipProfile,
 
     [ValidateNotNullOrEmpty()]
-    [string]$TerminalSettingsPath
+    [string]$TerminalSettingsPath,
+
+    [ValidateNotNullOrEmpty()]
+    [string]$BtopDirectory
 )
 
 $ErrorActionPreference = 'Stop'
@@ -24,6 +27,7 @@ $backupRoot = Join-Path $HOME '.winux-setup\backups'
 
 $includePowerShell = $Components -contains 'PowerShell'
 $includeFastfetch = $Components -contains 'Fastfetch' -or $includePowerShell
+if ($BtopDirectory -and $Components -notcontains 'Btop') { throw 'Use -Components Btop junto com -BtopDirectory.' }
 if ($TerminalSettingsPath -and $Components -notcontains 'WindowsTerminal') {
     throw 'Use -Components WindowsTerminal junto com -TerminalSettingsPath.'
 }
@@ -87,6 +91,12 @@ if ($Components -contains 'Whkd') {
     . (Join-Path $PSScriptRoot 'whkd.ps1')
     $files += Get-WinuxWhkdFiles -SourceDirectory (Join-Path $repositoryRoot 'config\whkd')
 }
+if ($Components -contains 'Btop') {
+    . (Join-Path $PSScriptRoot 'btop.ps1')
+    $btopDestination = Resolve-WinuxBtopDirectory -Path $BtopDirectory
+    $files += @(Get-WinuxBtopFiles -SourceDirectory (Join-Path $repositoryRoot 'config\btop') -DestinationDirectory $btopDestination)
+    Write-Host ('btop: ' + $btopDestination)
+}
 $result = Invoke-WinuxConfiguration -Files $files -BackupRoot $backupRoot -WhatIf:$WhatIfPreference
 if ($result.Status -eq 'Applied') {
     Write-Host ('Configuracao aplicada. Backup e registro: ' + $result.BackupPath) -ForegroundColor Green
@@ -94,6 +104,7 @@ if ($result.Status -eq 'Applied') {
     if ($Components -contains 'Komorebi') { Write-Host 'Recarregue a configuracao ou reinicie o Komorebi pelos seus controles habituais.' }
     if ($Components -contains 'Yasb') { Write-Host 'O YASB pode recarregar os arquivos automaticamente se estiver em execucao.' }
     if ($Components -contains 'Whkd') { Write-Host 'Reinicie o whkd pelos seus controles habituais para carregar os atalhos.' }
+    if ($Components -contains 'Btop') { Write-Host 'Feche e abra o btop4win para carregar a configuracao.' }
 } elseif ($result.Status -eq 'Unchanged') {
     Write-Host 'As configuracoes selecionadas ja estao atualizadas.'
 }

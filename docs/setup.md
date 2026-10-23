@@ -13,8 +13,9 @@ O ponto de entrada do projeto é `setup.ps1`, na raiz do repositório.
 | `Komorebi` | Configuração pessoal, regras de aplicativos e barra alternativa, com backup. |
 | `Yasb` | Configuração e CSS pessoais, com backup e preservação do `.env` local. |
 | `Whkd` | Arquivo pessoal de atalhos, com backup e respeito a `WHKD_CONFIG_HOME`. |
+| `Btop` | Configuração pessoal e tema NeutralPurple, aplicados na pasta do executável ou em `-BtopDirectory`. |
 
-Sem `-Components`, Fastfetch e PowerShell são selecionados. WindowsTerminal, Starship, Komorebi, Yasb e Whkd são opcionais. As configurações do btop4win e matrix-rain serão incorporadas nas etapas seguintes; ainda não são opções de `-Components`. A instalação dos programas tem uma seleção separada, descrita em [Instalação dos programas](programas.md).
+Sem `-Components`, Fastfetch e PowerShell são selecionados. WindowsTerminal, Starship, Komorebi, Yasb, Whkd e Btop são opcionais. matrix-rain será incorporado na etapa correspondente; ainda não é uma opção de `-Components`. A instalação dos programas tem uma seleção separada, descrita em [Instalação dos programas](programas.md).
 
 ## Verificar antes de aplicar
 
@@ -82,6 +83,10 @@ O perfil reúne os comandos dos dois perfis locais, incluindo `btop`, `rain` e `
 Os modos `-Check` e `-WhatIf` também se aplicam aos módulos. Para instalar programas e módulos na mesma execução, combine `-InstallPrograms -InstallModules -AcceptAgreements`. Os catálogos e as instalações são separados da seleção de configurações em `-Components`.
 
 Veja o [perfil do PowerShell e suas dependências](powershell.md) para exemplos, requisitos e limitações.
+
+## Configuração do btop
+
+Use `-Components Btop` para aplicar a configuração pessoal e NeutralPurple com backup. O componente aceita `-Check`, `-WhatIf` e `-BtopDirectory`. O programa pode ser instalado com `-InstallPrograms -Programs Btop`. Veja [btop4win](btop.md) para a busca do executável, o alias do WinGet e o modo TTY preservado.
 
 ## Atalhos do whkd
 

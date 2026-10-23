@@ -171,6 +171,11 @@ function Find-WinuxExecutable {
 }
 
 function btop {
+    # O pacote WinGet publica o executavel como btop.
+    foreach ($command in @('btop4win', 'btop')) {
+        $application = Get-Command $command -CommandType Application -ErrorAction SilentlyContinue
+        if ($application) { & $application.Source @args; return }
+    }
     $root = Join-Path $HOME 'Tools\btop4win'
     $executable = Find-WinuxExecutable -Command btop4win -Candidates @(
         (Join-Path $root 'btop4win\btop4win.exe')
@@ -226,3 +231,4 @@ if (Get-Command Set-PSReadLineOption -ErrorAction SilentlyContinue) {
 # Exibe o visual ao abrir o Terminal
 Clear-Host
 Show-Fastfetch
+
