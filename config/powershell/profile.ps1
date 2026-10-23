@@ -2,8 +2,8 @@
 # VISUAL ATUAL: Fastfetch
 # =========================
 
-$RepositoryRoot = Split-Path -Parent $PSScriptRoot
-$RepositoryFastfetch = Join-Path $RepositoryRoot 'config\fastfetch'
+$ConfigRoot = Split-Path -Parent $PSScriptRoot
+$RepositoryFastfetch = Join-Path $ConfigRoot 'fastfetch'
 
 # Works both inside this repository and after scripts/install.ps1 copies it.
 if (Test-Path -LiteralPath $RepositoryFastfetch) {

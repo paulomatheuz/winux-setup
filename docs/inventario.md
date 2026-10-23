@@ -88,8 +88,8 @@ As versões abaixo descrevem o ambiente observado; não são versões obrigatór
 
 | Arquivo | Função atual |
 | --- | --- |
-| `PowerShell/profile.ps1` | Perfil compartilhável com Starship, Fastfetch e comandos auxiliares. |
-| `WindowsTerminal/settings.json.example` | Esquema Spider Purple e preferências de fonte. |
+| `config/powershell/profile.ps1` | Perfil compartilhável com Starship, Fastfetch e comandos auxiliares. |
+| `config/windows-terminal/settings.json.example` | Esquema Spider Purple e preferências de fonte. |
 | `config/fastfetch/config-purple.jsonc` | Configuração do Fastfetch. |
 | `config/fastfetch/Spider2-ascii.txt` | Arte ASCII utilizada pelo perfil. |
 | `scripts/install.ps1` | Copia Fastfetch e perfil; adiciona a integração ao perfil do PowerShell, com backup antes da inclusão. Não instala programas. |

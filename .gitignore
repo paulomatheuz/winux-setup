@@ -13,8 +13,8 @@ Thumbs.db
 .idea/
 
 # Keep the directory, but do not version screenshots accidentally
-screenshots/*.png
-screenshots/*.jpg
-screenshots/*.jpeg
-!screenshots/.gitkeep
-!screenshots/terminal-preview.png
+assets/screenshots/*.png
+assets/screenshots/*.jpg
+assets/screenshots/*.jpeg
+!assets/screenshots/.gitkeep
+!assets/screenshots/terminal-preview.png
