@@ -24,6 +24,8 @@ param(
 
     [switch]$InstallPrograms,
 
+    [switch]$InstallRain,
+
     [ValidateNotNullOrEmpty()]
     [string[]]$Programs,
 
@@ -130,6 +132,10 @@ if ($selectedComponents -contains 'Btop') {
     $requiredFiles += Join-Path $PSScriptRoot 'config\btop\themes\NeutralPurple.theme'
     $requiredFiles += Join-Path $PSScriptRoot 'config\btop\BTOP.LICENSE'
 }
+if ($InstallRain) {
+    $requiredFiles += Join-Path $PSScriptRoot 'portable-programs.psd1'
+    $requiredFiles += Join-Path $PSScriptRoot 'scripts\install-rain.ps1'
+}
 $missingFiles = @($requiredFiles | Where-Object { -not (Test-Path -LiteralPath $_ -PathType Leaf) })
 if ($missingFiles.Count -gt 0) {
     throw ('Arquivos do projeto nao encontrados: ' + ($missingFiles -join ', '))
@@ -202,6 +208,9 @@ if ($selectedComponents -contains 'Fastfetch' -and -not $Check -and -not $WhatIf
     throw 'Fastfetch ainda nao esta disponivel no PATH. Abra uma nova sessao e execute o setup novamente. As configuracoes nao foram aplicadas.'
 }
 
+if ($InstallRain) {
+    & (Join-Path $PSScriptRoot 'scripts\install-rain.ps1') -Check:$Check -WhatIf:$WhatIfPreference
+}
 Write-Host ('Componentes: ' + ($selectedComponents -join ', '))
 
 if ($Check) {

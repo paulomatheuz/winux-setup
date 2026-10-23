@@ -18,7 +18,7 @@ O efeito de chuva mantém cor branca, caracteres Matrix, densidade 25, 60 FPS e 
 
 btop4win é procurado pelos comandos `btop4win` e `btop` no PATH, reconhecendo o alias do pacote WinGet. Depois, procura `$HOME/Tools/btop4win/btop4win/btop4win.exe`, `$HOME/Tools/btop4win/btop4win.exe` e subpastas dessa pasta. matrix-rain é procurado em `$HOME/Tools/matrix-rain/matrix-rain.exe`. Ambos priorizam executáveis disponíveis no PATH.
 
-O [btop4win](btop.md) já tem instalação opcional, configuração e tema no setup. A instalação do matrix-rain continua na etapa própria.
+O [btop4win](btop.md) tem instalação opcional, configuração e tema no setup. O [matrix-rain](chuva.md) pode ser instalado com `-InstallRain`, preservando os parâmetros pessoais da função `rain`.
 
 O ajuste do GitHub CLI usa a pasta `GitHub CLI` dentro de `$env:ProgramFiles`, caso o executável exista ali e ainda não esteja disponível no PATH. A entrada não é duplicada ao recarregar o perfil. O GitHub CLI não é instalado por esse ajuste.
 
