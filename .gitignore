@@ -1,5 +1,6 @@
 # Local backups and private material
 /archive/
+/.winux-setup/
 /fastfetch/
 *.backup
 *.bak

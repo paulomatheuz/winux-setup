@@ -15,6 +15,10 @@ $sourceProfile = Join-Path $repositoryRoot 'config\powershell\profile.ps1'
 $fastfetchHome = Join-Path $HOME '.config\fastfetch'
 $installedProfile = Join-Path $fastfetchHome 'custom-windows-terminal-profile.ps1'
 
+$configurationModule = Join-Path $PSScriptRoot 'configuration.ps1'
+. $configurationModule
+$backupRoot = Join-Path $HOME '.winux-setup\backups'
+
 $includePowerShell = $Components -contains 'PowerShell'
 $requiredFiles = @(
     (Join-Path $sourceFastfetch 'config-purple.jsonc')
@@ -39,34 +43,20 @@ foreach ($command in $commands) {
     }
 }
 
-if ($PSCmdlet.ShouldProcess($fastfetchHome, 'Aplicar configuracao do terminal')) {
-    New-Item -ItemType Directory -Force -Path $fastfetchHome | Out-Null
-    Copy-Item -LiteralPath (Join-Path $sourceFastfetch 'config-purple.jsonc') -Destination $fastfetchHome -Force
-    Copy-Item -LiteralPath (Join-Path $sourceFastfetch 'Spider2-ascii.txt') -Destination $fastfetchHome -Force
-    if ($includePowerShell) {
-        Copy-Item -LiteralPath $sourceProfile -Destination $installedProfile -Force
+$files = @(
+    @{ SourcePath = (Join-Path $sourceFastfetch 'config-purple.jsonc'); Destination = (Join-Path $fastfetchHome 'config-purple.jsonc') }
+    @{ SourcePath = (Join-Path $sourceFastfetch 'Spider2-ascii.txt'); Destination = (Join-Path $fastfetchHome 'Spider2-ascii.txt') }
+)
+if ($includePowerShell) {
+    $files += @{ SourcePath = $sourceProfile; Destination = $installedProfile }
+    if (-not $SkipProfile) {
+        $files += @{ Destination = $PROFILE; Bytes = (Get-WinuxProfileBytes -Path $PROFILE) }
     }
-
-    if ($includePowerShell -and -not $SkipProfile) {
-        $startMarker = '# >>> custom-windows-terminal >>>'
-        $endMarker = '# <<< custom-windows-terminal <<<'
-
-        if (-not (Test-Path -LiteralPath $PROFILE)) {
-            New-Item -ItemType File -Force -Path $PROFILE | Out-Null
-        }
-
-        $profileContent = Get-Content -Raw -LiteralPath $PROFILE
-
-        if ($profileContent -notmatch [regex]::Escape($startMarker)) {
-            Copy-Item -LiteralPath $PROFILE -Destination "$PROFILE.backup-before-custom-windows-terminal" -Force
-            Add-Content -LiteralPath $PROFILE -Value @"
-
-$startMarker
-. "`$HOME\.config\fastfetch\custom-windows-terminal-profile.ps1"
-$endMarker
-"@
-        }
-    }
-
-    Write-Host 'Configuracao aplicada. Feche e abra o Windows Terminal.' -ForegroundColor Green
+}
+$result = Invoke-WinuxConfiguration -Files $files -BackupRoot $backupRoot -WhatIf:$WhatIfPreference
+if ($result.Status -eq 'Applied') {
+    Write-Host ('Configuracao aplicada. Backup e registro: ' + $result.BackupPath) -ForegroundColor Green
+    Write-Host 'Feche e abra o Windows Terminal.'
+} elseif ($result.Status -eq 'Unchanged') {
+    Write-Host 'As configuracoes selecionadas ja estao atualizadas.'
 }
