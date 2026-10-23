@@ -8,7 +8,7 @@ O projeto começou como `custom-windows-terminal`, com a personalização do meu
 
 ## Estado atual
 
-Por enquanto, o repositório contém as configurações do terminal e um setup com seleção de componentes, verificação de pré-requisitos e simulação. Ele copia os arquivos do Fastfetch e integra o perfil do PowerShell. A instalação dos programas e a configuração completa do desktop ainda serão implementadas.
+Por enquanto, o repositório contém as configurações do terminal e um setup com seleção de componentes, verificação de pré-requisitos e simulação. Ele copia os arquivos do Fastfetch e integra o perfil do PowerShell. A instalação opcional dos programas está disponível via WinGet. A importação das configurações personalizadas do desktop será implementada nas próximas etapas.
 
 ## O que já está incluído
 
@@ -20,7 +20,7 @@ Por enquanto, o repositório contém as configurações do terminal e um setup c
 
 ## Requisitos atuais
 
-Instale os requisitos antes de executar o script:
+Para aplicar as configurações sem instalar programas, tenha os requisitos abaixo. A opção `-InstallPrograms` instala os programas do catálogo via WinGet:
 
 - Git, para clonar o repositório;
 - Windows Terminal;
@@ -59,7 +59,13 @@ powershell -ExecutionPolicy Bypass -File .\setup.ps1
 
 O instalador copia os arquivos do Fastfetch e o perfil do projeto para `$HOME\.config\fastfetch`. Antes de adicionar a integração ao perfil do PowerShell, salva um backup desse perfil.
 
-Esse script aplica a configuração atual do terminal; ele ainda não instala os programas nem configura os componentes do desktop.
+Sem `-InstallPrograms`, o setup aplica apenas a configuração atual do terminal. Para instalar os programas do catálogo e depois aplicar essa configuração:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\setup.ps1 -InstallPrograms -AcceptAgreements
+```
+
+A opção `-AcceptAgreements` aceita os termos da fonte e dos pacotes. Consulte o [catálogo e as opções de instalação](docs/programas.md) antes de usar. As configurações personalizadas do desktop serão incorporadas nas etapas próprias de cada ferramenta.
 
 Para aplicar apenas o Fastfetch, acrescente `-Components Fastfetch`. A opção `PowerShell` inclui os arquivos do Fastfetch usados pelo perfil. Consulte as [opções do setup](docs/setup.md) para os detalhes e a compatibilidade com o instalador anterior.
 
@@ -88,9 +94,12 @@ winux-setup/
 ├── docs/
 │   ├── estrutura.md
 │   ├── inventario.md
+│   ├── programas.md
 │   └── setup.md
 ├── scripts/
+│   ├── install-programs.ps1
 │   └── install.ps1
+├── packages.psd1
 ├── setup.ps1
 └── README.md
 ```
@@ -104,7 +113,8 @@ As mudanças serão feitas aos poucos, em commits separados:
 - [x] Inventariar as configurações e dependências do ambiente atual ([inventário](docs/inventario.md)).
 - [x] Organizar as configurações e os scripts para receber os demais componentes.
 - [x] Criar a entrada do setup com seleção de componentes, verificação de pré-requisitos e simulação.
-- [ ] Automatizar a instalação dos programas e a aplicação das configurações com backup.
+- [x] Automatizar a instalação dos programas do catálogo via WinGet.
+- [ ] Aplicar as configurações com backup completo.
 - [ ] Incorporar as configurações do Starship.
 - [ ] Adicionar Komorebi, YASB e whkd, com suas integrações e atalhos.
 - [ ] Adicionar btop e Chuva.

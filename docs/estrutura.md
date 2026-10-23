@@ -19,7 +19,9 @@ Cada ferramenta terá sua própria pasta em `config/` quando seus arquivos forem
 | `config/fastfetch/Spider2-ascii.txt` | Logo ASCII. |
 | `config/powershell/profile.ps1` | Perfil compartilhável do PowerShell. |
 | `config/windows-terminal/settings.json.example` | Tema e preferências de fonte do Windows Terminal. |
-| `setup.ps1` | Entrada principal com seleção de componentes, verificação de pré-requisitos e simulação. |
+| `setup.ps1` | Entrada principal com seleção de componentes, verificação de pré-requisitos, instalação opcional de programas e simulação. |
+| `packages.psd1` | Catálogo dos programas instaláveis via WinGet. |
+| `scripts/install-programs.ps1` | Instalação dos programas selecionados, com preservação das versões existentes. |
 | `scripts/install.ps1` | Aplicação dos arquivos da configuração atual do terminal. |
 | `assets/screenshots/terminal-preview.png` | Prévia exibida no README. |
 
@@ -41,7 +43,7 @@ O nome do perfil instalado, os marcadores de integração e o nome do backup ain
 
 O perfil encontra o Fastfetch na pasta vizinha quando carregado a partir do repositório e na própria pasta depois de instalado.
 
-O tema do Windows Terminal continua sendo aplicado manualmente conforme o README. Esta organização não adiciona instalação de programas nem importa as configurações locais dos demais componentes.
+O tema do Windows Terminal continua sendo aplicado manualmente conforme o README. A instalação opcional dos programas está descrita em [Instalação dos programas](programas.md). A importação das configurações locais dos demais componentes continua nas etapas correspondentes.
 
 ## Recursos e arquivos locais
 

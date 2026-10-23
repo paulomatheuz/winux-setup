@@ -14,7 +14,14 @@ param(
 
     [switch]$Check,
 
-    [switch]$SkipProfile
+    [switch]$SkipProfile,
+
+    [switch]$InstallPrograms,
+
+    [ValidateNotNullOrEmpty()]
+    [string[]]$Programs,
+
+    [switch]$AcceptAgreements
 )
 
 $ErrorActionPreference = 'Stop'
@@ -25,6 +32,10 @@ if ($env:OS -ne 'Windows_NT') {
 
 if ($PSVersionTable.PSVersion -lt [version]'5.1') {
     throw 'Use Windows PowerShell 5.1 ou PowerShell 7.'
+}
+
+if (-not $InstallPrograms -and ($PSBoundParameters.ContainsKey('Programs') -or $AcceptAgreements)) {
+    throw 'Use -InstallPrograms junto com -Programs ou -AcceptAgreements.'
 }
 
 # O perfil usa a configuracao e a logo do Fastfetch.
@@ -43,13 +54,35 @@ if ($selectedComponents -contains 'PowerShell') {
     $requiredFiles += Join-Path $PSScriptRoot 'config\powershell\profile.ps1'
 }
 
+if ($InstallPrograms) {
+    $requiredFiles += Join-Path $PSScriptRoot 'packages.psd1'
+    $requiredFiles += Join-Path $PSScriptRoot 'scripts\install-programs.ps1'
+}
+
 $missingFiles = @($requiredFiles | Where-Object { -not (Test-Path -LiteralPath $_ -PathType Leaf) })
 if ($missingFiles.Count -gt 0) {
     throw ('Arquivos do projeto nao encontrados: ' + ($missingFiles -join ', '))
 }
 
-if (-not (Get-Command fastfetch -CommandType Application -ErrorAction SilentlyContinue)) {
-    throw 'Fastfetch nao foi encontrado no PATH. Instale-o e abra uma nova sessao antes de executar o setup.'
+$hasFastfetch = [bool](Get-Command fastfetch -CommandType Application -ErrorAction SilentlyContinue)
+if (-not $hasFastfetch -and (-not $InstallPrograms -or ($Programs -and $Programs -notcontains 'Fastfetch'))) {
+    throw 'Fastfetch nao foi encontrado no PATH. Instale-o ou use -InstallPrograms com Fastfetch selecionado.'
+}
+
+if ($InstallPrograms) {
+    $programArguments = @{
+        Check = $Check
+        AcceptAgreements = $AcceptAgreements
+        WhatIf = $WhatIfPreference
+    }
+    if ($Programs) {
+        $programArguments.Programs = $Programs
+    }
+    & (Join-Path $PSScriptRoot 'scripts\install-programs.ps1') @programArguments
+}
+
+if (-not $Check -and -not $WhatIfPreference -and -not (Get-Command fastfetch -CommandType Application -ErrorAction SilentlyContinue)) {
+    throw 'Fastfetch ainda nao esta disponivel no PATH. Abra uma nova sessao e execute o setup novamente. As configuracoes nao foram aplicadas.'
 }
 
 Write-Host ('Componentes: ' + ($selectedComponents -join ', '))
