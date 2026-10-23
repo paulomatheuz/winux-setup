@@ -9,7 +9,7 @@
 | `assets/` | Recursos visuais usados pelo projeto. |
 | `docs/` | Inventário, organização e instruções complementares. |
 
-Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são incorporados. As configurações pessoais do Komorebi e do YASB já estão incluídas, incluindo o `styles.css` personalizado. whkd continua previsto no [inventário](inventario.md).
+Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são incorporados. As configurações pessoais do Komorebi, do YASB e do whkd já estão incluídas, incluindo o `styles.css` personalizado. As origens estão registradas no [inventário](inventario.md).
 
 ## Arquivos atuais
 
@@ -28,6 +28,9 @@ Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são in
 | `config/yasb/YASB.LICENSE` | Licença da base YASB. |
 | `scripts/yasb.ps1` | Planejamento dos arquivos e resolução do destino do YASB. |
 | `tests/yasb.tests.ps1` | Verificações isoladas de aplicação, backups e preservação do `.env`. |
+| `config/whkd/whkdrc` | Arquivo pessoal de atalhos, preservado integralmente. |
+| `scripts/whkd.ps1` | Planejamento do arquivo e resolução do destino do whkd. |
+| `tests/whkd.tests.ps1` | Verificações dos atalhos e da aplicação isolada e conjunta do desktop. |
 | `config/fastfetch/Spider2-ascii.txt` | Logo ASCII. |
 | `config/powershell/profile.ps1` | Perfil compartilhável do PowerShell. |
 | `config/starship/starship.toml` | Base atual do prompt, com os módulos e estilos padrão. |

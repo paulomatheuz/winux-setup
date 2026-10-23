@@ -48,7 +48,7 @@ O caminho absoluto da origem foi substituído por `$env:USERPROFILE/Pictures/wal
 
 O CSS mantém JetBrainsMono NFP, Segoe UI e Segoe Fluent Icons. A instalação de fontes continua prevista. O visual em outro dispositivo precisa ser conferido depois que as fontes e os recursos estiverem disponíveis.
 
-Os comandos de integração com Komorebi e whkd são preservados. O setup não os executa. Para usá-los, os programas e suas configurações precisam estar preparados; a importação dos atalhos do whkd será feita na etapa correspondente.
+Os comandos de integração com Komorebi e whkd são preservados. O setup não os executa. Para usá-los, os programas e suas configurações precisam estar preparados; os [atalhos do whkd](whkd.md) podem ser aplicados com `-Components Whkd`.
 
 ## Verificação
 
