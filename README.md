@@ -8,7 +8,7 @@ O projeto começou como `custom-windows-terminal`, com a personalização do meu
 
 ## Estado atual
 
-O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas configurações do Windows Terminal, Starship, Komorebi, YASB, whkd e btop4win, com backup. A instalação opcional dos programas está disponível via WinGet; o Chuva (matrix-rain) tem instalação portátil própria. Fontes, recursos visuais e outras automações continuam nas próximas etapas.
+O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas configurações do Windows Terminal, Starship, Komorebi, YASB, whkd e btop4win, com backup. Os programas e a JetBrainsMono Nerd Font têm instalação opcional via WinGet; o Chuva (matrix-rain) tem instalação portátil própria. Recursos visuais e outras automações continuam nas próximas etapas.
 
 ## O que já está incluído
 
@@ -23,6 +23,7 @@ O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica 
 - atalhos pessoais do whkd, com shell PowerShell e integração com Komorebi.
 - configuração pessoal e tema NeutralPurple do btop4win, com instalação opcional via WinGet.
 - instalação opcional do matrix-rain, com os parâmetros pessoais do comando `rain`.
+- instalação opcional da Nerd Font e verificação das famílias usadas pelo ambiente.
 
 ## Requisitos atuais
 
@@ -89,6 +90,8 @@ Para aplicar o btop4win, use `-Components Btop`. A instalação opcional usa `-I
 
 Para instalar o Chuva junto ao setup, acrescente `-InstallRain`. Veja [Chuva e o comando rain](docs/chuva.md) para a instalação isolada, os arquivos oficiais e as simulações.
 
+Para instalar a Nerd Font, use `-InstallPrograms -Programs JetBrainsMonoNerdFont`. A verificação somente leitura está em `scripts/check-fonts.ps1`. Veja [fontes, aliases e dependências do Windows](docs/fontes.md).
+
 ## Tema do Windows Terminal
 
 O esquema de cores está em:
@@ -126,6 +129,7 @@ winux-setup/
 │   ├── chuva.md
 │   ├── backups.md
 │   ├── estrutura.md
+│   ├── fontes.md
 │   ├── inventario.md
 │   ├── komorebi.md
 │   ├── powershell.md
@@ -137,7 +141,9 @@ winux-setup/
 │   └── yasb.md
 ├── scripts/
 │   ├── btop.ps1
+│   ├── check-fonts.ps1
 │   ├── configuration.ps1
+│   ├── fonts.ps1
 │   ├── install-modules.ps1
 │   ├── install-programs.ps1
 │   ├── install-rain.ps1
@@ -150,6 +156,7 @@ winux-setup/
 ├── tests/
 │   ├── btop.tests.ps1
 │   ├── configuration.tests.ps1
+│   ├── fonts.tests.ps1
 │   ├── komorebi.tests.ps1
 │   ├── modules.tests.ps1
 │   ├── powershell.tests.ps1
@@ -159,6 +166,7 @@ winux-setup/
 │   ├── windows-terminal.tests.ps1
 │   └── yasb.tests.ps1
 ├── modules.psd1
+├── fonts.psd1
 ├── packages.psd1
 ├── portable-programs.psd1
 ├── setup.ps1
@@ -184,7 +192,8 @@ As mudanças serão feitas aos poucos, em commits separados:
 - [x] Incorporar os atalhos pessoais do whkd e a aplicação conjunta das configurações do desktop.
 - [x] Incorporar a configuração e o tema do btop4win, com instalação opcional.
 - [x] Adicionar a instalação portátil do Chuva e preservar os parâmetros do comando `rain`.
-- [ ] Incluir fontes, temas e os recursos visuais necessários.
+- [x] Automatizar a Nerd Font e verificar as famílias usadas pelas configurações.
+- [ ] Incluir os recursos visuais necessários.
 - [ ] Configurar a inicialização automática dos componentes.
 - [ ] Permitir ajustes específicos por dispositivo.
 - [ ] Permitir atualizar o ambiente executando o setup novamente e restaurar backups.

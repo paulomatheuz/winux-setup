@@ -17,12 +17,13 @@ O arquivo `packages.psd1` contém os identificadores dos pacotes na fonte `winge
 | `Whkd` | `LGUG2Z.whkd` | 0.2.10. |
 | `Yasb` | `AmN.yasb` | 2.0.7. |
 | `Btop` | `aristocratos.btop4win` | 1.0.5. |
+| `JetBrainsMonoNerdFont` | `DEVCOM.JetBrainsMonoNerdFont` | 3.3.0. |
 
 As versões iniciais do Komorebi, whkd, YASB e btop4win correspondem ao ambiente inventariado. Elas poderão ser alteradas no catálogo após validar as configurações. O script usa `--no-upgrade`: uma instalação existente é preservada, mesmo que sua versão seja diferente da indicada.
 
 Os identificadores foram conferidos no [catálogo da Microsoft](https://github.com/microsoft/winget-pkgs/tree/master/manifests). A seleção exata do pacote e da fonte, as opções de instalação silenciosa e `--no-upgrade` seguem a [documentação do WinGet](https://learn.microsoft.com/en-us/windows/package-manager/winget/install).
 
-O btop4win usa o pacote portátil do WinGet, que publica o comando `btop`. Sua configuração é aplicada separadamente com `-Components Btop`; veja [destinos e opções](btop.md). matrix-rain usa `-InstallRain` e `portable-programs.psd1`, com download oficial e verificação SHA-256; veja [Chuva](chuva.md). Ele não faz parte da seleção `-Programs` do WinGet. Fontes terão seu método de instalação incorporado na etapa correspondente. A instalação opcional dos módulos do PowerShell usa `-InstallModules` e está descrita em [Perfil do PowerShell](powershell.md). Nenhum binário é armazenado neste repositório.
+O btop4win usa o pacote portátil do WinGet, que publica o comando `btop`. Sua configuração é aplicada separadamente com `-Components Btop`; veja [destinos e opções](btop.md). matrix-rain usa `-InstallRain` e `portable-programs.psd1`, com download oficial e verificação SHA-256; veja [Chuva](chuva.md). Ele não faz parte da seleção `-Programs` do WinGet. A [Nerd Font](fontes.md) é ignorada quando as duas famílias necessárias já estão disponíveis, preservando instalações manuais. A instalação opcional dos módulos do PowerShell usa `-InstallModules` e está descrita em [Perfil do PowerShell](powershell.md). Nenhum binário é armazenado neste repositório.
 
 ## Pré-requisitos
 
