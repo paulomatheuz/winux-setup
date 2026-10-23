@@ -14,9 +14,10 @@ Por enquanto, o repositório contém as configurações do terminal e um setup c
 
 - tema roxo para o Windows Terminal;
 - Fastfetch com logo ASCII personalizada;
-- perfil do PowerShell;
+- perfil do PowerShell com os comandos pessoais dos dois perfis locais;
 - integração com Starship;
-- comandos como `clear`, `cls`, `ls`, `ll`, `la` e `cd`.
+- comandos como `clear`, `cls`, `Clear-Terminal`, `ls`, `ll`, `la`, `cd`, `btop` e `rain`;
+- instalação opcional dos módulos z e PSReadLine.
 
 ## Requisitos atuais
 
@@ -28,7 +29,7 @@ Para aplicar as configurações sem instalar programas, tenha os requisitos abai
 - Fastfetch;
 - uma Nerd Font.
 
-Starship, `lsd` e o módulo `z` são opcionais.
+Starship, `lsd`, `z` e PSReadLine são opcionais. Os módulos podem ser instalados com `-InstallModules -AcceptAgreements`. Consulte o [perfil do PowerShell e suas dependências](docs/powershell.md).
 
 ## Como instalar a configuração atual
 
@@ -95,14 +96,19 @@ winux-setup/
 │   ├── backups.md
 │   ├── estrutura.md
 │   ├── inventario.md
+│   ├── powershell.md
 │   ├── programas.md
 │   └── setup.md
 ├── scripts/
 │   ├── configuration.ps1
+│   ├── install-modules.ps1
 │   ├── install-programs.ps1
 │   └── install.ps1
 ├── tests/
-│   └── configuration.tests.ps1
+│   ├── configuration.tests.ps1
+│   ├── modules.tests.ps1
+│   └── powershell.tests.ps1
+├── modules.psd1
 ├── packages.psd1
 ├── setup.ps1
 └── README.md
@@ -119,6 +125,7 @@ As mudanças serão feitas aos poucos, em commits separados:
 - [x] Criar a entrada do setup com seleção de componentes, verificação de pré-requisitos e simulação.
 - [x] Automatizar a instalação dos programas do catálogo via WinGet.
 - [x] Aplicar as configurações com backup dos arquivos anteriores e registro das alterações.
+- [x] Incorporar os comandos dos perfis pessoais do PowerShell e a instalação opcional dos módulos.
 - [ ] Incorporar as configurações do Starship.
 - [ ] Adicionar Komorebi, YASB e whkd, com suas integrações e atalhos.
 - [ ] Adicionar btop e Chuva.

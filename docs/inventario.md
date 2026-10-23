@@ -73,7 +73,7 @@ As versões abaixo descrevem o ambiente observado; não são versões obrigatór
 - O Terminal utiliza o esquema `Spider Purple` e a fonte `JetBrainsMonoNL Nerd Font Propo`.
 - O perfil usado no terminal aponta o Fastfetch para `$HOME/Documents/fastfetch`. O instalador atual do repositório usa `$HOME/.config/fastfetch`.
 - O repositório já contém uma versão do perfil com Starship, Fastfetch, lsd, módulo z, PSReadLine e funções auxiliares.
-- O arquivo local `profile.ps1` também define `btop` e `rain`; essas funções ainda não estão no perfil versionado.
+- O arquivo local `profile.ps1` também define `btop` e `rain`; os comandos dos dois perfis foram incorporados ao perfil versionado na etapa do PowerShell.
 - Preservar as personalizações dos dois perfis e adaptar os caminhos na etapa de integração, considerando a edição do PowerShell utilizada.
 
 ### btop4win e chuva

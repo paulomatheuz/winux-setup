@@ -68,3 +68,11 @@ Use `-InstallPrograms` para executar a instalação via WinGet antes da aplicaç
 `-Check` e `-WhatIf` também funcionam com `-InstallPrograms`, sem executar o WinGet. Os aceites de termos são opcionais e explícitos por meio de `-AcceptAgreements`. Veja o [catálogo e os exemplos](programas.md).
 
 Se o Fastfetch estiver ausente e não tiver sido selecionado para instalação, o setup interrompe a execução antes de alterar as configurações.
+
+## Perfil pessoal e módulos
+
+O perfil reúne os comandos dos dois perfis locais, incluindo `btop`, `rain` e `Clear-Terminal`. A instalação opcional de z e PSReadLine usa `-InstallModules`; a seleção usa `-Modules`, e os aceites são explícitos com `-AcceptAgreements`.
+
+Os modos `-Check` e `-WhatIf` também se aplicam aos módulos. Para instalar programas e módulos na mesma execução, combine `-InstallPrograms -InstallModules -AcceptAgreements`. Os catálogos e as instalações são separados da seleção de configurações em `-Components`.
+
+Veja o [perfil do PowerShell e suas dependências](powershell.md) para exemplos, requisitos e limitações.
