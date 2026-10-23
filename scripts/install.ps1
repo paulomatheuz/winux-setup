@@ -1,7 +1,7 @@
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [ValidateNotNullOrEmpty()]
-    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship')]
+    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship', 'Komorebi')]
     [string[]]$Components = @('Fastfetch', 'PowerShell'),
 
     [switch]$SkipProfile,
@@ -75,10 +75,15 @@ if ($Components -contains 'Starship') {
         Destination = Resolve-WinuxStarshipConfigPath
     }
 }
+if ($Components -contains 'Komorebi') {
+    . (Join-Path $PSScriptRoot 'komorebi.ps1')
+    $files += @(Get-WinuxKomorebiFiles -SourceDirectory (Join-Path $repositoryRoot 'config\komorebi'))
+}
 $result = Invoke-WinuxConfiguration -Files $files -BackupRoot $backupRoot -WhatIf:$WhatIfPreference
 if ($result.Status -eq 'Applied') {
     Write-Host ('Configuracao aplicada. Backup e registro: ' + $result.BackupPath) -ForegroundColor Green
     Write-Host 'Feche e abra o Windows Terminal.'
+    if ($Components -contains 'Komorebi') { Write-Host 'Recarregue a configuracao ou reinicie o Komorebi pelos seus controles habituais.' }
 } elseif ($result.Status -eq 'Unchanged') {
     Write-Host 'As configuracoes selecionadas ja estao atualizadas.'
 }
