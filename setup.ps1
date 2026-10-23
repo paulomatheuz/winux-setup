@@ -9,7 +9,7 @@ Aplica os componentes disponiveis do winux-setup.
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [ValidateNotNullOrEmpty()]
-    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship')]
+    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship', 'Komorebi')]
     [string[]]$Components = @('Fastfetch', 'PowerShell'),
 
     [switch]$Check,
@@ -63,6 +63,7 @@ if ($Components -contains 'PowerShell') {
 }
 if ($Components -contains 'WindowsTerminal') { $selectedComponents += 'WindowsTerminal' }
 if ($Components -contains 'Starship') { $selectedComponents += 'Starship' }
+if ($Components -contains 'Komorebi') { $selectedComponents += 'Komorebi' }
 if ($TerminalSettingsPath -and $selectedComponents -notcontains 'WindowsTerminal') {
     throw 'Use -Components WindowsTerminal junto com -TerminalSettingsPath.'
 }
@@ -92,6 +93,12 @@ if ($InstallPrograms) {
     $requiredFiles += Join-Path $PSScriptRoot 'packages.psd1'
     $requiredFiles += Join-Path $PSScriptRoot 'scripts\install-programs.ps1'
 }
+if ($selectedComponents -contains 'Komorebi') {
+    $requiredFiles += Join-Path $PSScriptRoot 'scripts\komorebi.ps1'
+    foreach ($name in @('komorebi.json', 'komorebi.bar.json', 'applications.json', 'applications.LICENSE')) {
+        $requiredFiles += Join-Path $PSScriptRoot ('config\komorebi\' + $name)
+    }
+}
 
 if ($InstallModules) {
     $requiredFiles += Join-Path $PSScriptRoot 'modules.psd1'
@@ -117,6 +124,11 @@ if ($selectedComponents -contains 'Starship') {
         throw "O destino do Starship deve ser um arquivo: $starshipDestination"
     }
     Write-Host ('Starship: ' + $starshipDestination)
+}
+if ($selectedComponents -contains 'Komorebi') {
+    . (Join-Path $PSScriptRoot 'scripts\komorebi.ps1')
+    Get-WinuxKomorebiFiles -SourceDirectory (Join-Path $PSScriptRoot 'config\komorebi') | Out-Null
+    Write-Host ('Komorebi: ' + (Resolve-WinuxKomorebiDirectory))
 }
 $hasFastfetch = [bool](Get-Command fastfetch -CommandType Application -ErrorAction SilentlyContinue)
 if ($selectedComponents -contains 'Fastfetch' -and -not $hasFastfetch -and (-not $InstallPrograms -or ($Programs -and $Programs -notcontains 'Fastfetch'))) {

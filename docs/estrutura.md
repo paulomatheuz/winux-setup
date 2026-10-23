@@ -9,13 +9,19 @@
 | `assets/` | Recursos visuais usados pelo projeto. |
 | `docs/` | Inventário, organização e instruções complementares. |
 
-Cada ferramenta terá sua própria pasta em `config/` quando seus arquivos forem incorporados. As configurações pessoais do Komorebi, do YASB e do whkd continuam previstas no [inventário](inventario.md), incluindo o `styles.css` do YASB.
+Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são incorporados. As configurações pessoais do Komorebi já estão incluídas. YASB e whkd continuam previstos no [inventário](inventario.md), incluindo o `styles.css` do YASB.
 
 ## Arquivos atuais
 
 | Caminho no repositório | Uso |
 | --- | --- |
 | `config/fastfetch/config-purple.jsonc` | Configuração do Fastfetch. |
+| `config/komorebi/komorebi.json` | Preferências pessoais, layouts e espaços de trabalho. |
+| `config/komorebi/komorebi.bar.json` | Barra alternativa, sem ativação automática. |
+| `config/komorebi/applications.json` | Cópia local das regras de aplicativos. |
+| `config/komorebi/applications.LICENSE` | Licença da base de regras. |
+| `scripts/komorebi.ps1` | Planejamento dos arquivos e adaptação do caminho das regras. |
+| `tests/komorebi.tests.ps1` | Verificações isoladas do componente Komorebi. |
 | `config/fastfetch/Spider2-ascii.txt` | Logo ASCII. |
 | `config/powershell/profile.ps1` | Perfil compartilhável do PowerShell. |
 | `config/starship/starship.toml` | Base atual do prompt, com os módulos e estilos padrão. |

@@ -8,7 +8,7 @@ O projeto começou como `custom-windows-terminal`, com a personalização do meu
 
 ## Estado atual
 
-O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas preferências do Windows Terminal, com backup. A instalação opcional dos programas está disponível via WinGet. A importação das configurações personalizadas do desktop será implementada nas próximas etapas.
+O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas configurações do Windows Terminal, Starship e Komorebi, com backup. A instalação opcional dos programas está disponível via WinGet. YASB, whkd e os demais componentes do desktop serão incorporados nas próximas etapas.
 
 ## O que já está incluído
 
@@ -18,6 +18,7 @@ O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica 
 - integração com Starship e aplicação opcional da base do prompt;
 - comandos como `clear`, `cls`, `Clear-Terminal`, `ls`, `ll`, `la`, `cd`, `btop` e `rain`;
 - instalação opcional dos módulos z e PSReadLine.
+- configurações pessoais do Komorebi, com layouts, regras de aplicativos e barra alternativa.
 
 ## Requisitos atuais
 
@@ -66,13 +67,15 @@ Sem `-InstallPrograms`, o setup aplica apenas a configuração atual do terminal
 powershell -ExecutionPolicy Bypass -File .\setup.ps1 -InstallPrograms -AcceptAgreements
 ```
 
-A opção `-AcceptAgreements` aceita os termos da fonte e dos pacotes. Consulte o [catálogo e as opções de instalação](docs/programas.md) antes de usar. As configurações personalizadas do desktop serão incorporadas nas etapas próprias de cada ferramenta.
+A opção `-AcceptAgreements` aceita os termos da fonte e dos pacotes. Consulte o [catálogo e as opções de instalação](docs/programas.md) antes de usar. As configurações de cada ferramenta são selecionadas separadamente com `-Components`.
 
 Para aplicar apenas o Fastfetch, acrescente `-Components Fastfetch`. A opção `PowerShell` inclui os arquivos do Fastfetch usados pelo perfil. Consulte as [opções do setup](docs/setup.md) para os detalhes e a compatibilidade com o instalador anterior.
 
 Depois, feche e abra novamente o Windows Terminal.
 
 Para aplicar a base do prompt Starship com backup, use `-Components Starship`. O ambiente inventariado usa o visual padrão, sem uma configuração personalizada. Veja os [destinos e as opções do Starship](docs/starship.md).
+
+Para aplicar as configurações pessoais do Komorebi, use `-Components Komorebi`. Veja os [destinos, a barra alternativa e os ajustes de monitores](docs/komorebi.md). O componente copia os arquivos sem iniciar o gerenciador de janelas.
 
 ## Tema do Windows Terminal
 
@@ -99,6 +102,7 @@ winux-setup/
 │   └── screenshots/
 ├── config/
 │   ├── fastfetch/
+│   ├── komorebi/
 │   ├── powershell/
 │   ├── starship/
 │   └── windows-terminal/
@@ -106,6 +110,7 @@ winux-setup/
 │   ├── backups.md
 │   ├── estrutura.md
 │   ├── inventario.md
+│   ├── komorebi.md
 │   ├── powershell.md
 │   ├── programas.md
 │   ├── starship.md
@@ -116,10 +121,12 @@ winux-setup/
 │   ├── install-modules.ps1
 │   ├── install-programs.ps1
 │   ├── install.ps1
+│   ├── komorebi.ps1
 │   ├── starship.ps1
 │   └── windows-terminal.ps1
 ├── tests/
 │   ├── configuration.tests.ps1
+│   ├── komorebi.tests.ps1
 │   ├── modules.tests.ps1
 │   ├── powershell.tests.ps1
 │   ├── starship.tests.ps1
@@ -144,7 +151,8 @@ As mudanças serão feitas aos poucos, em commits separados:
 - [x] Incorporar os comandos dos perfis pessoais do PowerShell e a instalação opcional dos módulos.
 - [x] Incorporar as preferências pessoais do Windows Terminal e sua aplicação com backup.
 - [x] Registrar a base atual do Starship e sua aplicação opcional com backup.
-- [ ] Adicionar Komorebi, YASB e whkd, com suas integrações e atalhos.
+- [x] Incorporar as configurações pessoais do Komorebi, regras e barra alternativa.
+- [ ] Adicionar YASB e whkd, com suas integrações e atalhos.
 - [ ] Adicionar btop e Chuva.
 - [ ] Incluir fontes, temas e os recursos visuais necessários.
 - [ ] Configurar a inicialização automática dos componentes.
