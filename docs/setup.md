@@ -59,7 +59,7 @@ O comando `powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1` conti
 
 A entrada principal acrescenta a verificação do sistema e do executável do Fastfetch. Os dois scripts verificam a presença dos arquivos de configuração antes de copiá-los.
 
-Os destinos, os marcadores e o backup do perfil continuam descritos em [Estrutura do projeto](estrutura.md). A proteção atual faz backup do perfil antes de adicionar a integração; a cópia dos arquivos do Fastfetch ainda usa substituição direta. Backups completos das configurações e restauração serão implementados em uma etapa própria.
+Os destinos, os marcadores e o backup do perfil continuam descritos em [Estrutura do projeto](estrutura.md). Todos os arquivos existentes que precisarem mudar são salvos antes das substituições, com registro por execução. Arquivos idênticos não são regravados. Consulte [Backups das configurações](backups.md). A restauração automática será implementada em uma etapa própria.
 
 ## Instalar programas antes de aplicar as configurações
 

@@ -23,6 +23,8 @@ Cada ferramenta terá sua própria pasta em `config/` quando seus arquivos forem
 | `packages.psd1` | Catálogo dos programas instaláveis via WinGet. |
 | `scripts/install-programs.ps1` | Instalação dos programas selecionados, com preservação das versões existentes. |
 | `scripts/install.ps1` | Aplicação dos arquivos da configuração atual do terminal. |
+| `scripts/configuration.ps1` | Planejamento, backups e registro das alterações dos arquivos. |
+| `tests/configuration.tests.ps1` | Verificações isoladas da aplicação e dos backups. |
 | `assets/screenshots/terminal-preview.png` | Prévia exibida no README. |
 
 ## Compatibilidade do instalador atual
@@ -39,7 +41,9 @@ O instalador lê o perfil de `config/powershell/profile.ps1` e os arquivos de `c
 - `$HOME/.config/fastfetch/Spider2-ascii.txt`;
 - `$HOME/.config/fastfetch/custom-windows-terminal-profile.ps1`.
 
-O nome do perfil instalado, os marcadores de integração e o nome do backup ainda usam `custom-windows-terminal`. Eles foram mantidos para reconhecer instalações existentes e evitar adicionar a mesma integração novamente.
+O nome do perfil instalado e os marcadores de integração ainda usam `custom-windows-terminal`. Eles foram mantidos para reconhecer instalações existentes e evitar adicionar a mesma integração novamente.
+
+Os conteúdos anteriores dos arquivos alterados e o registro de cada execução ficam em `$HOME/.winux-setup/backups/`. O funcionamento está descrito em [Backups das configurações](backups.md). Os backups antigos do perfil não são removidos.
 
 O perfil encontra o Fastfetch na pasta vizinha quando carregado a partir do repositório e na própria pasta depois de instalado.
 

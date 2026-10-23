@@ -57,7 +57,7 @@ Aplique os componentes disponíveis:
 powershell -ExecutionPolicy Bypass -File .\setup.ps1
 ```
 
-O instalador copia os arquivos do Fastfetch e o perfil do projeto para `$HOME\.config\fastfetch`. Antes de adicionar a integração ao perfil do PowerShell, salva um backup desse perfil.
+O instalador copia os arquivos do Fastfetch e o perfil do projeto para `$HOME\.config\fastfetch`. Antes de substituir qualquer arquivo existente, salva seu conteúdo anterior em `$HOME\.winux-setup\backups`, junto de um registro das alterações. Arquivos idênticos não são regravados. Veja os [detalhes dos backups](docs/backups.md).
 
 Sem `-InstallPrograms`, o setup aplica apenas a configuração atual do terminal. Para instalar os programas do catálogo e depois aplicar essa configuração:
 
@@ -92,13 +92,17 @@ winux-setup/
 │   ├── powershell/
 │   └── windows-terminal/
 ├── docs/
+│   ├── backups.md
 │   ├── estrutura.md
 │   ├── inventario.md
 │   ├── programas.md
 │   └── setup.md
 ├── scripts/
+│   ├── configuration.ps1
 │   ├── install-programs.ps1
 │   └── install.ps1
+├── tests/
+│   └── configuration.tests.ps1
 ├── packages.psd1
 ├── setup.ps1
 └── README.md
@@ -114,7 +118,7 @@ As mudanças serão feitas aos poucos, em commits separados:
 - [x] Organizar as configurações e os scripts para receber os demais componentes.
 - [x] Criar a entrada do setup com seleção de componentes, verificação de pré-requisitos e simulação.
 - [x] Automatizar a instalação dos programas do catálogo via WinGet.
-- [ ] Aplicar as configurações com backup completo.
+- [x] Aplicar as configurações com backup dos arquivos anteriores e registro das alterações.
 - [ ] Incorporar as configurações do Starship.
 - [ ] Adicionar Komorebi, YASB e whkd, com suas integrações e atalhos.
 - [ ] Adicionar btop e Chuva.

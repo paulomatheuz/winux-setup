@@ -47,6 +47,7 @@ if ($Components -contains 'PowerShell') {
 $installer = Join-Path $PSScriptRoot 'scripts\install.ps1'
 $requiredFiles = @(
     $installer
+    (Join-Path $PSScriptRoot 'scripts\configuration.ps1')
     (Join-Path $PSScriptRoot 'config\fastfetch\config-purple.jsonc')
     (Join-Path $PSScriptRoot 'config\fastfetch\Spider2-ascii.txt')
 )
