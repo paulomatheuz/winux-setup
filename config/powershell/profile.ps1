@@ -48,13 +48,17 @@ function winuxt {
 Remove-Item Alias:clear -Force -ErrorAction SilentlyContinue
 Remove-Item Alias:cls -Force -ErrorAction SilentlyContinue
 
-function clear {
+function Clear-Terminal {
     Clear-Host
     Show-Fastfetch
 }
 
+function clear {
+    Clear-Terminal
+}
+
 function cls {
-    clear
+    Clear-Terminal
 }
 
 # Wake-on-LAN:
@@ -130,10 +134,14 @@ function cd {
     )
 
     if ($Path) {
-        try {
-            z $Path
-        } catch {
-            Set-Location $Path
+        if (Get-Command z -ErrorAction SilentlyContinue) {
+            try {
+                z $Path
+            } catch {
+                Set-Location -LiteralPath $Path -ErrorAction Stop
+            }
+        } else {
+            Set-Location -LiteralPath $Path -ErrorAction Stop
         }
     } else {
         Set-Location ~
@@ -142,15 +150,77 @@ function cd {
     ls
 }
 
-# Autocomplete e historico
-Import-Module PSReadLine -ErrorAction SilentlyContinue
-Set-PSReadLineOption -EditMode Windows
-Set-PSReadLineKeyHandler -Key Tab -Function Complete
+# Ferramentas portateis: prefere o PATH e depois os caminhos pessoais.
+function Find-WinuxExecutable {
+    param(
+        [Parameter(Mandatory)][string]$Command,
+        [string[]]$Candidates,
+        [string]$SearchRoot,
+        [string]$FileName
+    )
+    $application = Get-Command $Command -CommandType Application -ErrorAction SilentlyContinue
+    if ($application) { return $application.Source }
+    foreach ($candidate in $Candidates) {
+        if (Test-Path -LiteralPath $candidate -PathType Leaf) { return $candidate }
+    }
+    if ($SearchRoot -and (Test-Path -LiteralPath $SearchRoot -PathType Container)) {
+        $match = Get-ChildItem -LiteralPath $SearchRoot -Filter $FileName -File -Recurse -ErrorAction SilentlyContinue |
+            Sort-Object FullName | Select-Object -First 1
+        if ($match) { return $match.FullName }
+    }
+}
 
-try {
-    Set-PSReadLineOption -PredictionSource History
-    Set-PSReadLineOption -PredictionViewStyle ListView
-} catch {
+function btop {
+    $root = Join-Path $HOME 'Tools\btop4win'
+    $executable = Find-WinuxExecutable -Command btop4win -Candidates @(
+        (Join-Path $root 'btop4win\btop4win.exe')
+        (Join-Path $root 'btop4win.exe')
+    ) -SearchRoot $root -FileName 'btop4win.exe'
+    if (-not $executable) {
+        Write-Error 'btop4win nao foi encontrado no PATH nem em $HOME\Tools\btop4win.'
+        return
+    }
+    & $executable @args
+}
+
+function rain {
+    param([double]$Velocidade = 0.3)
+    $executable = Find-WinuxExecutable -Command matrix-rain -Candidates @(
+        (Join-Path $HOME 'Tools\matrix-rain\matrix-rain.exe')
+    )
+    if (-not $executable) {
+        Write-Error 'matrix-rain nao foi encontrado no PATH nem em $HOME\Tools\matrix-rain.'
+        return
+    }
+    & $executable -color white -charset matrix -density 25 -fps 60 -speed $Velocidade
+}
+
+# GitHub CLI: preserva o ajuste local sem duplicar o PATH a cada abertura.
+if ($env:ProgramFiles -and -not (Get-Command gh -CommandType Application -ErrorAction SilentlyContinue)) {
+    $githubCliDirectory = Join-Path $env:ProgramFiles 'GitHub CLI'
+    if ((Test-Path -LiteralPath (Join-Path $githubCliDirectory 'gh.exe') -PathType Leaf) -and
+        ($env:PATH -split ';') -notcontains $githubCliDirectory) {
+        $env:PATH = $githubCliDirectory + ';' + $env:PATH
+    }
+}
+
+# Autocomplete e historico: os modulos opcionais nao sao baixados no perfil.
+if (Get-Module -ListAvailable -Name PSReadLine) {
+    Import-Module PSReadLine -ErrorAction SilentlyContinue
+}
+if (Get-Command Set-PSReadLineOption -ErrorAction SilentlyContinue) {
+    try {
+        Set-PSReadLineOption -EditMode Windows -ErrorAction Stop
+        Set-PSReadLineKeyHandler -Key Tab -Function Complete -ErrorAction Stop
+    } catch {
+        Write-Verbose 'Atalhos do PSReadLine indisponiveis nesta sessao.'
+    }
+    try {
+        Set-PSReadLineOption -PredictionSource History -ErrorAction Stop
+        Set-PSReadLineOption -PredictionViewStyle ListView -ErrorAction Stop
+    } catch {
+        Write-Verbose 'Previsoes do PSReadLine indisponiveis nesta sessao.'
+    }
 }
 
 # Exibe o visual ao abrir o Terminal

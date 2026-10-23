@@ -21,7 +21,13 @@ param(
     [ValidateNotNullOrEmpty()]
     [string[]]$Programs,
 
-    [switch]$AcceptAgreements
+    [switch]$AcceptAgreements,
+
+    [switch]$InstallModules,
+
+    [ValidateNotNullOrEmpty()]
+    [ValidateSet('z', 'PSReadLine')]
+    [string[]]$Modules
 )
 
 $ErrorActionPreference = 'Stop'
@@ -34,8 +40,14 @@ if ($PSVersionTable.PSVersion -lt [version]'5.1') {
     throw 'Use Windows PowerShell 5.1 ou PowerShell 7.'
 }
 
-if (-not $InstallPrograms -and ($PSBoundParameters.ContainsKey('Programs') -or $AcceptAgreements)) {
-    throw 'Use -InstallPrograms junto com -Programs ou -AcceptAgreements.'
+if (-not $InstallPrograms -and $PSBoundParameters.ContainsKey('Programs')) {
+    throw 'Use -InstallPrograms junto com -Programs.'
+}
+if (-not $InstallModules -and $PSBoundParameters.ContainsKey('Modules')) {
+    throw 'Use -InstallModules junto com -Modules.'
+}
+if ($AcceptAgreements -and -not ($InstallPrograms -or $InstallModules)) {
+    throw 'Use -InstallPrograms ou -InstallModules junto com -AcceptAgreements.'
 }
 
 # O perfil usa a configuracao e a logo do Fastfetch.
@@ -60,6 +72,11 @@ if ($InstallPrograms) {
     $requiredFiles += Join-Path $PSScriptRoot 'scripts\install-programs.ps1'
 }
 
+if ($InstallModules) {
+    $requiredFiles += Join-Path $PSScriptRoot 'modules.psd1'
+    $requiredFiles += Join-Path $PSScriptRoot 'scripts\install-modules.ps1'
+}
+
 $missingFiles = @($requiredFiles | Where-Object { -not (Test-Path -LiteralPath $_ -PathType Leaf) })
 if ($missingFiles.Count -gt 0) {
     throw ('Arquivos do projeto nao encontrados: ' + ($missingFiles -join ', '))
@@ -80,6 +97,16 @@ if ($InstallPrograms) {
         $programArguments.Programs = $Programs
     }
     & (Join-Path $PSScriptRoot 'scripts\install-programs.ps1') @programArguments
+}
+
+if ($InstallModules) {
+    $moduleArguments = @{
+        Check = $Check
+        AcceptAgreements = $AcceptAgreements
+        WhatIf = $WhatIfPreference
+    }
+    if ($Modules) { $moduleArguments.Modules = $Modules }
+    & (Join-Path $PSScriptRoot 'scripts\install-modules.ps1') @moduleArguments
 }
 
 if (-not $Check -and -not $WhatIfPreference -and -not (Get-Command fastfetch -CommandType Application -ErrorAction SilentlyContinue)) {

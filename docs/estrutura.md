@@ -21,6 +21,8 @@ Cada ferramenta terá sua própria pasta em `config/` quando seus arquivos forem
 | `config/windows-terminal/settings.json.example` | Tema e preferências de fonte do Windows Terminal. |
 | `setup.ps1` | Entrada principal com seleção de componentes, verificação de pré-requisitos, instalação opcional de programas e simulação. |
 | `packages.psd1` | Catálogo dos programas instaláveis via WinGet. |
+| `modules.psd1` | Catálogo das dependências opcionais do perfil. |
+| `scripts/install-modules.ps1` | Instalação de z e PSReadLine para o usuário atual. |
 | `scripts/install-programs.ps1` | Instalação dos programas selecionados, com preservação das versões existentes. |
 | `scripts/install.ps1` | Aplicação dos arquivos da configuração atual do terminal. |
 | `scripts/configuration.ps1` | Planejamento, backups e registro das alterações dos arquivos. |
