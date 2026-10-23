@@ -4,7 +4,7 @@ Minhas configurações para Windows, reunidas em um só lugar para facilitar a i
 
 O projeto começou como `custom-windows-terminal`, com a personalização do meu terminal. Agora, a proposta é incluir também o desktop, os atalhos e as automações que uso no dia a dia.
 
-![Prévia do terminal](screenshots/terminal-preview.png)
+![Prévia do terminal](assets/screenshots/terminal-preview.png)
 
 ## Estado atual
 
@@ -56,7 +56,7 @@ Depois, feche e abra novamente o Windows Terminal.
 O esquema de cores está em:
 
 ```text
-WindowsTerminal/settings.json.example
+config/windows-terminal/settings.json.example
 ```
 
 Copie o esquema `Spider Purple` para o `settings.json` do seu Windows Terminal. Faça um backup antes de editar o arquivo.
@@ -65,20 +65,28 @@ Copie o esquema `Spider Purple` para o `settings.json` do seu Windows Terminal. 
 
 ```text
 winux-setup/
-├── config/fastfetch/
-├── PowerShell/
-├── WindowsTerminal/
-├── screenshots/
+├── assets/
+│   └── screenshots/
+├── config/
+│   ├── fastfetch/
+│   ├── powershell/
+│   └── windows-terminal/
+├── docs/
+│   ├── estrutura.md
+│   └── inventario.md
 ├── scripts/
+│   └── install.ps1
 └── README.md
 ```
+
+A organização das pastas e os caminhos de instalação estão descritos em [Estrutura do projeto](docs/estrutura.md).
 
 ## Próximas etapas
 
 As mudanças serão feitas aos poucos, em commits separados:
 
 - [x] Inventariar as configurações e dependências do ambiente atual ([inventário](docs/inventario.md)).
-- [ ] Organizar as configurações e os scripts para receber os demais componentes.
+- [x] Organizar as configurações e os scripts para receber os demais componentes.
 - [ ] Automatizar a instalação dos programas e a aplicação das configurações com backup.
 - [ ] Incorporar as configurações do Starship.
 - [ ] Adicionar Komorebi, YASB e whkd, com suas integrações e atalhos.

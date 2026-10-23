@@ -7,7 +7,7 @@ $ErrorActionPreference = 'Stop'
 
 $repositoryRoot = Split-Path -Parent $PSScriptRoot
 $sourceFastfetch = Join-Path $repositoryRoot 'config\fastfetch'
-$sourceProfile = Join-Path $repositoryRoot 'PowerShell\profile.ps1'
+$sourceProfile = Join-Path $repositoryRoot 'config\powershell\profile.ps1'
 $fastfetchHome = Join-Path $HOME '.config\fastfetch'
 $installedProfile = Join-Path $fastfetchHome 'custom-windows-terminal-profile.ps1'
 
