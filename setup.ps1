@@ -9,7 +9,7 @@ Aplica os componentes disponiveis do winux-setup.
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [ValidateNotNullOrEmpty()]
-    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal')]
+    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship')]
     [string[]]$Components = @('Fastfetch', 'PowerShell'),
 
     [switch]$Check,
@@ -62,6 +62,7 @@ if ($Components -contains 'PowerShell') {
     $selectedComponents += 'PowerShell'
 }
 if ($Components -contains 'WindowsTerminal') { $selectedComponents += 'WindowsTerminal' }
+if ($Components -contains 'Starship') { $selectedComponents += 'Starship' }
 if ($TerminalSettingsPath -and $selectedComponents -notcontains 'WindowsTerminal') {
     throw 'Use -Components WindowsTerminal junto com -TerminalSettingsPath.'
 }
@@ -81,6 +82,10 @@ if ($selectedComponents -contains 'WindowsTerminal') {
 }
 if ($selectedComponents -contains 'PowerShell') {
     $requiredFiles += Join-Path $PSScriptRoot 'config\powershell\profile.ps1'
+}
+if ($selectedComponents -contains 'Starship') {
+    $requiredFiles += Join-Path $PSScriptRoot 'config\starship\starship.toml'
+    $requiredFiles += Join-Path $PSScriptRoot 'scripts\starship.ps1'
 }
 
 if ($InstallPrograms) {
@@ -104,6 +109,14 @@ if ($selectedComponents -contains 'WindowsTerminal') {
     $terminalDestination = Resolve-WinuxTerminalSettingsPath -Path $TerminalSettingsPath
     New-WinuxTerminalConfiguration -SourcePath (Join-Path $PSScriptRoot 'config\windows-terminal\settings.json.example') -Destination $terminalDestination | Out-Null
     Write-Host ('Windows Terminal: ' + $terminalDestination)
+}
+if ($selectedComponents -contains 'Starship') {
+    . (Join-Path $PSScriptRoot 'scripts\starship.ps1')
+    $starshipDestination = Resolve-WinuxStarshipConfigPath
+    if ((Test-Path -LiteralPath $starshipDestination) -and -not (Test-Path -LiteralPath $starshipDestination -PathType Leaf)) {
+        throw "O destino do Starship deve ser um arquivo: $starshipDestination"
+    }
+    Write-Host ('Starship: ' + $starshipDestination)
 }
 $hasFastfetch = [bool](Get-Command fastfetch -CommandType Application -ErrorAction SilentlyContinue)
 if ($selectedComponents -contains 'Fastfetch' -and -not $hasFastfetch -and (-not $InstallPrograms -or ($Programs -and $Programs -notcontains 'Fastfetch'))) {

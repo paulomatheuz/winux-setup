@@ -1,0 +1,4 @@
+# Base do prompt atual: usa os modulos e estilos padrao do Starship.
+"$schema" = 'https://starship.rs/config-schema.json'
+format = '$all'
+add_newline = true

@@ -1,7 +1,7 @@
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [ValidateNotNullOrEmpty()]
-    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal')]
+    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship')]
     [string[]]$Components = @('Fastfetch', 'PowerShell'),
 
     [switch]$SkipProfile,
@@ -67,6 +67,13 @@ if ($Components -contains 'WindowsTerminal') {
     . (Join-Path $PSScriptRoot 'windows-terminal.ps1')
     $destination = Resolve-WinuxTerminalSettingsPath -Path $TerminalSettingsPath
     $files += New-WinuxTerminalConfiguration -SourcePath (Join-Path $repositoryRoot 'config\windows-terminal\settings.json.example') -Destination $destination
+}
+if ($Components -contains 'Starship') {
+    . (Join-Path $PSScriptRoot 'starship.ps1')
+    $files += @{
+        SourcePath = Join-Path $repositoryRoot 'config\starship\starship.toml'
+        Destination = Resolve-WinuxStarshipConfigPath
+    }
 }
 $result = Invoke-WinuxConfiguration -Files $files -BackupRoot $backupRoot -WhatIf:$WhatIfPreference
 if ($result.Status -eq 'Applied') {

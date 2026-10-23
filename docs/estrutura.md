@@ -18,6 +18,9 @@ Cada ferramenta terá sua própria pasta em `config/` quando seus arquivos forem
 | `config/fastfetch/config-purple.jsonc` | Configuração do Fastfetch. |
 | `config/fastfetch/Spider2-ascii.txt` | Logo ASCII. |
 | `config/powershell/profile.ps1` | Perfil compartilhável do PowerShell. |
+| `config/starship/starship.toml` | Base atual do prompt, com os módulos e estilos padrão. |
+| `scripts/starship.ps1` | Resolução do destino padrão ou de `STARSHIP_CONFIG`. |
+| `tests/starship.tests.ps1` | Verificações isoladas da aplicação do Starship. |
 | `config/windows-terminal/settings.json.example` | Temas, fonte, transparência e atalhos do Windows Terminal. |
 | `scripts/windows-terminal.ps1` | Leitura de JSON com comentários, seleção do destino e combinação das preferências. |
 | `tests/windows-terminal.tests.ps1` | Verificações isoladas do componente Windows Terminal. |

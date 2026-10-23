@@ -9,8 +9,9 @@ O ponto de entrada do projeto é `setup.ps1`, na raiz do repositório.
 | `Fastfetch` | Configuração e logo ASCII do Fastfetch. |
 | `PowerShell` | Perfil compartilhável e sua integração ao perfil da sessão. Inclui os arquivos do Fastfetch, que são uma dependência desse perfil. |
 | `WindowsTerminal` | Preferências visuais e atalhos, combinados com os perfis locais e aplicados com backup. |
+| `Starship` | Base do prompt, aplicada no caminho padrão ou em `STARSHIP_CONFIG`, com backup. |
 
-Sem `-Components`, Fastfetch e PowerShell são selecionados. WindowsTerminal é opcional. As configurações do Komorebi, YASB, whkd, btop4win e matrix-rain serão incorporadas nas etapas seguintes; ainda não são opções de `-Components`. A instalação dos programas tem uma seleção separada, descrita em [Instalação dos programas](programas.md).
+Sem `-Components`, Fastfetch e PowerShell são selecionados. WindowsTerminal e Starship são opcionais. As configurações do Komorebi, YASB, whkd, btop4win e matrix-rain serão incorporadas nas etapas seguintes; ainda não são opções de `-Components`. A instalação dos programas tem uma seleção separada, descrita em [Instalação dos programas](programas.md).
 
 ## Verificar antes de aplicar
 
@@ -78,6 +79,10 @@ O perfil reúne os comandos dos dois perfis locais, incluindo `btop`, `rain` e `
 Os modos `-Check` e `-WhatIf` também se aplicam aos módulos. Para instalar programas e módulos na mesma execução, combine `-InstallPrograms -InstallModules -AcceptAgreements`. Os catálogos e as instalações são separados da seleção de configurações em `-Components`.
 
 Veja o [perfil do PowerShell e suas dependências](powershell.md) para exemplos, requisitos e limitações.
+
+## Base do prompt Starship
+
+O componente `Starship` aplica a base do prompt com backup e aceita `-Check` e `-WhatIf`. O destino usa `STARSHIP_CONFIG` ou `$HOME/.config/starship.toml`. Veja [Starship](starship.md) para a diferença entre instalar o programa, inicializar o shell e aplicar a configuração.
 
 ## Preferências do Windows Terminal
 
