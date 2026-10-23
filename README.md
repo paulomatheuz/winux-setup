@@ -1,12 +1,16 @@
-# Custom Windows Terminal
+# winux-setup
 
-Este repositório contém a configuração que uso no meu terminal do Windows.
+Minhas configurações para Windows, reunidas em um só lugar para facilitar a instalação e a reprodução do meu ambiente em outros dispositivos.
+
+O projeto começou como `custom-windows-terminal`, com a personalização do meu terminal. Agora, a proposta é incluir também o desktop, os atalhos e as automações que uso no dia a dia.
 
 ![Prévia do terminal](screenshots/terminal-preview.png)
 
-Criei porque amigos sempre perguntavam como eu personalizava meu terminal. A ideia é deixar tudo organizado para quem quiser copiar e usar de forma rápida.
+## Estado atual
 
-## O que está incluído
+Por enquanto, o repositório contém as configurações do terminal e um instalador que copia os arquivos do Fastfetch e integra o perfil do PowerShell. A instalação dos programas e a configuração completa do desktop ainda serão implementadas.
+
+## O que já está incluído
 
 - tema roxo para o Windows Terminal;
 - Fastfetch com logo ASCII personalizada;
@@ -14,8 +18,11 @@ Criei porque amigos sempre perguntavam como eu personalizava meu terminal. A ide
 - integração com Starship;
 - comandos como `clear`, `cls`, `ls`, `ll`, `la` e `cd`.
 
-## Requisitos
+## Requisitos atuais
 
+Instale os requisitos antes de executar o script:
+
+- Git, para clonar o repositório;
 - Windows Terminal;
 - Windows PowerShell 5.1 ou PowerShell 7;
 - Fastfetch;
@@ -23,13 +30,13 @@ Criei porque amigos sempre perguntavam como eu personalizava meu terminal. A ide
 
 Starship, `lsd` e o módulo `z` são opcionais.
 
-## Como instalar
+## Como instalar a configuração atual
 
 Clone o repositório:
 
 ```powershell
-git clone https://github.com/paulomatheuz/custom-windows-terminal.git
-cd custom-windows-terminal
+git clone https://github.com/paulomatheuz/winux-setup.git
+cd winux-setup
 ```
 
 Execute o instalador:
@@ -38,7 +45,9 @@ Execute o instalador:
 powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 ```
 
-O instalador copia os arquivos do Fastfetch e salva um backup do perfil atual do PowerShell antes de adicionar a configuração.
+O instalador copia os arquivos do Fastfetch e o perfil do projeto para `$HOME\.config\fastfetch`. Antes de adicionar a integração ao perfil do PowerShell, salva um backup desse perfil.
+
+Esse script aplica a configuração atual do terminal; ele ainda não instala os programas nem configura os componentes do desktop.
 
 Depois, feche e abra novamente o Windows Terminal.
 
@@ -52,17 +61,34 @@ WindowsTerminal/settings.json.example
 
 Copie o esquema `Spider Purple` para o `settings.json` do seu Windows Terminal. Faça um backup antes de editar o arquivo.
 
-## Estrutura
+## Estrutura atual
 
 ```text
-custom-windows-terminal/
+winux-setup/
 ├── config/fastfetch/
 ├── PowerShell/
 ├── WindowsTerminal/
+├── screenshots/
 ├── scripts/
 └── README.md
 ```
 
-## Observação
+## Próximas etapas
 
-Este repositório é apenas uma cópia organizada do meu terminal para quem quiser usar ou adaptar.
+As mudanças serão feitas aos poucos, em commits separados:
+
+- [ ] Inventariar as configurações e dependências do ambiente atual.
+- [ ] Organizar as configurações e os scripts para receber os demais componentes.
+- [ ] Automatizar a instalação dos programas e a aplicação das configurações com backup.
+- [ ] Incorporar as configurações do Starship.
+- [ ] Adicionar Komorebi, YASB e whkd, com suas integrações e atalhos.
+- [ ] Adicionar btop e Chuva.
+- [ ] Incluir fontes, temas e os recursos visuais necessários.
+- [ ] Configurar a inicialização automática dos componentes.
+- [ ] Permitir ajustes específicos por dispositivo.
+- [ ] Permitir atualizar o ambiente executando o setup novamente e restaurar backups.
+- [ ] Validar o setup em outro dispositivo e documentar o processo.
+
+## Personalização
+
+As configurações refletem meu uso pessoal. Você pode usá-las como base e adaptar temas, atalhos e ferramentas ao seu ambiente.
