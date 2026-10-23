@@ -22,7 +22,7 @@ As versões iniciais do Komorebi, whkd, YASB e btop4win correspondem ao ambiente
 
 Os identificadores foram conferidos no [catálogo da Microsoft](https://github.com/microsoft/winget-pkgs/tree/master/manifests). A seleção exata do pacote e da fonte, as opções de instalação silenciosa e `--no-upgrade` seguem a [documentação do WinGet](https://learn.microsoft.com/en-us/windows/package-manager/winget/install).
 
-O btop4win usa o pacote portátil do WinGet, que publica o comando `btop`. Sua configuração é aplicada separadamente com `-Components Btop`; veja [destinos e opções](btop.md). matrix-rain e fontes terão seus métodos de instalação incorporados nas etapas correspondentes. A instalação opcional dos módulos do PowerShell usa `-InstallModules` e está descrita em [Perfil do PowerShell](powershell.md). Nenhum binário é armazenado neste repositório.
+O btop4win usa o pacote portátil do WinGet, que publica o comando `btop`. Sua configuração é aplicada separadamente com `-Components Btop`; veja [destinos e opções](btop.md). matrix-rain usa `-InstallRain` e `portable-programs.psd1`, com download oficial e verificação SHA-256; veja [Chuva](chuva.md). Ele não faz parte da seleção `-Programs` do WinGet. Fontes terão seu método de instalação incorporado na etapa correspondente. A instalação opcional dos módulos do PowerShell usa `-InstallModules` e está descrita em [Perfil do PowerShell](powershell.md). Nenhum binário é armazenado neste repositório.
 
 ## Pré-requisitos
 

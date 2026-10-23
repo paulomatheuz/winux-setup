@@ -8,7 +8,7 @@ O projeto começou como `custom-windows-terminal`, com a personalização do meu
 
 ## Estado atual
 
-O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas configurações do Windows Terminal, Starship, Komorebi, YASB, whkd e btop4win, com backup. A instalação opcional dos programas está disponível via WinGet. Chuva e os demais recursos serão incorporados nas próximas etapas.
+O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas configurações do Windows Terminal, Starship, Komorebi, YASB, whkd e btop4win, com backup. A instalação opcional dos programas está disponível via WinGet; o Chuva (matrix-rain) tem instalação portátil própria. Fontes, recursos visuais e outras automações continuam nas próximas etapas.
 
 ## O que já está incluído
 
@@ -22,6 +22,7 @@ O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica 
 - configuração e CSS pessoais do YASB, com os valores privados do clima separados.
 - atalhos pessoais do whkd, com shell PowerShell e integração com Komorebi.
 - configuração pessoal e tema NeutralPurple do btop4win, com instalação opcional via WinGet.
+- instalação opcional do matrix-rain, com os parâmetros pessoais do comando `rain`.
 
 ## Requisitos atuais
 
@@ -86,6 +87,8 @@ Para aplicar os atalhos, use `-Components Whkd`. Veja os [atalhos, destinos e ap
 
 Para aplicar o btop4win, use `-Components Btop`. A instalação opcional usa `-InstallPrograms -Programs Btop`. Veja os [destinos, modo TTY e opções do btop](docs/btop.md).
 
+Para instalar o Chuva junto ao setup, acrescente `-InstallRain`. Veja [Chuva e o comando rain](docs/chuva.md) para a instalação isolada, os arquivos oficiais e as simulações.
+
 ## Tema do Windows Terminal
 
 O esquema de cores está em:
@@ -120,6 +123,7 @@ winux-setup/
 │   └── yasb/
 ├── docs/
 │   ├── btop.md
+│   ├── chuva.md
 │   ├── backups.md
 │   ├── estrutura.md
 │   ├── inventario.md
@@ -136,6 +140,7 @@ winux-setup/
 │   ├── configuration.ps1
 │   ├── install-modules.ps1
 │   ├── install-programs.ps1
+│   ├── install-rain.ps1
 │   ├── install.ps1
 │   ├── komorebi.ps1
 │   ├── starship.ps1
@@ -148,12 +153,14 @@ winux-setup/
 │   ├── komorebi.tests.ps1
 │   ├── modules.tests.ps1
 │   ├── powershell.tests.ps1
+│   ├── rain.tests.ps1
 │   ├── starship.tests.ps1
 │   ├── whkd.tests.ps1
 │   ├── windows-terminal.tests.ps1
 │   └── yasb.tests.ps1
 ├── modules.psd1
 ├── packages.psd1
+├── portable-programs.psd1
 ├── setup.ps1
 └── README.md
 ```
@@ -176,7 +183,7 @@ As mudanças serão feitas aos poucos, em commits separados:
 - [x] Incorporar a configuração e o CSS pessoais do YASB, preservando o visual.
 - [x] Incorporar os atalhos pessoais do whkd e a aplicação conjunta das configurações do desktop.
 - [x] Incorporar a configuração e o tema do btop4win, com instalação opcional.
-- [ ] Adicionar Chuva.
+- [x] Adicionar a instalação portátil do Chuva e preservar os parâmetros do comando `rain`.
 - [ ] Incluir fontes, temas e os recursos visuais necessários.
 - [ ] Configurar a inicialização automática dos componentes.
 - [ ] Permitir ajustes específicos por dispositivo.

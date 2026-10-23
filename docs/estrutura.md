@@ -46,6 +46,9 @@ Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são in
 | `tests/windows-terminal.tests.ps1` | Verificações isoladas do componente Windows Terminal. |
 | `setup.ps1` | Entrada principal com seleção de componentes, verificação de pré-requisitos, instalação opcional de programas e simulação. |
 | `packages.psd1` | Catálogo dos programas instaláveis via WinGet. |
+| `portable-programs.psd1` | URLs e SHA-256 do matrix-rain 1.1.0 para x64 e ARM64. |
+| `scripts/install-rain.ps1` | Instalação portátil do matrix-rain, com verificação e preservação de instalações existentes. |
+| `tests/rain.tests.ps1` | Instalação, falhas e integração com arquivos e downloads simulados. |
 | `modules.psd1` | Catálogo das dependências opcionais do perfil. |
 | `scripts/install-modules.ps1` | Instalação de z e PSReadLine para o usuário atual. |
 | `scripts/install-programs.ps1` | Instalação dos programas selecionados, com preservação das versões existentes. |
