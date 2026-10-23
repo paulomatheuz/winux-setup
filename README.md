@@ -77,7 +77,7 @@ winux-setup/
 
 As mudanças serão feitas aos poucos, em commits separados:
 
-- [ ] Inventariar as configurações e dependências do ambiente atual.
+- [x] Inventariar as configurações e dependências do ambiente atual ([inventário](docs/inventario.md)).
 - [ ] Organizar as configurações e os scripts para receber os demais componentes.
 - [ ] Automatizar a instalação dos programas e a aplicação das configurações com backup.
 - [ ] Incorporar as configurações do Starship.
