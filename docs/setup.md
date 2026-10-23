@@ -9,7 +9,7 @@ O ponto de entrada do projeto é `setup.ps1`, na raiz do repositório.
 | `Fastfetch` | Configuração e logo ASCII do Fastfetch. |
 | `PowerShell` | Perfil compartilhável e sua integração ao perfil da sessão. Inclui os arquivos do Fastfetch, que são uma dependência desse perfil. |
 
-Sem `-Components`, os dois componentes são selecionados. Komorebi, YASB, whkd, btop4win e matrix-rain serão incorporados nas etapas seguintes; ainda não são opções do setup.
+Sem `-Components`, os dois componentes são selecionados. As configurações do Komorebi, YASB, whkd, btop4win e matrix-rain serão incorporadas nas etapas seguintes; ainda não são opções de `-Components`. A instalação dos programas tem uma seleção separada, descrita em [Instalação dos programas](programas.md).
 
 ## Verificar antes de aplicar
 
@@ -61,4 +61,10 @@ A entrada principal acrescenta a verificação do sistema e do executável do Fa
 
 Os destinos, os marcadores e o backup do perfil continuam descritos em [Estrutura do projeto](estrutura.md). A proteção atual faz backup do perfil antes de adicionar a integração; a cópia dos arquivos do Fastfetch ainda usa substituição direta. Backups completos das configurações e restauração serão implementados em uma etapa própria.
 
-A instalação dos programas ainda não está implementada. Se o Fastfetch estiver ausente, instale-o e abra uma nova sessão antes de repetir o comando.
+## Instalar programas antes de aplicar as configurações
+
+Use `-InstallPrograms` para executar a instalação via WinGet antes da aplicação das configurações. A opção `-Programs` seleciona programas do catálogo, enquanto `-Components` seleciona configurações. Por exemplo, `-Programs PowerShell` instala PowerShell 7 e `-Components PowerShell` aplica o perfil na edição da sessão atual.
+
+`-Check` e `-WhatIf` também funcionam com `-InstallPrograms`, sem executar o WinGet. Os aceites de termos são opcionais e explícitos por meio de `-AcceptAgreements`. Veja o [catálogo e os exemplos](programas.md).
+
+Se o Fastfetch estiver ausente e não tiver sido selecionado para instalação, o setup interrompe a execução antes de alterar as configurações.
