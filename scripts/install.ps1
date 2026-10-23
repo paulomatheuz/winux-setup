@@ -1,10 +1,13 @@
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [ValidateNotNullOrEmpty()]
-    [ValidateSet('Fastfetch', 'PowerShell')]
+    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal')]
     [string[]]$Components = @('Fastfetch', 'PowerShell'),
 
-    [switch]$SkipProfile
+    [switch]$SkipProfile,
+
+    [ValidateNotNullOrEmpty()]
+    [string]$TerminalSettingsPath
 )
 
 $ErrorActionPreference = 'Stop'
@@ -20,10 +23,15 @@ $configurationModule = Join-Path $PSScriptRoot 'configuration.ps1'
 $backupRoot = Join-Path $HOME '.winux-setup\backups'
 
 $includePowerShell = $Components -contains 'PowerShell'
-$requiredFiles = @(
+$includeFastfetch = $Components -contains 'Fastfetch' -or $includePowerShell
+if ($TerminalSettingsPath -and $Components -notcontains 'WindowsTerminal') {
+    throw 'Use -Components WindowsTerminal junto com -TerminalSettingsPath.'
+}
+$requiredFiles = @()
+if ($includeFastfetch) { $requiredFiles += @(
     (Join-Path $sourceFastfetch 'config-purple.jsonc')
     (Join-Path $sourceFastfetch 'Spider2-ascii.txt')
-)
+) }
 if ($includePowerShell) {
     $requiredFiles += $sourceProfile
 }
@@ -33,7 +41,8 @@ foreach ($file in $requiredFiles) {
     }
 }
 
-$commands = @('fastfetch')
+$commands = @()
+if ($includeFastfetch) { $commands += 'fastfetch' }
 if ($includePowerShell) {
     $commands += 'starship', 'lsd'
 }
@@ -43,15 +52,21 @@ foreach ($command in $commands) {
     }
 }
 
-$files = @(
+$files = @()
+if ($includeFastfetch) { $files += @(
     @{ SourcePath = (Join-Path $sourceFastfetch 'config-purple.jsonc'); Destination = (Join-Path $fastfetchHome 'config-purple.jsonc') }
     @{ SourcePath = (Join-Path $sourceFastfetch 'Spider2-ascii.txt'); Destination = (Join-Path $fastfetchHome 'Spider2-ascii.txt') }
-)
+) }
 if ($includePowerShell) {
     $files += @{ SourcePath = $sourceProfile; Destination = $installedProfile }
     if (-not $SkipProfile) {
         $files += @{ Destination = $PROFILE; Bytes = (Get-WinuxProfileBytes -Path $PROFILE) }
     }
+}
+if ($Components -contains 'WindowsTerminal') {
+    . (Join-Path $PSScriptRoot 'windows-terminal.ps1')
+    $destination = Resolve-WinuxTerminalSettingsPath -Path $TerminalSettingsPath
+    $files += New-WinuxTerminalConfiguration -SourcePath (Join-Path $repositoryRoot 'config\windows-terminal\settings.json.example') -Destination $destination
 }
 $result = Invoke-WinuxConfiguration -Files $files -BackupRoot $backupRoot -WhatIf:$WhatIfPreference
 if ($result.Status -eq 'Applied') {
@@ -60,3 +75,4 @@ if ($result.Status -eq 'Applied') {
 } elseif ($result.Status -eq 'Unchanged') {
     Write-Host 'As configuracoes selecionadas ja estao atualizadas.'
 }
+

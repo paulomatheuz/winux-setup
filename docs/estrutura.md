@@ -18,7 +18,9 @@ Cada ferramenta terá sua própria pasta em `config/` quando seus arquivos forem
 | `config/fastfetch/config-purple.jsonc` | Configuração do Fastfetch. |
 | `config/fastfetch/Spider2-ascii.txt` | Logo ASCII. |
 | `config/powershell/profile.ps1` | Perfil compartilhável do PowerShell. |
-| `config/windows-terminal/settings.json.example` | Tema e preferências de fonte do Windows Terminal. |
+| `config/windows-terminal/settings.json.example` | Temas, fonte, transparência e atalhos do Windows Terminal. |
+| `scripts/windows-terminal.ps1` | Leitura de JSON com comentários, seleção do destino e combinação das preferências. |
+| `tests/windows-terminal.tests.ps1` | Verificações isoladas do componente Windows Terminal. |
 | `setup.ps1` | Entrada principal com seleção de componentes, verificação de pré-requisitos, instalação opcional de programas e simulação. |
 | `packages.psd1` | Catálogo dos programas instaláveis via WinGet. |
 | `modules.psd1` | Catálogo das dependências opcionais do perfil. |
@@ -49,10 +51,11 @@ Os conteúdos anteriores dos arquivos alterados e o registro de cada execução 
 
 O perfil encontra o Fastfetch na pasta vizinha quando carregado a partir do repositório e na própria pasta depois de instalado.
 
-O tema do Windows Terminal continua sendo aplicado manualmente conforme o README. A instalação opcional dos programas está descrita em [Instalação dos programas](programas.md). A importação das configurações locais dos demais componentes continua nas etapas correspondentes.
+O componente opcional `WindowsTerminal` aplica suas preferências no `settings.json` da edição selecionada, com backup e preservação dos perfis locais. Veja [Windows Terminal](windows-terminal.md). A instalação opcional dos programas está descrita em [Instalação dos programas](programas.md). A importação das configurações locais dos demais componentes continua nas etapas correspondentes.
 
 ## Recursos e arquivos locais
 
 As imagens públicas ficam em `assets/screenshots/`. O `.gitignore` mantém a exceção para a prévia do terminal já publicada; novas capturas precisam ser adicionadas de forma explícita.
 
 Backups, logs, credenciais, binários e arquivos específicos de um dispositivo não fazem parte das configurações compartilhadas. Os ajustes por dispositivo e a separação dos valores privados serão implementados nas etapas correspondentes.
+
