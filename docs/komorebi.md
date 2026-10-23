@@ -49,7 +49,7 @@ Os arquivos existentes são substituídos após [backup completo](backups.md), s
 
 `komorebi.bar.json` acompanha a importação para preservar a alternativa encontrada. O setup não inicia a barra, o Komorebi ou whkd, nem cria inicialização automática. A configuração principal não passa a ativar essa barra.
 
-YASB, seu CSS e whkd serão incorporados nas etapas próprias. A diferença entre os sete espaços de trabalho e os oito atalhos encontrados no whkd permanece registrada no inventário; esta etapa não altera essa escolha.
+O [YASB e seu CSS](yasb.md) já podem ser aplicados pelo componente `Yasb`. whkd será incorporado na etapa própria. A diferença entre os sete espaços de trabalho e os oito atalhos encontrados no whkd permanece registrada no inventário; esta etapa não altera essa escolha.
 
 A configuração mantém o monitor do ambiente de origem, sem identificadores físicos. Outros dispositivos podem precisar de ajustes na lista de monitores e nos espaços de trabalho. A separação de ajustes por dispositivo continua prevista; o setup ainda não detecta nem reorganiza monitores automaticamente. A fonte JetBrains Mono usada pela barra fica para a etapa de fontes.
 

@@ -9,7 +9,7 @@
 | `assets/` | Recursos visuais usados pelo projeto. |
 | `docs/` | Inventário, organização e instruções complementares. |
 
-Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são incorporados. As configurações pessoais do Komorebi já estão incluídas. YASB e whkd continuam previstos no [inventário](inventario.md), incluindo o `styles.css` do YASB.
+Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são incorporados. As configurações pessoais do Komorebi e do YASB já estão incluídas, incluindo o `styles.css` personalizado. whkd continua previsto no [inventário](inventario.md).
 
 ## Arquivos atuais
 
@@ -22,6 +22,12 @@ Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são in
 | `config/komorebi/applications.LICENSE` | Licença da base de regras. |
 | `scripts/komorebi.ps1` | Planejamento dos arquivos e adaptação do caminho das regras. |
 | `tests/komorebi.tests.ps1` | Verificações isoladas do componente Komorebi. |
+| `config/yasb/config.yaml` | Barra, widgets e integrações pessoais, sem valores privados do clima. |
+| `config/yasb/styles.css` | CSS pessoal preservado integralmente. |
+| `config/yasb/.env.example` | Modelo sem valores para a configuração local do clima. |
+| `config/yasb/YASB.LICENSE` | Licença da base YASB. |
+| `scripts/yasb.ps1` | Planejamento dos arquivos e resolução do destino do YASB. |
+| `tests/yasb.tests.ps1` | Verificações isoladas de aplicação, backups e preservação do `.env`. |
 | `config/fastfetch/Spider2-ascii.txt` | Logo ASCII. |
 | `config/powershell/profile.ps1` | Perfil compartilhável do PowerShell. |
 | `config/starship/starship.toml` | Base atual do prompt, com os módulos e estilos padrão. |

@@ -9,7 +9,7 @@ Aplica os componentes disponiveis do winux-setup.
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [ValidateNotNullOrEmpty()]
-    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship', 'Komorebi')]
+    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship', 'Komorebi', 'Yasb')]
     [string[]]$Components = @('Fastfetch', 'PowerShell'),
 
     [switch]$Check,
@@ -64,6 +64,7 @@ if ($Components -contains 'PowerShell') {
 if ($Components -contains 'WindowsTerminal') { $selectedComponents += 'WindowsTerminal' }
 if ($Components -contains 'Starship') { $selectedComponents += 'Starship' }
 if ($Components -contains 'Komorebi') { $selectedComponents += 'Komorebi' }
+if ($Components -contains 'Yasb') { $selectedComponents += 'Yasb' }
 if ($TerminalSettingsPath -and $selectedComponents -notcontains 'WindowsTerminal') {
     throw 'Use -Components WindowsTerminal junto com -TerminalSettingsPath.'
 }
@@ -104,6 +105,12 @@ if ($InstallModules) {
     $requiredFiles += Join-Path $PSScriptRoot 'modules.psd1'
     $requiredFiles += Join-Path $PSScriptRoot 'scripts\install-modules.ps1'
 }
+if ($selectedComponents -contains 'Yasb') {
+    $requiredFiles += Join-Path $PSScriptRoot 'scripts\yasb.ps1'
+    $requiredFiles += Join-Path $PSScriptRoot 'config\yasb\config.yaml'
+    $requiredFiles += Join-Path $PSScriptRoot 'config\yasb\styles.css'
+    $requiredFiles += Join-Path $PSScriptRoot 'config\yasb\YASB.LICENSE'
+}
 
 $missingFiles = @($requiredFiles | Where-Object { -not (Test-Path -LiteralPath $_ -PathType Leaf) })
 if ($missingFiles.Count -gt 0) {
@@ -129,6 +136,11 @@ if ($selectedComponents -contains 'Komorebi') {
     . (Join-Path $PSScriptRoot 'scripts\komorebi.ps1')
     Get-WinuxKomorebiFiles -SourceDirectory (Join-Path $PSScriptRoot 'config\komorebi') | Out-Null
     Write-Host ('Komorebi: ' + (Resolve-WinuxKomorebiDirectory))
+}
+if ($selectedComponents -contains 'Yasb') {
+    . (Join-Path $PSScriptRoot 'scripts\yasb.ps1')
+    Get-WinuxYasbFiles -SourceDirectory (Join-Path $PSScriptRoot 'config\yasb') | Out-Null
+    Write-Host ('YASB: ' + (Resolve-WinuxYasbDirectory))
 }
 $hasFastfetch = [bool](Get-Command fastfetch -CommandType Application -ErrorAction SilentlyContinue)
 if ($selectedComponents -contains 'Fastfetch' -and -not $hasFastfetch -and (-not $InstallPrograms -or ($Programs -and $Programs -notcontains 'Fastfetch'))) {
