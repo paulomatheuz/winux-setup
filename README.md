@@ -15,7 +15,7 @@ O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica 
 - temas, fonte, transparência e atalhos pessoais do Windows Terminal;
 - Fastfetch com logo ASCII personalizada;
 - perfil do PowerShell com os comandos pessoais dos dois perfis locais;
-- integração com Starship;
+- integração com Starship e aplicação opcional da base do prompt;
 - comandos como `clear`, `cls`, `Clear-Terminal`, `ls`, `ll`, `la`, `cd`, `btop` e `rain`;
 - instalação opcional dos módulos z e PSReadLine.
 
@@ -72,6 +72,8 @@ Para aplicar apenas o Fastfetch, acrescente `-Components Fastfetch`. A opção `
 
 Depois, feche e abra novamente o Windows Terminal.
 
+Para aplicar a base do prompt Starship com backup, use `-Components Starship`. O ambiente inventariado usa o visual padrão, sem uma configuração personalizada. Veja os [destinos e as opções do Starship](docs/starship.md).
+
 ## Tema do Windows Terminal
 
 O esquema de cores está em:
@@ -98,6 +100,7 @@ winux-setup/
 ├── config/
 │   ├── fastfetch/
 │   ├── powershell/
+│   ├── starship/
 │   └── windows-terminal/
 ├── docs/
 │   ├── backups.md
@@ -105,6 +108,7 @@ winux-setup/
 │   ├── inventario.md
 │   ├── powershell.md
 │   ├── programas.md
+│   ├── starship.md
 │   ├── setup.md
 │   └── windows-terminal.md
 ├── scripts/
@@ -112,11 +116,13 @@ winux-setup/
 │   ├── install-modules.ps1
 │   ├── install-programs.ps1
 │   ├── install.ps1
+│   ├── starship.ps1
 │   └── windows-terminal.ps1
 ├── tests/
 │   ├── configuration.tests.ps1
 │   ├── modules.tests.ps1
 │   ├── powershell.tests.ps1
+│   ├── starship.tests.ps1
 │   └── windows-terminal.tests.ps1
 ├── modules.psd1
 ├── packages.psd1
@@ -137,7 +143,7 @@ As mudanças serão feitas aos poucos, em commits separados:
 - [x] Aplicar as configurações com backup dos arquivos anteriores e registro das alterações.
 - [x] Incorporar os comandos dos perfis pessoais do PowerShell e a instalação opcional dos módulos.
 - [x] Incorporar as preferências pessoais do Windows Terminal e sua aplicação com backup.
-- [ ] Incorporar as configurações do Starship.
+- [x] Registrar a base atual do Starship e sua aplicação opcional com backup.
 - [ ] Adicionar Komorebi, YASB e whkd, com suas integrações e atalhos.
 - [ ] Adicionar btop e Chuva.
 - [ ] Incluir fontes, temas e os recursos visuais necessários.

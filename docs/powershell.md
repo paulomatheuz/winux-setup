@@ -25,6 +25,7 @@ O ajuste do GitHub CLI usa a pasta `GitHub CLI` dentro de `$env:ProgramFiles`, c
 ## Dependências opcionais
 
 - Starship inicializa o prompt quando está disponível.
+- O componente opcional `Starship` aplica a base do prompt com backup; veja [destinos e configuração](starship.md).
 - z permite navegação por pastas usadas anteriormente.
 - PSReadLine configura o modo de edição Windows, Tab e previsões quando os recursos estão disponíveis.
 - lsd adiciona ícones e cores às listagens.
@@ -98,3 +99,4 @@ Os testes usam ferramentas e instalações simuladas:
 powershell -ExecutionPolicy Bypass -File .\tests\powershell.tests.ps1 -TestRoot "$env:TEMP\winux-setup-tests"
 powershell -ExecutionPolicy Bypass -File .\tests\modules.tests.ps1 -TestRoot "$env:TEMP\winux-setup-tests"
 ```
+
