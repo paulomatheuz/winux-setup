@@ -8,7 +8,7 @@ O projeto começou como `custom-windows-terminal`, com a personalização do meu
 
 ## Estado atual
 
-O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas configurações do Windows Terminal, Starship, Komorebi, YASB e whkd, com backup. A instalação opcional dos programas está disponível via WinGet. btop, Chuva e os demais recursos serão incorporados nas próximas etapas.
+O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas configurações do Windows Terminal, Starship, Komorebi, YASB, whkd e btop4win, com backup. A instalação opcional dos programas está disponível via WinGet. Chuva e os demais recursos serão incorporados nas próximas etapas.
 
 ## O que já está incluído
 
@@ -21,6 +21,7 @@ O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica 
 - configurações pessoais do Komorebi, com layouts, regras de aplicativos e barra alternativa.
 - configuração e CSS pessoais do YASB, com os valores privados do clima separados.
 - atalhos pessoais do whkd, com shell PowerShell e integração com Komorebi.
+- configuração pessoal e tema NeutralPurple do btop4win, com instalação opcional via WinGet.
 
 ## Requisitos atuais
 
@@ -83,6 +84,8 @@ Para aplicar a barra e o CSS do YASB, use `-Components Yasb`. Veja os [destinos,
 
 Para aplicar os atalhos, use `-Components Whkd`. Veja os [atalhos, destinos e aplicação conjunta do desktop](docs/whkd.md). Os oito atalhos de espaços de trabalho são preservados; a configuração do Komorebi mantém sete espaços.
 
+Para aplicar o btop4win, use `-Components Btop`. A instalação opcional usa `-InstallPrograms -Programs Btop`. Veja os [destinos, modo TTY e opções do btop](docs/btop.md).
+
 ## Tema do Windows Terminal
 
 O esquema de cores está em:
@@ -107,6 +110,7 @@ winux-setup/
 ├── assets/
 │   └── screenshots/
 ├── config/
+│   ├── btop/
 │   ├── fastfetch/
 │   ├── komorebi/
 │   ├── powershell/
@@ -115,6 +119,7 @@ winux-setup/
 │   ├── windows-terminal/
 │   └── yasb/
 ├── docs/
+│   ├── btop.md
 │   ├── backups.md
 │   ├── estrutura.md
 │   ├── inventario.md
@@ -127,6 +132,7 @@ winux-setup/
 │   ├── windows-terminal.md
 │   └── yasb.md
 ├── scripts/
+│   ├── btop.ps1
 │   ├── configuration.ps1
 │   ├── install-modules.ps1
 │   ├── install-programs.ps1
@@ -137,6 +143,7 @@ winux-setup/
 │   ├── windows-terminal.ps1
 │   └── yasb.ps1
 ├── tests/
+│   ├── btop.tests.ps1
 │   ├── configuration.tests.ps1
 │   ├── komorebi.tests.ps1
 │   ├── modules.tests.ps1
@@ -168,7 +175,8 @@ As mudanças serão feitas aos poucos, em commits separados:
 - [x] Incorporar as configurações pessoais do Komorebi, regras e barra alternativa.
 - [x] Incorporar a configuração e o CSS pessoais do YASB, preservando o visual.
 - [x] Incorporar os atalhos pessoais do whkd e a aplicação conjunta das configurações do desktop.
-- [ ] Adicionar btop e Chuva.
+- [x] Incorporar a configuração e o tema do btop4win, com instalação opcional.
+- [ ] Adicionar Chuva.
 - [ ] Incluir fontes, temas e os recursos visuais necessários.
 - [ ] Configurar a inicialização automática dos componentes.
 - [ ] Permitir ajustes específicos por dispositivo.

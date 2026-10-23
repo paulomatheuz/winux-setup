@@ -9,7 +9,7 @@ Aplica os componentes disponiveis do winux-setup.
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [ValidateNotNullOrEmpty()]
-    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship', 'Komorebi', 'Yasb', 'Whkd')]
+    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship', 'Komorebi', 'Yasb', 'Whkd', 'Btop')]
     [string[]]$Components = @('Fastfetch', 'PowerShell'),
 
     [switch]$Check,
@@ -18,6 +18,9 @@ param(
 
     [ValidateNotNullOrEmpty()]
     [string]$TerminalSettingsPath,
+
+    [ValidateNotNullOrEmpty()]
+    [string]$BtopDirectory,
 
     [switch]$InstallPrograms,
 
@@ -66,6 +69,10 @@ if ($Components -contains 'Starship') { $selectedComponents += 'Starship' }
 if ($Components -contains 'Komorebi') { $selectedComponents += 'Komorebi' }
 if ($Components -contains 'Yasb') { $selectedComponents += 'Yasb' }
 if ($Components -contains 'Whkd') { $selectedComponents += 'Whkd' }
+if ($Components -contains 'Btop') { $selectedComponents += 'Btop' }
+if ($BtopDirectory -and $selectedComponents -notcontains 'Btop') {
+    throw 'Use -Components Btop junto com -BtopDirectory.'
+}
 if ($TerminalSettingsPath -and $selectedComponents -notcontains 'WindowsTerminal') {
     throw 'Use -Components WindowsTerminal junto com -TerminalSettingsPath.'
 }
@@ -117,6 +124,12 @@ if ($selectedComponents -contains 'Whkd') {
     $requiredFiles += Join-Path $PSScriptRoot 'scripts\whkd.ps1'
     $requiredFiles += Join-Path $PSScriptRoot 'config\whkd\whkdrc'
 }
+if ($selectedComponents -contains 'Btop') {
+    $requiredFiles += Join-Path $PSScriptRoot 'scripts\btop.ps1'
+    $requiredFiles += Join-Path $PSScriptRoot 'config\btop\btop.conf'
+    $requiredFiles += Join-Path $PSScriptRoot 'config\btop\themes\NeutralPurple.theme'
+    $requiredFiles += Join-Path $PSScriptRoot 'config\btop\BTOP.LICENSE'
+}
 $missingFiles = @($requiredFiles | Where-Object { -not (Test-Path -LiteralPath $_ -PathType Leaf) })
 if ($missingFiles.Count -gt 0) {
     throw ('Arquivos do projeto nao encontrados: ' + ($missingFiles -join ', '))
@@ -151,6 +164,12 @@ if ($selectedComponents -contains 'Whkd') {
     . (Join-Path $PSScriptRoot 'scripts\whkd.ps1')
     Get-WinuxWhkdFiles -SourceDirectory (Join-Path $PSScriptRoot 'config\whkd') | Out-Null
     Write-Host ('whkd: ' + (Join-Path (Resolve-WinuxWhkdDirectory) 'whkdrc'))
+}
+if ($selectedComponents -contains 'Btop') {
+    . (Join-Path $PSScriptRoot 'scripts\btop.ps1')
+    $btopDestination = Resolve-WinuxBtopDirectory -Path $BtopDirectory
+    Get-WinuxBtopFiles -SourceDirectory (Join-Path $PSScriptRoot 'config\btop') -DestinationDirectory $btopDestination | Out-Null
+    Write-Host ('btop: ' + $btopDestination)
 }
 $hasFastfetch = [bool](Get-Command fastfetch -CommandType Application -ErrorAction SilentlyContinue)
 if ($selectedComponents -contains 'Fastfetch' -and -not $hasFastfetch -and (-not $InstallPrograms -or ($Programs -and $Programs -notcontains 'Fastfetch'))) {
@@ -194,6 +213,7 @@ $target = $selectedComponents -join ', '
 if ($PSCmdlet.ShouldProcess($target, 'Aplicar os componentes selecionados')) {
     $arguments = @{ Components = $selectedComponents; SkipProfile = $SkipProfile; Confirm = $false }
     if ($TerminalSettingsPath) { $arguments.TerminalSettingsPath = $TerminalSettingsPath }
+    if ($BtopDirectory) { $arguments.BtopDirectory = $BtopDirectory }
     & $installer @arguments
 }
 

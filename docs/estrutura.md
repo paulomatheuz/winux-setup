@@ -16,6 +16,11 @@ Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são in
 | Caminho no repositório | Uso |
 | --- | --- |
 | `config/fastfetch/config-purple.jsonc` | Configuração do Fastfetch. |
+| `config/btop/btop.conf` | Configuração pessoal do btop4win, com caminho portátil do tema. |
+| `config/btop/themes/NeutralPurple.theme` | Tema pessoal preservado integralmente. |
+| `config/btop/BTOP.LICENSE` | Licença da base btop4win. |
+| `scripts/btop.ps1` | Busca do executável e planejamento da configuração e do tema. |
+| `tests/btop.tests.ps1` | Verificações isoladas do btop e instalação simulada. |
 | `config/komorebi/komorebi.json` | Preferências pessoais, layouts e espaços de trabalho. |
 | `config/komorebi/komorebi.bar.json` | Barra alternativa, sem ativação automática. |
 | `config/komorebi/applications.json` | Cópia local das regras de aplicativos. |

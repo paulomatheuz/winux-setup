@@ -16,9 +16,9 @@ O perfil em `config/powershell/profile.ps1` reúne as personalizações encontra
 
 O efeito de chuva mantém cor branca, caracteres Matrix, densidade 25, 60 FPS e velocidade padrão de 0.3. Por exemplo, `rain 0.8` muda a velocidade.
 
-btop4win é procurado em `$HOME/Tools/btop4win/btop4win/btop4win.exe`, `$HOME/Tools/btop4win/btop4win.exe` e subpastas dessa pasta. matrix-rain é procurado em `$HOME/Tools/matrix-rain/matrix-rain.exe`. Ambos priorizam executáveis disponíveis no PATH.
+btop4win é procurado pelos comandos `btop4win` e `btop` no PATH, reconhecendo o alias do pacote WinGet. Depois, procura `$HOME/Tools/btop4win/btop4win/btop4win.exe`, `$HOME/Tools/btop4win/btop4win.exe` e subpastas dessa pasta. matrix-rain é procurado em `$HOME/Tools/matrix-rain/matrix-rain.exe`. Ambos priorizam executáveis disponíveis no PATH.
 
-Os comandos são incluídos agora; a instalação dos binários, a configuração do btop4win e seu tema continuam nas etapas próprias dessas ferramentas.
+O [btop4win](btop.md) já tem instalação opcional, configuração e tema no setup. A instalação do matrix-rain continua na etapa própria.
 
 O ajuste do GitHub CLI usa a pasta `GitHub CLI` dentro de `$env:ProgramFiles`, caso o executável exista ali e ainda não esteja disponível no PATH. A entrada não é duplicada ao recarregar o perfil. O GitHub CLI não é instalado por esse ajuste.
 

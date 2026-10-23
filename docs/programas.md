@@ -16,12 +16,13 @@ O arquivo `packages.psd1` contém os identificadores dos pacotes na fonte `winge
 | `Komorebi` | `LGUG2Z.komorebi` | 0.1.41. |
 | `Whkd` | `LGUG2Z.whkd` | 0.2.10. |
 | `Yasb` | `AmN.yasb` | 2.0.7. |
+| `Btop` | `aristocratos.btop4win` | 1.0.5. |
 
-As versões iniciais do Komorebi, whkd e YASB correspondem ao ambiente inventariado. Elas poderão ser alteradas no catálogo após validar as configurações. O script usa `--no-upgrade`: uma instalação existente é preservada, mesmo que sua versão seja diferente da indicada.
+As versões iniciais do Komorebi, whkd, YASB e btop4win correspondem ao ambiente inventariado. Elas poderão ser alteradas no catálogo após validar as configurações. O script usa `--no-upgrade`: uma instalação existente é preservada, mesmo que sua versão seja diferente da indicada.
 
 Os identificadores foram conferidos no [catálogo da Microsoft](https://github.com/microsoft/winget-pkgs/tree/master/manifests). A seleção exata do pacote e da fonte, as opções de instalação silenciosa e `--no-upgrade` seguem a [documentação do WinGet](https://learn.microsoft.com/en-us/windows/package-manager/winget/install).
 
-btop4win, matrix-rain e fontes terão seus métodos de instalação incorporados nas etapas correspondentes. A instalação opcional dos módulos do PowerShell usa `-InstallModules` e está descrita em [Perfil do PowerShell](powershell.md). Nenhum binário é armazenado neste repositório.
+O btop4win usa o pacote portátil do WinGet, que publica o comando `btop`. Sua configuração é aplicada separadamente com `-Components Btop`; veja [destinos e opções](btop.md). matrix-rain e fontes terão seus métodos de instalação incorporados nas etapas correspondentes. A instalação opcional dos módulos do PowerShell usa `-InstallModules` e está descrita em [Perfil do PowerShell](powershell.md). Nenhum binário é armazenado neste repositório.
 
 ## Pré-requisitos
 
@@ -87,3 +88,4 @@ Ele também aceita `-Programs`, `-Check` e `-WhatIf`.
 - Instalar Komorebi, whkd e YASB ainda não importa suas configurações personalizadas nem cria a inicialização automática. Essas integrações seguem o inventário e serão adicionadas nos próximos commits.
 
 Os códigos de resultado tratados seguem as [definições do WinGet](https://github.com/microsoft/winget-cli/blob/master/src/AppInstallerSharedLib/Public/AppInstallerErrors.h).
+
