@@ -8,7 +8,7 @@ O projeto começou como `custom-windows-terminal`, com a personalização do meu
 
 ## Estado atual
 
-Por enquanto, o repositório contém as configurações do terminal e um instalador que copia os arquivos do Fastfetch e integra o perfil do PowerShell. A instalação dos programas e a configuração completa do desktop ainda serão implementadas.
+Por enquanto, o repositório contém as configurações do terminal e um setup com seleção de componentes, verificação de pré-requisitos e simulação. Ele copia os arquivos do Fastfetch e integra o perfil do PowerShell. A instalação dos programas e a configuração completa do desktop ainda serão implementadas.
 
 ## O que já está incluído
 
@@ -39,15 +39,29 @@ git clone https://github.com/paulomatheuz/winux-setup.git
 cd winux-setup
 ```
 
-Execute o instalador:
+Verifique os pré-requisitos:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
+powershell -ExecutionPolicy Bypass -File .\setup.ps1 -Check
+```
+
+Simule a aplicação:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\setup.ps1 -WhatIf
+```
+
+Aplique os componentes disponíveis:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\setup.ps1
 ```
 
 O instalador copia os arquivos do Fastfetch e o perfil do projeto para `$HOME\.config\fastfetch`. Antes de adicionar a integração ao perfil do PowerShell, salva um backup desse perfil.
 
 Esse script aplica a configuração atual do terminal; ele ainda não instala os programas nem configura os componentes do desktop.
+
+Para aplicar apenas o Fastfetch, acrescente `-Components Fastfetch`. A opção `PowerShell` inclui os arquivos do Fastfetch usados pelo perfil. Consulte as [opções do setup](docs/setup.md) para os detalhes e a compatibilidade com o instalador anterior.
 
 Depois, feche e abra novamente o Windows Terminal.
 
@@ -73,9 +87,11 @@ winux-setup/
 │   └── windows-terminal/
 ├── docs/
 │   ├── estrutura.md
-│   └── inventario.md
+│   ├── inventario.md
+│   └── setup.md
 ├── scripts/
 │   └── install.ps1
+├── setup.ps1
 └── README.md
 ```
 
@@ -87,6 +103,7 @@ As mudanças serão feitas aos poucos, em commits separados:
 
 - [x] Inventariar as configurações e dependências do ambiente atual ([inventário](docs/inventario.md)).
 - [x] Organizar as configurações e os scripts para receber os demais componentes.
+- [x] Criar a entrada do setup com seleção de componentes, verificação de pré-requisitos e simulação.
 - [ ] Automatizar a instalação dos programas e a aplicação das configurações com backup.
 - [ ] Incorporar as configurações do Starship.
 - [ ] Adicionar Komorebi, YASB e whkd, com suas integrações e atalhos.

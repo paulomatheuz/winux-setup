@@ -19,12 +19,13 @@ Cada ferramenta terá sua própria pasta em `config/` quando seus arquivos forem
 | `config/fastfetch/Spider2-ascii.txt` | Logo ASCII. |
 | `config/powershell/profile.ps1` | Perfil compartilhável do PowerShell. |
 | `config/windows-terminal/settings.json.example` | Tema e preferências de fonte do Windows Terminal. |
-| `scripts/install.ps1` | Instalação da configuração atual do terminal. |
+| `setup.ps1` | Entrada principal com seleção de componentes, verificação de pré-requisitos e simulação. |
+| `scripts/install.ps1` | Aplicação dos arquivos da configuração atual do terminal. |
 | `assets/screenshots/terminal-preview.png` | Prévia exibida no README. |
 
 ## Compatibilidade do instalador atual
 
-O comando de instalação continua sendo:
+A entrada recomendada é `setup.ps1`; as opções estão em [Uso do setup](setup.md). O comando anterior continua disponível:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
