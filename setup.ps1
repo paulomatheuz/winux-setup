@@ -14,6 +14,9 @@ param(
 
     [switch]$Check,
 
+    [ValidateNotNullOrEmpty()]
+    [string]$DeviceConfig,
+
     [switch]$SkipProfile,
 
     [ValidateNotNullOrEmpty()]
@@ -50,6 +53,21 @@ if ($PSVersionTable.PSVersion -lt [version]'5.1') {
     throw 'Use Windows PowerShell 5.1 ou PowerShell 7.'
 }
 
+$configurationDirectories = @{}
+if ($DeviceConfig) {
+    . (Join-Path $PSScriptRoot 'scripts\device.ps1')
+    $device = Read-WinuxDeviceConfiguration -Path $DeviceConfig
+    if ($device.ContainsKey('Components') -and -not $PSBoundParameters.ContainsKey('Components')) { $Components = $device.Components }
+    if ($Components -contains 'WindowsTerminal' -and $device.ContainsKey('TerminalSettingsPath') -and -not $PSBoundParameters.ContainsKey('TerminalSettingsPath')) { $TerminalSettingsPath = $device.TerminalSettingsPath }
+    if ($Components -contains 'Btop' -and $device.ContainsKey('BtopDirectory') -and -not $PSBoundParameters.ContainsKey('BtopDirectory')) { $BtopDirectory = $device.BtopDirectory }
+    $configurationDirectories = $device.ConfigDirectories
+    Write-Host ('Dispositivo: ' + [IO.Path]::GetFullPath($DeviceConfig))
+}
+$sourceDirectories = @{}
+foreach ($name in @('Komorebi','Yasb','Whkd','Btop')) {
+    $sourceDirectories[$name] = Join-Path $PSScriptRoot ('config\' + $name.ToLowerInvariant())
+    if ($configurationDirectories.ContainsKey($name)) { $sourceDirectories[$name] = $configurationDirectories[$name] }
+}
 if (-not $InstallPrograms -and $PSBoundParameters.ContainsKey('Programs')) {
     throw 'Use -InstallPrograms junto com -Programs.'
 }
@@ -114,7 +132,7 @@ if ($InstallPrograms) {
 if ($selectedComponents -contains 'Komorebi') {
     $requiredFiles += Join-Path $PSScriptRoot 'scripts\komorebi.ps1'
     foreach ($name in @('komorebi.json', 'komorebi.bar.json', 'applications.json', 'applications.LICENSE')) {
-        $requiredFiles += Join-Path $PSScriptRoot ('config\komorebi\' + $name)
+        $requiredFiles += Join-Path $sourceDirectories.Komorebi $name
     }
 }
 
@@ -124,20 +142,20 @@ if ($InstallModules) {
 }
 if ($selectedComponents -contains 'Yasb') {
     $requiredFiles += Join-Path $PSScriptRoot 'scripts\yasb.ps1'
-    $requiredFiles += Join-Path $PSScriptRoot 'config\yasb\config.yaml'
-    $requiredFiles += Join-Path $PSScriptRoot 'config\yasb\styles.css'
-    $requiredFiles += Join-Path $PSScriptRoot 'config\yasb\YASB.LICENSE'
+    $requiredFiles += Join-Path $sourceDirectories.Yasb 'config.yaml'
+    $requiredFiles += Join-Path $sourceDirectories.Yasb 'styles.css'
+    $requiredFiles += Join-Path $sourceDirectories.Yasb 'YASB.LICENSE'
 }
 
 if ($selectedComponents -contains 'Whkd') {
     $requiredFiles += Join-Path $PSScriptRoot 'scripts\whkd.ps1'
-    $requiredFiles += Join-Path $PSScriptRoot 'config\whkd\whkdrc'
+    $requiredFiles += Join-Path $sourceDirectories.Whkd 'whkdrc'
 }
 if ($selectedComponents -contains 'Btop') {
     $requiredFiles += Join-Path $PSScriptRoot 'scripts\btop.ps1'
-    $requiredFiles += Join-Path $PSScriptRoot 'config\btop\btop.conf'
-    $requiredFiles += Join-Path $PSScriptRoot 'config\btop\themes\NeutralPurple.theme'
-    $requiredFiles += Join-Path $PSScriptRoot 'config\btop\BTOP.LICENSE'
+    $requiredFiles += Join-Path $sourceDirectories.Btop 'btop.conf'
+    $requiredFiles += Join-Path $sourceDirectories.Btop 'themes\NeutralPurple.theme'
+    $requiredFiles += Join-Path $sourceDirectories.Btop 'BTOP.LICENSE'
 }
 if ($InstallRain) {
     $requiredFiles += Join-Path $PSScriptRoot 'portable-programs.psd1'
@@ -179,23 +197,23 @@ if ($selectedComponents -contains 'Starship') {
 }
 if ($selectedComponents -contains 'Komorebi') {
     . (Join-Path $PSScriptRoot 'scripts\komorebi.ps1')
-    Get-WinuxKomorebiFiles -SourceDirectory (Join-Path $PSScriptRoot 'config\komorebi') | Out-Null
+    Get-WinuxKomorebiFiles -SourceDirectory $sourceDirectories.Komorebi | Out-Null
     Write-Host ('Komorebi: ' + (Resolve-WinuxKomorebiDirectory))
 }
 if ($selectedComponents -contains 'Yasb') {
     . (Join-Path $PSScriptRoot 'scripts\yasb.ps1')
-    Get-WinuxYasbFiles -SourceDirectory (Join-Path $PSScriptRoot 'config\yasb') | Out-Null
+    Get-WinuxYasbFiles -SourceDirectory $sourceDirectories.Yasb | Out-Null
     Write-Host ('YASB: ' + (Resolve-WinuxYasbDirectory))
 }
 if ($selectedComponents -contains 'Whkd') {
     . (Join-Path $PSScriptRoot 'scripts\whkd.ps1')
-    Get-WinuxWhkdFiles -SourceDirectory (Join-Path $PSScriptRoot 'config\whkd') | Out-Null
+    Get-WinuxWhkdFiles -SourceDirectory $sourceDirectories.Whkd | Out-Null
     Write-Host ('whkd: ' + (Join-Path (Resolve-WinuxWhkdDirectory) 'whkdrc'))
 }
 if ($selectedComponents -contains 'Btop') {
     . (Join-Path $PSScriptRoot 'scripts\btop.ps1')
     $btopDestination = Resolve-WinuxBtopDirectory -Path $BtopDirectory
-    Get-WinuxBtopFiles -SourceDirectory (Join-Path $PSScriptRoot 'config\btop') -DestinationDirectory $btopDestination | Out-Null
+    Get-WinuxBtopFiles -SourceDirectory $sourceDirectories.Btop -DestinationDirectory $btopDestination | Out-Null
     Write-Host ('btop: ' + $btopDestination)
 }
 if ($EnableStartup) {
@@ -251,6 +269,7 @@ if ($Check) {
 $target = $selectedComponents -join ', '
 if ($PSCmdlet.ShouldProcess($target, 'Aplicar os componentes selecionados')) {
     $arguments = @{ Components = $selectedComponents; SkipProfile = $SkipProfile; Confirm = $false }
+    if ($configurationDirectories.Count -gt 0) { $arguments.ConfigurationDirectories = $configurationDirectories }
     if ($TerminalSettingsPath) { $arguments.TerminalSettingsPath = $TerminalSettingsPath }
     if ($BtopDirectory) { $arguments.BtopDirectory = $BtopDirectory }
     & $installer @arguments

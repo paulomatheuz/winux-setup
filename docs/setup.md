@@ -2,6 +2,12 @@
 
 O ponto de entrada do projeto é `setup.ps1`, na raiz do repositório.
 
+## Ajustes por dispositivo
+
+Use `-DeviceConfig .\devices\notebook\device.json` para selecionar preferências locais. O JSON pode definir componentes, destinos do Terminal e btop e pastas de origem alternativas para Komorebi, YASB, whkd e btop. As opções digitadas no comando têm prioridade; a seleção do arquivo substitui os componentes padrão quando `-Components` é omitido.
+
+O arquivo é lido somente quando indicado, e os caminhos relativos usam sua pasta como base. `-Check`, `-WhatIf`, backups e reaplicação continuam disponíveis. Veja [Ajustes por dispositivo](dispositivos.md) para criar uma variante e preservar os arquivos compartilhados.
+
 ## Componentes disponíveis
 
 | Componente | O que aplica |
@@ -16,7 +22,7 @@ O ponto de entrada do projeto é `setup.ps1`, na raiz do repositório.
 | `Btop` | Configuração pessoal e tema NeutralPurple, aplicados na pasta do executável ou em `-BtopDirectory`. |
 | `VisualAssets` | Wallpapers e ícone pessoais, com backup e integração opcional com WindowsTerminal. |
 
-Sem `-Components`, Fastfetch e PowerShell são selecionados. WindowsTerminal, Starship, Komorebi, Yasb, Whkd, Btop e VisualAssets são opcionais. matrix-rain é instalado com `-InstallRain`; seus parâmetros estão no perfil PowerShell. A instalação dos demais programas tem uma seleção separada, descrita em [Instalação dos programas](programas.md).
+Sem `-Components` e sem uma seleção em `-DeviceConfig`, Fastfetch e PowerShell são selecionados. WindowsTerminal, Starship, Komorebi, Yasb, Whkd, Btop e VisualAssets são opcionais. matrix-rain é instalado com `-InstallRain`; seus parâmetros estão no perfil PowerShell. A instalação dos demais programas tem uma seleção separada, descrita em [Instalação dos programas](programas.md).
 
 ## Verificar antes de aplicar
 
@@ -123,7 +129,7 @@ O componente `Starship` aplica a base do prompt com backup e aceita `-Check` e `
 
 ## Preferências do Windows Terminal
 
-Use `-Components WindowsTerminal` para aplicar temas, fonte, transparência e atalhos com backup, preservando os perfis locais. O componente aceita `-Check`, `-WhatIf` e `-TerminalSettingsPath`. Sem seleção explícita, o setup continua usando apenas Fastfetch e PowerShell.
+Use `-Components WindowsTerminal` para aplicar temas, fonte, transparência e atalhos com backup, preservando os perfis locais. O componente aceita `-Check`, `-WhatIf` e `-TerminalSettingsPath`. Sem seleção explícita no comando ou no arquivo de dispositivo, o setup continua usando apenas Fastfetch e PowerShell.
 
 Dentro do PowerShell, combine os componentes com `-Components Fastfetch, PowerShell, WindowsTerminal`. As opções do componente e a detecção das edições estão em [Windows Terminal](windows-terminal.md). O instalador `scripts/install.ps1` também aceita essas opções.
 

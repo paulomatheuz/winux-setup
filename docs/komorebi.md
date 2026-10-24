@@ -1,5 +1,7 @@
 # Komorebi
 
+Para manter layouts e monitores diferentes em cada máquina, use uma pasta de origem local com `-DeviceConfig`. Veja [Ajustes por dispositivo](dispositivos.md).
+
 O componente `Komorebi` aplica os arquivos pessoais de `config/komorebi/`, com backup. Ele preserva as preferências encontradas no computador de origem:
 
 - um monitor com sete espaços de trabalho, I a VII;

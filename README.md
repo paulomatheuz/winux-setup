@@ -8,7 +8,7 @@ O projeto começou como `custom-windows-terminal`, com a personalização do meu
 
 ## Estado atual
 
-O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas configurações do Windows Terminal, Starship, Komorebi, YASB, whkd e btop4win, com backup. Os programas e a JetBrainsMono Nerd Font têm instalação opcional via WinGet; o Chuva (matrix-rain) tem instalação portátil própria. Os wallpapers e o ícone do Terminal também podem ser aplicados. A inicialização do desktop no login é opcional; ajustes por dispositivo e restauração automática continuam nas próximas etapas.
+O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas configurações do Windows Terminal, Starship, Komorebi, YASB, whkd e btop4win, com backup. Os programas e a JetBrainsMono Nerd Font têm instalação opcional via WinGet; o Chuva (matrix-rain) tem instalação portátil própria. Os wallpapers e o ícone do Terminal também podem ser aplicados. A inicialização do desktop no login é opcional, e um arquivo local permite ajustes por dispositivo. A restauração automática continua nas próximas etapas.
 
 ## O que já está incluído
 
@@ -26,6 +26,7 @@ O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica 
 - instalação opcional da Nerd Font e verificação das famílias usadas pelo ambiente.
 - coleção pessoal de 18 wallpapers e ícone Gengar, com aplicação opcional e backup.
 - inicialização opcional do Komorebi com whkd e do YASB no login, com backup dos atalhos.
+- seleção de componentes e configurações específicas por dispositivo, sem editar as fontes compartilhadas.
 
 ## Requisitos atuais
 
@@ -98,6 +99,8 @@ Para copiar os wallpapers e o ícone, use `-Components VisualAssets`. Combine co
 
 Para configurar o desktop no próximo login, acrescente `-EnableStartup` depois de preparar Komorebi, YASB e whkd. Veja [Inicialização automática](docs/inicializacao.md) para a aplicação conjunta, os atalhos, o diagnóstico e a desativação.
 
+Para adaptar o ambiente a cada máquina, use `-DeviceConfig` com um JSON local. Ele pode selecionar componentes, destinos do Terminal e btop e pastas alternativas de configurações. Veja [Ajustes por dispositivo](docs/dispositivos.md) e o [exemplo](devices/example.json).
+
 ## Tema do Windows Terminal
 
 O esquema de cores está em:
@@ -134,6 +137,7 @@ winux-setup/
 │   ├── windows-terminal/
 │   └── yasb/
 ├── docs/
+│   ├── dispositivos.md
 │   ├── btop.md
 │   ├── chuva.md
 │   ├── backups.md
@@ -155,6 +159,7 @@ winux-setup/
 │   ├── check-fonts.ps1
 │   ├── configuration.ps1
 │   ├── configure-startup.ps1
+│   ├── device.ps1
 │   ├── fonts.ps1
 │   ├── install-modules.ps1
 │   ├── install-programs.ps1
@@ -171,6 +176,7 @@ winux-setup/
 ├── tests/
 │   ├── btop.tests.ps1
 │   ├── configuration.tests.ps1
+│   ├── device.tests.ps1
 │   ├── fonts.tests.ps1
 │   ├── komorebi.tests.ps1
 │   ├── modules.tests.ps1
@@ -182,6 +188,8 @@ winux-setup/
 │   ├── whkd.tests.ps1
 │   ├── windows-terminal.tests.ps1
 │   └── yasb.tests.ps1
+├── devices/
+│   └── example.json
 ├── modules.psd1
 ├── fonts.psd1
 ├── packages.psd1
@@ -212,7 +220,7 @@ As mudanças serão feitas aos poucos, em commits separados:
 - [x] Automatizar a Nerd Font e verificar as famílias usadas pelas configurações.
 - [x] Incluir os wallpapers pessoais e o ícone do Terminal, com aplicação e backup.
 - [x] Configurar a inicialização opcional do Komorebi com whkd e do YASB.
-- [ ] Permitir ajustes específicos por dispositivo.
+- [x] Permitir ajustes específicos por dispositivo.
 - [ ] Permitir atualizar o ambiente executando o setup novamente e restaurar backups.
 - [ ] Validar o setup em outro dispositivo e documentar o processo.
 

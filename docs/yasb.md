@@ -1,5 +1,7 @@
 # YASB
 
+Para manter widgets e CSS diferentes em cada máquina, use uma pasta de origem local com `-DeviceConfig`. Veja [Ajustes por dispositivo](dispositivos.md).
+
 O componente `Yasb` aplica o `config.yaml` e o `styles.css` pessoais, preservando a barra superior de 32 px, sua distribuição de widgets, fontes, cores, menus, animações e detalhes visuais. O CSS foi importado integralmente. A base do [YASB](https://github.com/amnweb/yasb/tree/v2.0.7) acompanha a licença MIT em `config/yasb/YASB.LICENSE`, também copiada para o destino.
 
 O YAML mantém home e taskbar à esquerda; clock e apps ao centro; media, wallpapers, wifi, microphone, volume, notifications e power_menu à direita. Os widgets do Komorebi e da janela ativa continuam comentados na seleção da barra. O clima continua definido, mas fora da barra ativa.
