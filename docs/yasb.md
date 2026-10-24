@@ -16,6 +16,8 @@ Na raiz do repositório:
 
 O componente é opcional e não exige Fastfetch nem o executável do YASB para preparar os arquivos. Para instalar também o programa, acrescente `-InstallPrograms -Programs Yasb`; os aceites de termos usam `-AcceptAgreements`. O catálogo mantém a versão 2.0.7 do ambiente inventariado.
 
+Para preparar a inicialização do desktop no login, use também `-EnableStartup` depois de preparar os programas e as configurações de Komorebi, YASB e whkd. Veja [Inicialização automática](inicializacao.md).
+
 Dentro do PowerShell, combine as configurações com `-Components Komorebi, Yasb`. Sem seleção explícita, o setup continua aplicando apenas Fastfetch e PowerShell. Esta etapa não inicia aplicativos nem cria inicialização automática.
 
 ## Destino e backup

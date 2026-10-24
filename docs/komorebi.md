@@ -49,6 +49,8 @@ Os arquivos existentes são substituídos após [backup completo](backups.md), s
 
 `komorebi.bar.json` acompanha a importação para preservar a alternativa encontrada. O setup não inicia a barra, o Komorebi ou whkd, nem cria inicialização automática. A configuração principal não passa a ativar essa barra.
 
+A inicialização no próximo login é uma opção separada, `-EnableStartup`, que prepara Komorebi com whkd e YASB, sem a barra alternativa. Veja [Inicialização automática](inicializacao.md).
+
 O [YASB e seu CSS](yasb.md) podem ser aplicados pelo componente `Yasb`, e os [atalhos do whkd](whkd.md), pelo componente `Whkd`. A diferença entre os sete espaços de trabalho e os oito atalhos encontrados no whkd é preservada e documentada; a aplicação não cria nem remove espaços.
 
 A configuração mantém o monitor do ambiente de origem, sem identificadores físicos. Outros dispositivos podem precisar de ajustes na lista de monitores e nos espaços de trabalho. A separação de ajustes por dispositivo continua prevista; o setup ainda não detecta nem reorganiza monitores automaticamente. A família original JetBrains Mono usada pela barra é diferente da Nerd Font do catálogo e precisa estar disponível antes de usar essa alternativa; veja [Fontes](fontes.md).

@@ -85,6 +85,10 @@ Os modos `-Check` e `-WhatIf` também se aplicam aos módulos. Para instalar pro
 
 Veja o [perfil do PowerShell e suas dependências](powershell.md) para exemplos, requisitos e limitações.
 
+## Inicialização automática
+
+Use `-EnableStartup` para preparar Komorebi com whkd e YASB para o próximo login. A opção aceita `-Check` e `-WhatIf`, pode ser combinada com a instalação dos programas e a aplicação das três configurações e não inicia aplicativos durante o setup. Veja [Inicialização automática](inicializacao.md).
+
 ## Recursos visuais
 
 Use `-Components VisualAssets` para copiar os wallpapers e o ícone com backup. Dentro do PowerShell, `-Components VisualAssets, WindowsTerminal` também aplica a referência do ícone, respeitando `-TerminalSettingsPath`. `-Check` e `-WhatIf` conferem os recursos sem alterar arquivos. Veja [Recursos visuais](recursos-visuais.md).
