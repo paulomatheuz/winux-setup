@@ -22,7 +22,7 @@ O script dedicado dispensa Fastfetch. Para aplicar as configurações do desktop
 
 Para instalar também os programas, acrescente `-InstallPrograms -Programs Komorebi, Yasb, Whkd -AcceptAgreements`. A verificação inicial aceita esses programas e configurações como previstos; a aplicação real exige que os programas estejam disponíveis e os arquivos já tenham sido aplicados.
 
-O setup configura a inicialização depois de aplicar os componentes. Cada aplicação tem seu próprio [registro de backup](backups.md). Se a configuração da inicialização falhar, as configurações aplicadas anteriormente permanecem; a restauração automática será tratada em sua etapa própria.
+O setup configura a inicialização depois de aplicar os componentes. Cada aplicação tem seu próprio [registro de backup](backups.md). Se a configuração da inicialização falhar, as configurações aplicadas anteriormente permanecem. Use `scripts/restore-backup.ps1` com o registro desejado para solicitar a recuperação; se for restaurar ambos, comece pelo registro mais recente.
 
 ## Arquivos gerados
 

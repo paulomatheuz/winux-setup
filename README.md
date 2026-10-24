@@ -8,7 +8,7 @@ O projeto começou como `custom-windows-terminal`, com a personalização do meu
 
 ## Estado atual
 
-O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas configurações do Windows Terminal, Starship, Komorebi, YASB, whkd e btop4win, com backup. Os programas e a JetBrainsMono Nerd Font têm instalação opcional via WinGet; o Chuva (matrix-rain) tem instalação portátil própria. Os wallpapers e o ícone do Terminal também podem ser aplicados. A inicialização do desktop no login é opcional, e um arquivo local permite ajustes por dispositivo. A restauração automática continua nas próximas etapas.
+O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas configurações do Windows Terminal, Starship, Komorebi, YASB, whkd e btop4win, com backup. Os programas e a JetBrainsMono Nerd Font têm instalação opcional via WinGet; o Chuva (matrix-rain) tem instalação portátil própria. Os wallpapers e o ícone do Terminal também podem ser aplicados. A inicialização do desktop no login é opcional, e um arquivo local permite ajustes por dispositivo. As configurações podem ser reaplicadas e seus backups restaurados por um comando próprio.
 
 ## O que já está incluído
 
@@ -27,6 +27,7 @@ O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica 
 - coleção pessoal de 18 wallpapers e ícone Gengar, com aplicação opcional e backup.
 - inicialização opcional do Komorebi com whkd e do YASB no login, com backup dos atalhos.
 - seleção de componentes e configurações específicas por dispositivo, sem editar as fontes compartilhadas.
+- restauração dos arquivos de uma execução, com verificação de integridade, proteção contra conflitos e backup do estado atual.
 
 ## Requisitos atuais
 
@@ -101,6 +102,8 @@ Para configurar o desktop no próximo login, acrescente `-EnableStartup` depois 
 
 Para adaptar o ambiente a cada máquina, use `-DeviceConfig` com um JSON local. Ele pode selecionar componentes, destinos do Terminal e btop e pastas alternativas de configurações. Veja [Ajustes por dispositivo](docs/dispositivos.md) e o [exemplo](devices/example.json).
 
+Para atualizar as configurações, atualize o clone e repita o setup com sua seleção habitual. Para recuperar uma execução anterior, use `scripts/restore-backup.ps1 -BackupPath <pasta-do-backup>`, começando por `-Check` e `-WhatIf`. Veja [Atualização e restauração](docs/backups.md) para escolher o backup, lidar com conflitos e desfazer uma restauração.
+
 ## Tema do Windows Terminal
 
 O esquema de cores está em:
@@ -165,6 +168,8 @@ winux-setup/
 │   ├── install-programs.ps1
 │   ├── install-rain.ps1
 │   ├── install.ps1
+│   ├── restore-backup.ps1
+│   ├── restore.ps1
 │   ├── komorebi.ps1
 │   ├── starship.ps1
 │   ├── start-desktop.ps1
@@ -182,6 +187,7 @@ winux-setup/
 │   ├── modules.tests.ps1
 │   ├── powershell.tests.ps1
 │   ├── rain.tests.ps1
+│   ├── restore.tests.ps1
 │   ├── starship.tests.ps1
 │   ├── startup.tests.ps1
 │   ├── visual-assets.tests.ps1
@@ -221,7 +227,7 @@ As mudanças serão feitas aos poucos, em commits separados:
 - [x] Incluir os wallpapers pessoais e o ícone do Terminal, com aplicação e backup.
 - [x] Configurar a inicialização opcional do Komorebi com whkd e do YASB.
 - [x] Permitir ajustes específicos por dispositivo.
-- [ ] Permitir atualizar o ambiente executando o setup novamente e restaurar backups.
+- [x] Permitir atualizar o ambiente executando o setup novamente e restaurar backups.
 - [ ] Validar o setup em outro dispositivo e documentar o processo.
 
 ## Personalização

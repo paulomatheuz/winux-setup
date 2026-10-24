@@ -66,6 +66,9 @@ Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são in
 | `tests/startup.tests.ps1` | Atalhos e backups em pasta temporária, com início dos programas simulado. |
 | `scripts/install.ps1` | Aplicação dos arquivos da configuração atual do terminal. |
 | `scripts/configuration.ps1` | Planejamento, backups e registro das alterações dos arquivos. |
+| `scripts/restore.ps1` | Validação dos manifestos, integridade dos originais e planejamento da restauração. |
+| `scripts/restore-backup.ps1` | Restauração explícita com simulação e novo backup do estado atual. |
+| `tests/restore.tests.ps1` | Recuperação isolada de arquivos, remoções, conflitos, corrupção e aplicações parciais. |
 | `tests/configuration.tests.ps1` | Verificações isoladas da aplicação e dos backups. |
 | `assets/screenshots/terminal-preview.png` | Prévia exibida no README. |
 | `assets/wallpapers/` | Coleção pessoal de 18 wallpapers, sem conversão. |
