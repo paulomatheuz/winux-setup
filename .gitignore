@@ -19,3 +19,7 @@ assets/screenshots/*.jpg
 assets/screenshots/*.jpeg
 !assets/screenshots/.gitkeep
 !assets/screenshots/terminal-preview.png
+
+# Local device settings; keep only the shared example
+/devices/*
+!/devices/example.json

@@ -8,6 +8,7 @@
 | `scripts/` | Scripts de instalação e manutenção. |
 | `assets/` | Recursos visuais usados pelo projeto. |
 | `docs/` | Inventário, organização e instruções complementares. |
+| `devices/` | Exemplo compartilhado e ajustes locais por dispositivo, ignorados pelo Git. |
 
 Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são incorporados. As configurações pessoais do Komorebi, do YASB e do whkd já estão incluídas, incluindo o `styles.css` personalizado. As origens estão registradas no [inventário](inventario.md).
 
@@ -45,6 +46,9 @@ Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são in
 | `scripts/windows-terminal.ps1` | Leitura de JSON com comentários, seleção do destino e combinação das preferências. |
 | `tests/windows-terminal.tests.ps1` | Verificações isoladas do componente Windows Terminal. |
 | `setup.ps1` | Entrada principal com seleção de componentes, verificação de pré-requisitos, instalação opcional de programas e simulação. |
+| `devices/example.json` | Modelo público sem caminhos pessoais para os ajustes por dispositivo. |
+| `scripts/device.ps1` | Leitura e validação do JSON local e resolução dos caminhos relativos. |
+| `tests/device.tests.ps1` | Aplicação isolada das variantes locais, prioridade, backups e preservação dos padrões. |
 | `packages.psd1` | Catálogo dos programas instaláveis via WinGet. |
 | `fonts.psd1` | Famílias, aliases e dependência opcional da barra alternativa. |
 | `scripts/fonts.ps1` | Leitura das famílias instaladas e comparação com as dependências. |
@@ -96,5 +100,5 @@ O componente opcional `WindowsTerminal` aplica suas preferências no `settings.j
 
 As capturas públicas ficam em `assets/screenshots/`. O `.gitignore` mantém a exceção para a prévia do terminal já publicada; novas capturas precisam ser adicionadas de forma explícita. A coleção pessoal de wallpapers e o ícone ficam em `assets/wallpapers/` e `assets/icons/`, com seleção registrada em `assets/manifest.json`. A aplicação usa `$HOME/Pictures/wallpaper` e `$HOME/Pictures/winux-setup/terminal.ico`; veja [Recursos visuais](recursos-visuais.md).
 
-Backups, logs, credenciais, binários e arquivos específicos de um dispositivo não fazem parte das configurações compartilhadas. Os ajustes por dispositivo e a separação dos valores privados serão implementados nas etapas correspondentes.
+Backups, logs, credenciais, binários e arquivos específicos de um dispositivo não fazem parte das configurações compartilhadas. A opção `-DeviceConfig` seleciona variantes locais para cada máquina; veja [Ajustes por dispositivo](dispositivos.md). Novos arquivos em `devices/` são ignorados pelo Git, exceto o exemplo público.
 

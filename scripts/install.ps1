@@ -10,12 +10,24 @@ param(
     [string]$TerminalSettingsPath,
 
     [ValidateNotNullOrEmpty()]
-    [string]$BtopDirectory
+    [string]$BtopDirectory,
+
+    [hashtable]$ConfigurationDirectories = @{}
 )
 
 $ErrorActionPreference = 'Stop'
 
 $repositoryRoot = Split-Path -Parent $PSScriptRoot
+$sourceDirectories = @{}
+foreach ($name in $ConfigurationDirectories.Keys) {
+    if ($name -notin @('Komorebi','Yasb','Whkd','Btop')) { throw "Pasta de configuracao desconhecida: $name" }
+    $path = $ConfigurationDirectories[$name]
+    if ($path -isnot [string] -or -not [IO.Path]::IsPathRooted($path) -or [IO.Path]::GetPathRoot($path).Length -lt 3 -or -not (Test-Path -LiteralPath $path -PathType Container)) { throw "Pasta de configuracao absoluta nao encontrada: $path" }
+}
+foreach ($name in @('Komorebi','Yasb','Whkd','Btop')) {
+    $sourceDirectories[$name] = Join-Path $repositoryRoot ('config\' + $name.ToLowerInvariant())
+    if ($ConfigurationDirectories.ContainsKey($name)) { $sourceDirectories[$name] = $ConfigurationDirectories[$name] }
+}
 $sourceFastfetch = Join-Path $repositoryRoot 'config\fastfetch'
 $sourceProfile = Join-Path $repositoryRoot 'config\powershell\profile.ps1'
 $fastfetchHome = Join-Path $HOME '.config\fastfetch'
@@ -87,20 +99,20 @@ if ($Components -contains 'Starship') {
 }
 if ($Components -contains 'Komorebi') {
     . (Join-Path $PSScriptRoot 'komorebi.ps1')
-    $files += @(Get-WinuxKomorebiFiles -SourceDirectory (Join-Path $repositoryRoot 'config\komorebi'))
+    $files += @(Get-WinuxKomorebiFiles -SourceDirectory $sourceDirectories.Komorebi)
 }
 if ($Components -contains 'Yasb') {
     . (Join-Path $PSScriptRoot 'yasb.ps1')
-    $files += @(Get-WinuxYasbFiles -SourceDirectory (Join-Path $repositoryRoot 'config\yasb'))
+    $files += @(Get-WinuxYasbFiles -SourceDirectory $sourceDirectories.Yasb)
 }
 if ($Components -contains 'Whkd') {
     . (Join-Path $PSScriptRoot 'whkd.ps1')
-    $files += Get-WinuxWhkdFiles -SourceDirectory (Join-Path $repositoryRoot 'config\whkd')
+    $files += Get-WinuxWhkdFiles -SourceDirectory $sourceDirectories.Whkd
 }
 if ($Components -contains 'Btop') {
     . (Join-Path $PSScriptRoot 'btop.ps1')
     $btopDestination = Resolve-WinuxBtopDirectory -Path $BtopDirectory
-    $files += @(Get-WinuxBtopFiles -SourceDirectory (Join-Path $repositoryRoot 'config\btop') -DestinationDirectory $btopDestination)
+    $files += @(Get-WinuxBtopFiles -SourceDirectory $sourceDirectories.Btop -DestinationDirectory $btopDestination)
     Write-Host ('btop: ' + $btopDestination)
 }
 $result = Invoke-WinuxConfiguration -Files $files -BackupRoot $backupRoot -WhatIf:$WhatIfPreference
