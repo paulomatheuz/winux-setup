@@ -24,6 +24,8 @@ Para aplicar as três configurações do desktop em uma execução, use dentro d
 
 Esses comandos aplicam configurações. O setup não inicia aplicativos, não aciona atalhos e não cria inicialização automática. Sem `-Components`, continuam selecionados apenas Fastfetch e PowerShell.
 
+A inicialização automática é configurada separadamente com `-EnableStartup`. O lançador prepara Komorebi com whkd e YASB para o próximo login; veja [Inicialização automática](inicializacao.md).
+
 ## Destino e backup
 
 O destino padrão é `$HOME/.config/whkdrc`. Se `WHKD_CONFIG_HOME` estiver definida na sessão, o destino será `whkdrc` dentro dessa pasta, conforme o [projeto whkd](https://github.com/LGUG2Z/whkd/tree/v0.2.10). Informe um caminho absoluto para a pasta e mantenha o mesmo valor nas sessões que iniciarão o programa:
