@@ -56,6 +56,10 @@ Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são in
 | `modules.psd1` | Catálogo das dependências opcionais do perfil. |
 | `scripts/install-modules.ps1` | Instalação de z e PSReadLine para o usuário atual. |
 | `scripts/install-programs.ps1` | Instalação dos programas selecionados, com preservação das versões existentes. |
+| `scripts/configure-startup.ps1` | Configuração opcional dos atalhos de login, com backup. |
+| `scripts/startup.ps1` | Resolução dos programas e diretórios, verificação e criação dos atalhos. |
+| `scripts/start-desktop.ps1` | Lançador copiado para a pasta local do setup; consulta processos e inicia os componentes no login. |
+| `tests/startup.tests.ps1` | Atalhos e backups em pasta temporária, com início dos programas simulado. |
 | `scripts/install.ps1` | Aplicação dos arquivos da configuração atual do terminal. |
 | `scripts/configuration.ps1` | Planejamento, backups e registro das alterações dos arquivos. |
 | `tests/configuration.tests.ps1` | Verificações isoladas da aplicação e dos backups. |

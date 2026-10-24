@@ -26,6 +26,8 @@ param(
 
     [switch]$InstallRain,
 
+    [switch]$EnableStartup,
+
     [ValidateNotNullOrEmpty()]
     [string[]]$Programs,
 
@@ -145,6 +147,9 @@ if ($selectedComponents -contains 'VisualAssets') {
     $requiredFiles += Join-Path $PSScriptRoot 'scripts\visual-assets.ps1'
     $requiredFiles += Join-Path $PSScriptRoot 'assets\manifest.json'
 }
+if ($EnableStartup) {
+    foreach ($name in @('startup.ps1', 'configure-startup.ps1', 'start-desktop.ps1')) { $requiredFiles += Join-Path $PSScriptRoot ('scripts\' + $name) }
+}
 $missingFiles = @($requiredFiles | Where-Object { -not (Test-Path -LiteralPath $_ -PathType Leaf) })
 if ($missingFiles.Count -gt 0) {
     throw ('Arquivos do projeto nao encontrados: ' + ($missingFiles -join ', '))
@@ -193,6 +198,15 @@ if ($selectedComponents -contains 'Btop') {
     Get-WinuxBtopFiles -SourceDirectory (Join-Path $PSScriptRoot 'config\btop') -DestinationDirectory $btopDestination | Out-Null
     Write-Host ('btop: ' + $btopDestination)
 }
+if ($EnableStartup) {
+    $expectedPrograms = @()
+    if ($InstallPrograms) {
+        $expectedPrograms = @('Komorebi', 'Whkd', 'Yasb')
+        if ($Programs) { $expectedPrograms = @($expectedPrograms | Where-Object { $Programs -contains $_ }) }
+    }
+    $expectedComponents = @($selectedComponents | Where-Object { $_ -in @('Komorebi', 'Whkd', 'Yasb') })
+    & (Join-Path $PSScriptRoot 'scripts\configure-startup.ps1') -Check -ExpectedPrograms $expectedPrograms -ExpectedComponents $expectedComponents
+}
 $hasFastfetch = [bool](Get-Command fastfetch -CommandType Application -ErrorAction SilentlyContinue)
 if ($selectedComponents -contains 'Fastfetch' -and -not $hasFastfetch -and (-not $InstallPrograms -or ($Programs -and $Programs -notcontains 'Fastfetch'))) {
     throw 'Fastfetch nao foi encontrado no PATH. Instale-o ou use -InstallPrograms com Fastfetch selecionado.'
@@ -240,5 +254,6 @@ if ($PSCmdlet.ShouldProcess($target, 'Aplicar os componentes selecionados')) {
     if ($TerminalSettingsPath) { $arguments.TerminalSettingsPath = $TerminalSettingsPath }
     if ($BtopDirectory) { $arguments.BtopDirectory = $BtopDirectory }
     & $installer @arguments
+    if ($EnableStartup) { & (Join-Path $PSScriptRoot 'scripts\configure-startup.ps1') -Confirm:$false }
 }
 
