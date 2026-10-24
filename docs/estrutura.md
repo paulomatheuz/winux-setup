@@ -60,6 +60,11 @@ Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são in
 | `scripts/configuration.ps1` | Planejamento, backups e registro das alterações dos arquivos. |
 | `tests/configuration.tests.ps1` | Verificações isoladas da aplicação e dos backups. |
 | `assets/screenshots/terminal-preview.png` | Prévia exibida no README. |
+| `assets/wallpapers/` | Coleção pessoal de 18 wallpapers, sem conversão. |
+| `assets/icons/terminal.ico` | Ícone Gengar do perfil do Windows PowerShell. |
+| `assets/manifest.json` | Arquivos de mídia selecionados e seus SHA-256. |
+| `scripts/visual-assets.ps1` | Verificação e planejamento da aplicação dos recursos. |
+| `tests/visual-assets.tests.ps1` | Verificações de cópia, backup, reaplicação e integração do ícone. |
 
 ## Compatibilidade do instalador atual
 
@@ -85,7 +90,7 @@ O componente opcional `WindowsTerminal` aplica suas preferências no `settings.j
 
 ## Recursos e arquivos locais
 
-As imagens públicas ficam em `assets/screenshots/`. O `.gitignore` mantém a exceção para a prévia do terminal já publicada; novas capturas precisam ser adicionadas de forma explícita.
+As capturas públicas ficam em `assets/screenshots/`. O `.gitignore` mantém a exceção para a prévia do terminal já publicada; novas capturas precisam ser adicionadas de forma explícita. A coleção pessoal de wallpapers e o ícone ficam em `assets/wallpapers/` e `assets/icons/`, com seleção registrada em `assets/manifest.json`. A aplicação usa `$HOME/Pictures/wallpaper` e `$HOME/Pictures/winux-setup/terminal.ico`; veja [Recursos visuais](recursos-visuais.md).
 
 Backups, logs, credenciais, binários e arquivos específicos de um dispositivo não fazem parte das configurações compartilhadas. Os ajustes por dispositivo e a separação dos valores privados serão implementados nas etapas correspondentes.
 

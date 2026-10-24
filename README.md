@@ -8,7 +8,7 @@ O projeto começou como `custom-windows-terminal`, com a personalização do meu
 
 ## Estado atual
 
-O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas configurações do Windows Terminal, Starship, Komorebi, YASB, whkd e btop4win, com backup. Os programas e a JetBrainsMono Nerd Font têm instalação opcional via WinGet; o Chuva (matrix-rain) tem instalação portátil própria. Recursos visuais e outras automações continuam nas próximas etapas.
+O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas configurações do Windows Terminal, Starship, Komorebi, YASB, whkd e btop4win, com backup. Os programas e a JetBrainsMono Nerd Font têm instalação opcional via WinGet; o Chuva (matrix-rain) tem instalação portátil própria. Os wallpapers pessoais e o ícone do Terminal também podem ser aplicados. A inicialização automática e os ajustes por dispositivo continuam nas próximas etapas.
 
 ## O que já está incluído
 
@@ -24,6 +24,7 @@ O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica 
 - configuração pessoal e tema NeutralPurple do btop4win, com instalação opcional via WinGet.
 - instalação opcional do matrix-rain, com os parâmetros pessoais do comando `rain`.
 - instalação opcional da Nerd Font e verificação das famílias usadas pelo ambiente.
+- coleção pessoal de 18 wallpapers e ícone Gengar, com aplicação opcional e backup.
 
 ## Requisitos atuais
 
@@ -92,6 +93,8 @@ Para instalar o Chuva junto ao setup, acrescente `-InstallRain`. Veja [Chuva e o
 
 Para instalar a Nerd Font, use `-InstallPrograms -Programs JetBrainsMonoNerdFont`. A verificação somente leitura está em `scripts/check-fonts.ps1`. Veja [fontes, aliases e dependências do Windows](docs/fontes.md).
 
+Para copiar os wallpapers e o ícone, use `-Components VisualAssets`. Combine com `WindowsTerminal` para aplicar a referência do ícone. Veja [Recursos visuais](docs/recursos-visuais.md).
+
 ## Tema do Windows Terminal
 
 O esquema de cores está em:
@@ -114,7 +117,10 @@ Esse componente é opcional e não exige Fastfetch. Veja os [destinos, a seleç�
 ```text
 winux-setup/
 ├── assets/
-│   └── screenshots/
+│   ├── icons/
+│   ├── screenshots/
+│   ├── wallpapers/
+│   └── manifest.json
 ├── config/
 │   ├── btop/
 │   ├── fastfetch/
@@ -134,6 +140,7 @@ winux-setup/
 │   ├── komorebi.md
 │   ├── powershell.md
 │   ├── programas.md
+│   ├── recursos-visuais.md
 │   ├── starship.md
 │   ├── setup.md
 │   ├── whkd.md
@@ -150,6 +157,7 @@ winux-setup/
 │   ├── install.ps1
 │   ├── komorebi.ps1
 │   ├── starship.ps1
+│   ├── visual-assets.ps1
 │   ├── whkd.ps1
 │   ├── windows-terminal.ps1
 │   └── yasb.ps1
@@ -162,6 +170,7 @@ winux-setup/
 │   ├── powershell.tests.ps1
 │   ├── rain.tests.ps1
 │   ├── starship.tests.ps1
+│   ├── visual-assets.tests.ps1
 │   ├── whkd.tests.ps1
 │   ├── windows-terminal.tests.ps1
 │   └── yasb.tests.ps1
@@ -193,7 +202,7 @@ As mudanças serão feitas aos poucos, em commits separados:
 - [x] Incorporar a configuração e o tema do btop4win, com instalação opcional.
 - [x] Adicionar a instalação portátil do Chuva e preservar os parâmetros do comando `rain`.
 - [x] Automatizar a Nerd Font e verificar as famílias usadas pelas configurações.
-- [ ] Incluir os recursos visuais necessários.
+- [x] Incluir os wallpapers pessoais e o ícone do Terminal, com aplicação e backup.
 - [ ] Configurar a inicialização automática dos componentes.
 - [ ] Permitir ajustes específicos por dispositivo.
 - [ ] Permitir atualizar o ambiente executando o setup novamente e restaurar backups.

@@ -94,9 +94,14 @@ function Get-WinuxTerminalKey {
 }
 
 function New-WinuxTerminalConfiguration {
-    param([Parameter(Mandatory)][string]$SourcePath, [Parameter(Mandatory)][string]$Destination)
+    param([Parameter(Mandatory)][string]$SourcePath, [Parameter(Mandatory)][string]$Destination, [string]$IconPath)
     $ErrorActionPreference = 'Stop'
     $source = ConvertFrom-WinuxTerminalJson ([IO.File]::ReadAllText($SourcePath))
+    if ($IconPath) {
+        $iconProfile = @($source.profiles.list | Where-Object { [guid]$_.guid -eq [guid]'61c54bbd-c2c6-5271-96e7-009a87ff44bf' })
+        if ($iconProfile.Count -ne 1) { throw 'Perfil integrado do PowerShell nao encontrado para aplicar o icone.' }
+        Set-WinuxTerminalProperty $iconProfile[0] 'icon' $IconPath
+    }
     $hash = $null
     [byte[]]$original = @()
     $target = [pscustomobject]@{}

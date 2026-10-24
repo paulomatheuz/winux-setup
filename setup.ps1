@@ -9,7 +9,7 @@ Aplica os componentes disponiveis do winux-setup.
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [ValidateNotNullOrEmpty()]
-    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship', 'Komorebi', 'Yasb', 'Whkd', 'Btop')]
+    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship', 'Komorebi', 'Yasb', 'Whkd', 'Btop', 'VisualAssets')]
     [string[]]$Components = @('Fastfetch', 'PowerShell'),
 
     [switch]$Check,
@@ -72,6 +72,7 @@ if ($Components -contains 'Komorebi') { $selectedComponents += 'Komorebi' }
 if ($Components -contains 'Yasb') { $selectedComponents += 'Yasb' }
 if ($Components -contains 'Whkd') { $selectedComponents += 'Whkd' }
 if ($Components -contains 'Btop') { $selectedComponents += 'Btop' }
+if ($Components -contains 'VisualAssets') { $selectedComponents += 'VisualAssets' }
 if ($BtopDirectory -and $selectedComponents -notcontains 'Btop') {
     throw 'Use -Components Btop junto com -BtopDirectory.'
 }
@@ -140,16 +141,27 @@ if ($InstallRain) {
     $requiredFiles += Join-Path $PSScriptRoot 'portable-programs.psd1'
     $requiredFiles += Join-Path $PSScriptRoot 'scripts\install-rain.ps1'
 }
+if ($selectedComponents -contains 'VisualAssets') {
+    $requiredFiles += Join-Path $PSScriptRoot 'scripts\visual-assets.ps1'
+    $requiredFiles += Join-Path $PSScriptRoot 'assets\manifest.json'
+}
 $missingFiles = @($requiredFiles | Where-Object { -not (Test-Path -LiteralPath $_ -PathType Leaf) })
 if ($missingFiles.Count -gt 0) {
     throw ('Arquivos do projeto nao encontrados: ' + ($missingFiles -join ', '))
 }
 
+if ($selectedComponents -contains 'VisualAssets') {
+    . (Join-Path $PSScriptRoot 'scripts\configuration.ps1')
+    . (Join-Path $PSScriptRoot 'scripts\visual-assets.ps1')
+    Get-WinuxVisualAssetFiles -SourceDirectory (Join-Path $PSScriptRoot 'assets') | Out-Null
+}
 if ($selectedComponents -contains 'WindowsTerminal') {
     . (Join-Path $PSScriptRoot 'scripts\configuration.ps1')
     . (Join-Path $PSScriptRoot 'scripts\windows-terminal.ps1')
     $terminalDestination = Resolve-WinuxTerminalSettingsPath -Path $TerminalSettingsPath
-    New-WinuxTerminalConfiguration -SourcePath (Join-Path $PSScriptRoot 'config\windows-terminal\settings.json.example') -Destination $terminalDestination | Out-Null
+    $terminalArguments = @{ SourcePath = (Join-Path $PSScriptRoot 'config\windows-terminal\settings.json.example'); Destination = $terminalDestination }
+    if ($selectedComponents -contains 'VisualAssets') { $terminalArguments.IconPath = Get-WinuxTerminalIconPath }
+    New-WinuxTerminalConfiguration @terminalArguments | Out-Null
     Write-Host ('Windows Terminal: ' + $terminalDestination)
 }
 if ($selectedComponents -contains 'Starship') {

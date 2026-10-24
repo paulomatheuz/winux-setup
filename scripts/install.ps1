@@ -1,7 +1,7 @@
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [ValidateNotNullOrEmpty()]
-    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship', 'Komorebi', 'Yasb', 'Whkd', 'Btop')]
+    [ValidateSet('Fastfetch', 'PowerShell', 'WindowsTerminal', 'Starship', 'Komorebi', 'Yasb', 'Whkd', 'Btop', 'VisualAssets')]
     [string[]]$Components = @('Fastfetch', 'PowerShell'),
 
     [switch]$SkipProfile,
@@ -57,6 +57,10 @@ foreach ($command in $commands) {
 }
 
 $files = @()
+if ($Components -contains 'VisualAssets') {
+    . (Join-Path $PSScriptRoot 'visual-assets.ps1')
+    $files += @(Get-WinuxVisualAssetFiles -SourceDirectory (Join-Path $repositoryRoot 'assets'))
+}
 if ($includeFastfetch) { $files += @(
     @{ SourcePath = (Join-Path $sourceFastfetch 'config-purple.jsonc'); Destination = (Join-Path $fastfetchHome 'config-purple.jsonc') }
     @{ SourcePath = (Join-Path $sourceFastfetch 'Spider2-ascii.txt'); Destination = (Join-Path $fastfetchHome 'Spider2-ascii.txt') }
@@ -70,7 +74,9 @@ if ($includePowerShell) {
 if ($Components -contains 'WindowsTerminal') {
     . (Join-Path $PSScriptRoot 'windows-terminal.ps1')
     $destination = Resolve-WinuxTerminalSettingsPath -Path $TerminalSettingsPath
-    $files += New-WinuxTerminalConfiguration -SourcePath (Join-Path $repositoryRoot 'config\windows-terminal\settings.json.example') -Destination $destination
+    $terminalArguments = @{ SourcePath = (Join-Path $repositoryRoot 'config\windows-terminal\settings.json.example'); Destination = $destination }
+    if ($Components -contains 'VisualAssets') { $terminalArguments.IconPath = Get-WinuxTerminalIconPath }
+    $files += New-WinuxTerminalConfiguration @terminalArguments
 }
 if ($Components -contains 'Starship') {
     . (Join-Path $PSScriptRoot 'starship.ps1')
