@@ -14,8 +14,9 @@ O ponto de entrada do projeto é `setup.ps1`, na raiz do repositório.
 | `Yasb` | Configuração e CSS pessoais, com backup e preservação do `.env` local. |
 | `Whkd` | Arquivo pessoal de atalhos, com backup e respeito a `WHKD_CONFIG_HOME`. |
 | `Btop` | Configuração pessoal e tema NeutralPurple, aplicados na pasta do executável ou em `-BtopDirectory`. |
+| `VisualAssets` | Wallpapers e ícone pessoais, com backup e integração opcional com WindowsTerminal. |
 
-Sem `-Components`, Fastfetch e PowerShell são selecionados. WindowsTerminal, Starship, Komorebi, Yasb, Whkd e Btop são opcionais. matrix-rain é instalado com `-InstallRain`; seus parâmetros estão no perfil PowerShell. A instalação dos demais programas tem uma seleção separada, descrita em [Instalação dos programas](programas.md).
+Sem `-Components`, Fastfetch e PowerShell são selecionados. WindowsTerminal, Starship, Komorebi, Yasb, Whkd, Btop e VisualAssets são opcionais. matrix-rain é instalado com `-InstallRain`; seus parâmetros estão no perfil PowerShell. A instalação dos demais programas tem uma seleção separada, descrita em [Instalação dos programas](programas.md).
 
 ## Verificar antes de aplicar
 
@@ -83,6 +84,10 @@ O perfil reúne os comandos dos dois perfis locais, incluindo `btop`, `rain` e `
 Os modos `-Check` e `-WhatIf` também se aplicam aos módulos. Para instalar programas e módulos na mesma execução, combine `-InstallPrograms -InstallModules -AcceptAgreements`. Os catálogos e as instalações são separados da seleção de configurações em `-Components`.
 
 Veja o [perfil do PowerShell e suas dependências](powershell.md) para exemplos, requisitos e limitações.
+
+## Recursos visuais
+
+Use `-Components VisualAssets` para copiar os wallpapers e o ícone com backup. Dentro do PowerShell, `-Components VisualAssets, WindowsTerminal` também aplica a referência do ícone, respeitando `-TerminalSettingsPath`. `-Check` e `-WhatIf` conferem os recursos sem alterar arquivos. Veja [Recursos visuais](recursos-visuais.md).
 
 ## Fontes
 

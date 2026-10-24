@@ -39,7 +39,7 @@ Os quatro atalhos compartilhados substituem associações existentes das mesmas 
 
 Configurações com comentários e vírgulas finais são aceitas. Quando há alterações, o resultado é JSON formatado em UTF-8, sem comentários. O arquivo original completo, incluindo comentários e codificação, fica no [backup da execução](backups.md). Sem alterações nas preferências, o arquivo não é regravado e nenhum backup novo é criado. Mudanças detectadas no destino durante o planejamento ou a aplicação interrompem a execução.
 
-A fonte precisa estar instalada no dispositivo; o catálogo inclui `JetBrainsMonoNerdFont`, com [instalação e verificação das famílias](fontes.md). A inclusão do ícone pessoal fica para a etapa de recursos visuais. Feche e abra o Terminal depois da aplicação. Esta etapa valida os arquivos e a integração do setup; a aparência final em outro dispositivo ainda precisa ser conferida.
+A fonte precisa estar instalada no dispositivo; o catálogo inclui `JetBrainsMonoNerdFont`, com [instalação e verificação das famílias](fontes.md). Para aplicar o ícone pessoal, combine `-Components VisualAssets, WindowsTerminal` dentro do PowerShell; veja [Recursos visuais](recursos-visuais.md). Sem VisualAssets, os ícones locais continuam preservados. Feche e abra o Terminal depois da aplicação. A aparência final em outro dispositivo ainda precisa ser conferida.
 
 ## Verificação isolada
 

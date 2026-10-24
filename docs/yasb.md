@@ -44,7 +44,7 @@ O modelo sem valores está em `config/yasb/.env.example`. Ele não é aplicado a
 
 ## Wallpapers, fontes e atalhos
 
-O caminho absoluto da origem foi substituído por `$env:USERPROFILE/Pictures/wallpaper`, expandido pelo YASB para a pasta do usuário atual. O componente não copia imagens nem cria essa pasta. Para usar a galeria, coloque suas imagens nesse local; a distribuição dos recursos visuais fica para uma etapa própria.
+O caminho absoluto da origem foi substituído por `$env:USERPROFILE/Pictures/wallpaper`, expandido pelo YASB para a pasta do usuário atual. O componente `Yasb` não copia imagens; selecione também `VisualAssets` para aplicar os 18 wallpapers pessoais nessa pasta, com backup. Veja [Recursos visuais](recursos-visuais.md). A aplicação prepara a galeria sem trocar o wallpaper atual.
 
 O CSS mantém JetBrainsMono NFP, Segoe UI e Segoe Fluent Icons. A Nerd Font pode ser instalada pelo catálogo; as fontes do Windows são verificadas separadamente. Veja [Fontes](fontes.md). O visual em outro dispositivo precisa ser conferido depois que as fontes e os recursos estiverem disponíveis.
 
