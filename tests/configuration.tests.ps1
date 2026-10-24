@@ -1,8 +1,9 @@
 param(
     [Parameter(Mandatory)][string]$TestRoot,
-    [string]$RepositoryRoot = (Split-Path -Parent $PSScriptRoot)
+    [string]$RepositoryRoot
 )
 $ErrorActionPreference = 'Stop'
+if (-not $RepositoryRoot) { $RepositoryRoot = Split-Path -Parent $PSScriptRoot }
 . (Join-Path $RepositoryRoot 'scripts\configuration.ps1')
 function Assert-Test($Condition, [string]$Message) { if (-not $Condition) { throw $Message } }
 function Assert-Failure([scriptblock]$Action, [string]$Pattern) {
@@ -111,3 +112,4 @@ $inverted = Join-Path $root 'inverted.ps1'
 [IO.File]::WriteAllText($inverted, '# <<< custom-windows-terminal <<< # >>> custom-windows-terminal >>>')
 Assert-Failure { Get-WinuxProfileBytes -Path $inverted } 'marcadores incompletos'
 [pscustomobject]@{PowerShell=$PSVersionTable.PSVersion.ToString();BackupIntegrity='passed';NewAndEmptyFiles='passed';Idempotency='passed';FailureRecords='passed';ProfileEncodings='passed';TestDirectory=$root} | ConvertTo-Json -Compress
+

@@ -80,7 +80,11 @@ function Invoke-WinuxConfiguration {
         $destination = [IO.Path]::GetFullPath($file.Destination)
         if ($destinations.ContainsKey($destination)) { throw "Destino repetido: $destination" }
         $destinations[$destination] = $true
-        if ($file.ContainsKey('Bytes')) {
+        $remove = $file.ContainsKey('Remove') -and $file.Remove -eq $true
+        if ($remove) {
+            if ($file.ContainsKey('Bytes') -or $file.ContainsKey('SourcePath')) { throw "Remocao com conteudo informado: $destination" }
+            [byte[]]$desired = @()
+        } elseif ($file.ContainsKey('Bytes')) {
             if ($null -eq $file.Bytes) { throw "Conteudo nao informado: $destination" }
             [byte[]]$desired = $file.Bytes
         } else {
@@ -102,7 +106,8 @@ function Invoke-WinuxConfiguration {
         if ($file.ContainsKey('ExpectedSHA256') -and $originalHash -ne $file.ExpectedSHA256) {
             throw "O destino mudou desde o planejamento: $destination"
         }
-        $desiredHash = Get-WinuxBytesHash -Bytes $desired
+        $desiredHash = if ($remove) { $null } else { Get-WinuxBytesHash -Bytes $desired }
+        if ($remove -and -not $existed) { continue }
         if ($existed -and $originalHash -eq $desiredHash) { continue }
         $changes += [pscustomobject]@{
             Destination = $destination
@@ -111,6 +116,7 @@ function Invoke-WinuxConfiguration {
             Bytes = $desired
             OriginalSHA256 = $originalHash
             DesiredSHA256 = $desiredHash
+            Remove = $remove
         }
     }
 
@@ -136,6 +142,7 @@ function Invoke-WinuxConfiguration {
                 BackupFile = $null
                 OriginalSHA256 = $_.OriginalSHA256
                 DesiredSHA256 = $_.DesiredSHA256
+                Operation = if ($_.Remove) { 'Remove' } else { 'Write' }
                 Status = 'Pending'
             }
         })
@@ -165,18 +172,22 @@ function Invoke-WinuxConfiguration {
                 ($existsNow -and (Get-FileHash -LiteralPath $change.Destination -Algorithm SHA256).Hash -ne $change.OriginalSHA256)) {
                 throw ('O destino mudou durante a aplicacao: ' + $change.Destination)
             }
-            $parent = Split-Path -Parent $change.Destination
-            New-Item -ItemType Directory -Path $parent -Force -ErrorAction Stop | Out-Null
-            $temporary = Join-Path $parent ('.winux-' + [Guid]::NewGuid().ToString('N') + '.tmp')
-            try {
-                [IO.File]::WriteAllBytes($temporary, $change.Bytes)
-                if ($change.Existed) {
-                    [IO.File]::Replace($temporary, $change.Destination, [NullString]::Value)
-                } else {
-                    [IO.File]::Move($temporary, $change.Destination)
+            if ($change.Remove) {
+                [IO.File]::Delete($change.Destination)
+            } else {
+                $parent = Split-Path -Parent $change.Destination
+                New-Item -ItemType Directory -Path $parent -Force -ErrorAction Stop | Out-Null
+                $temporary = Join-Path $parent ('.winux-' + [Guid]::NewGuid().ToString('N') + '.tmp')
+                try {
+                    [IO.File]::WriteAllBytes($temporary, $change.Bytes)
+                    if ($change.Existed) {
+                        [IO.File]::Replace($temporary, $change.Destination, [NullString]::Value)
+                    } else {
+                        [IO.File]::Move($temporary, $change.Destination)
+                    }
+                } finally {
+                    if ([IO.File]::Exists($temporary)) { [IO.File]::Delete($temporary) }
                 }
-            } finally {
-                if ([IO.File]::Exists($temporary)) { [IO.File]::Delete($temporary) }
             }
             $record.Files[$index].Status = 'Applied'
             Save-WinuxConfigurationRecord -Record $record -Path $recordPath
