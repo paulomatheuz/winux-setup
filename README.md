@@ -28,6 +28,7 @@ O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica 
 - inicialização opcional do Komorebi com whkd e do YASB no login, com backup dos atalhos.
 - seleção de componentes e configurações específicas por dispositivo, sem editar as fontes compartilhadas.
 - restauração dos arquivos de uma execução, com verificação de integridade, proteção contra conflitos e backup do estado atual.
+- comando único para executar os testes isolados e gerar relatórios locais de diagnóstico.
 
 ## Requisitos atuais
 
@@ -104,6 +105,10 @@ Para adaptar o ambiente a cada máquina, use `-DeviceConfig` com um JSON local. 
 
 Para atualizar as configurações, atualize o clone e repita o setup com sua seleção habitual. Para recuperar uma execução anterior, use `scripts/restore-backup.ps1 -BackupPath <pasta-do-backup>`, começando por `-Check` e `-WhatIf`. Veja [Atualização e restauração](docs/backups.md) para escolher o backup, lidar com conflitos e desfazer uma restauração.
 
+## Validar antes de usar em outro dispositivo
+
+Execute `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\validate.ps1` para rodar os testes isolados. Se tiver PowerShell 7, repita com `pwsh -NoProfile -File .\scripts\validate.ps1`. O comando gera relatórios locais e usa instalações e destinos simulados. Veja [Validação do setup](docs/validacao.md) para diagnóstico e para conferir a aplicação, a restauração e o login em outra máquina. Essa validação real continua pendente.
+
 ## Tema do Windows Terminal
 
 O esquema de cores está em:
@@ -154,6 +159,7 @@ winux-setup/
 │   ├── recursos-visuais.md
 │   ├── starship.md
 │   ├── setup.md
+│   ├── validacao.md
 │   ├── whkd.md
 │   ├── windows-terminal.md
 │   └── yasb.md
@@ -174,6 +180,7 @@ winux-setup/
 │   ├── starship.ps1
 │   ├── start-desktop.ps1
 │   ├── startup.ps1
+│   ├── validate.ps1
 │   ├── visual-assets.ps1
 │   ├── whkd.ps1
 │   ├── windows-terminal.ps1
@@ -228,7 +235,8 @@ As mudanças serão feitas aos poucos, em commits separados:
 - [x] Configurar a inicialização opcional do Komorebi com whkd e do YASB.
 - [x] Permitir ajustes específicos por dispositivo.
 - [x] Permitir atualizar o ambiente executando o setup novamente e restaurar backups.
-- [ ] Validar o setup em outro dispositivo e documentar o processo.
+- [x] Reunir os testes isolados e documentar a validação em outro dispositivo.
+- [ ] Executar e registrar a aplicação, a recuperação e o login em outro dispositivo.
 
 ## Personalização
 

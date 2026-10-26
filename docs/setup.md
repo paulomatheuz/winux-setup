@@ -2,6 +2,8 @@
 
 O ponto de entrada do projeto é `setup.ps1`, na raiz do repositório.
 
+Os testes isolados podem ser executados com `scripts/validate.ps1`, que gera um relatório local. A conferência completa de outro dispositivo está descrita em [Validação do setup](validacao.md), incluindo aplicação, reaplicação, restauração e login.
+
 ## Ajustes por dispositivo
 
 Use `-DeviceConfig .\devices\notebook\device.json` para selecionar preferências locais. O JSON pode definir componentes, destinos do Terminal e btop e pastas de origem alternativas para Komorebi, YASB, whkd e btop. As opções digitadas no comando têm prioridade; a seleção do arquivo substitui os componentes padrão quando `-Components` é omitido.
