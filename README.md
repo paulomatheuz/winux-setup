@@ -1,244 +1,47 @@
 # winux-setup
 
-Minhas configurações para Windows, reunidas em um só lugar para facilitar a instalação e a reprodução do meu ambiente em outros dispositivos.
+Meu Windows, do desktop ao terminal.
 
-O projeto começou como `custom-windows-terminal`, com a personalização do meu terminal. Agora, a proposta é incluir também o desktop, os atalhos e as automações que uso no dia a dia.
+[Desktop](#desktop) · [Terminal](#terminal) · [YASB](#yasb) · [Instalação](#instalação)
 
-![Prévia do terminal](assets/screenshots/terminal-preview.png)
+## Desktop
 
-## Estado atual
+![Desktop com wallpaper e YASB](assets/screenshots/gallery/desktop.svg)
 
-O setup copia os arquivos do Fastfetch, integra o perfil do PowerShell e aplica opcionalmente minhas configurações do Windows Terminal, Starship, Komorebi, YASB, whkd e btop4win, com backup. Os programas e a JetBrainsMono Nerd Font têm instalação opcional via WinGet; o Chuva (matrix-rain) tem instalação portátil própria. Os wallpapers e o ícone do Terminal também podem ser aplicados. A inicialização do desktop no login é opcional, e um arquivo local permite ajustes por dispositivo. As configurações podem ser reaplicadas e seus backups restaurados por um comando próprio.
+### Em uso
 
-## O que já está incluído
+![Janelas organizadas pelo Komorebi, com btop, Chuva e spotify_player](assets/screenshots/gallery/layout.svg)
 
-- temas, fonte, transparência e atalhos pessoais do Windows Terminal;
-- Fastfetch com logo ASCII personalizada;
-- perfil do PowerShell com os comandos pessoais dos dois perfis locais;
-- integração com Starship e aplicação opcional da base do prompt;
-- comandos como `clear`, `cls`, `Clear-Terminal`, `ls`, `ll`, `la`, `cd`, `btop` e `rain`;
-- instalação opcional dos módulos z e PSReadLine.
-- configurações pessoais do Komorebi, com layouts, regras de aplicativos e barra alternativa.
-- configuração e CSS pessoais do YASB, com os valores privados do clima separados.
-- atalhos pessoais do whkd, com shell PowerShell e integração com Komorebi.
-- configuração pessoal e tema NeutralPurple do btop4win, com instalação opcional via WinGet.
-- instalação opcional do matrix-rain, com os parâmetros pessoais do comando `rain`.
-- instalação opcional da Nerd Font e verificação das famílias usadas pelo ambiente.
-- coleção pessoal de 18 wallpapers e ícone Gengar, com aplicação opcional e backup.
-- inicialização opcional do Komorebi com whkd e do YASB no login, com backup dos atalhos.
-- seleção de componentes e configurações específicas por dispositivo, sem editar as fontes compartilhadas.
-- restauração dos arquivos de uma execução, com verificação de integridade, proteção contra conflitos e backup do estado atual.
-- comando único para executar os testes isolados e gerar relatórios locais de diagnóstico.
+Komorebi · whkd · btop4win · Chuva · spotify_player
 
-## Requisitos atuais
+## Terminal
 
-Para aplicar as configurações sem instalar programas, tenha os requisitos abaixo. A opção `-InstallPrograms` instala os programas do catálogo via WinGet:
+![Windows Terminal com Fastfetch e Starship](assets/screenshots/gallery/terminal.svg)
 
-- Git, para clonar o repositório;
-- Windows Terminal;
-- Windows PowerShell 5.1 ou PowerShell 7;
-- Fastfetch;
-- uma Nerd Font.
+Windows Terminal · PowerShell · Fastfetch · Starship
 
-Starship, `lsd`, `z` e PSReadLine são opcionais. Os módulos podem ser instalados com `-InstallModules -AcceptAgreements`. Consulte o [perfil do PowerShell e suas dependências](docs/powershell.md).
+## YASB
 
-## Como instalar a configuração atual
+### Wallpapers
 
-Clone o repositório:
+![Galeria de wallpapers](assets/screenshots/gallery/wallpapers.svg)
+
+### Mídia
+
+![Painel de mídia com capa e controles](assets/screenshots/gallery/media.svg)
+
+### Energia
+
+![Menu de energia](assets/screenshots/gallery/power.svg)
+
+## Instalação
 
 ```powershell
 git clone https://github.com/paulomatheuz/winux-setup.git
 cd winux-setup
+.\setup.ps1 -Check
 ```
 
-Verifique os pré-requisitos:
+Escolha os componentes e siga o [guia de instalação](docs/setup.md).
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\setup.ps1 -Check
-```
-
-Simule a aplicação:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\setup.ps1 -WhatIf
-```
-
-Aplique Fastfetch e PowerShell:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\setup.ps1
-```
-
-O instalador copia os arquivos do Fastfetch e o perfil do projeto para `$HOME\.config\fastfetch`. Antes de substituir qualquer arquivo existente, salva seu conteúdo anterior em `$HOME\.winux-setup\backups`, junto de um registro das alterações. Arquivos idênticos não são regravados. Veja os [detalhes dos backups](docs/backups.md).
-
-Sem `-InstallPrograms`, o setup aplica apenas a configuração atual do terminal. Para instalar os programas do catálogo e depois aplicar essa configuração:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\setup.ps1 -InstallPrograms -AcceptAgreements
-```
-
-A opção `-AcceptAgreements` aceita os termos da fonte e dos pacotes. Consulte o [catálogo e as opções de instalação](docs/programas.md) antes de usar. As configurações de cada ferramenta são selecionadas separadamente com `-Components`.
-
-Para aplicar apenas o Fastfetch, acrescente `-Components Fastfetch`. A opção `PowerShell` inclui os arquivos do Fastfetch usados pelo perfil. Consulte as [opções do setup](docs/setup.md) para os detalhes e a compatibilidade com o instalador anterior.
-
-Depois, feche e abra novamente o Windows Terminal.
-
-Para aplicar a base do prompt Starship com backup, use `-Components Starship`. O ambiente inventariado usa o visual padrão, sem uma configuração personalizada. Veja os [destinos e as opções do Starship](docs/starship.md).
-
-Para aplicar as configurações pessoais do Komorebi, use `-Components Komorebi`. Veja os [destinos, a barra alternativa e os ajustes de monitores](docs/komorebi.md). O componente copia os arquivos sem iniciar o gerenciador de janelas.
-
-Para aplicar a barra e o CSS do YASB, use `-Components Yasb`. Veja os [destinos, clima, wallpapers e fontes](docs/yasb.md). O arquivo `.env` local é preservado.
-
-Para aplicar os atalhos, use `-Components Whkd`. Veja os [atalhos, destinos e aplicação conjunta do desktop](docs/whkd.md). Os oito atalhos de espaços de trabalho são preservados; a configuração do Komorebi mantém sete espaços.
-
-Para aplicar o btop4win, use `-Components Btop`. A instalação opcional usa `-InstallPrograms -Programs Btop`. Veja os [destinos, modo TTY e opções do btop](docs/btop.md).
-
-Para instalar o Chuva junto ao setup, acrescente `-InstallRain`. Veja [Chuva e o comando rain](docs/chuva.md) para a instalação isolada, os arquivos oficiais e as simulações.
-
-Para instalar a Nerd Font, use `-InstallPrograms -Programs JetBrainsMonoNerdFont`. A verificação somente leitura está em `scripts/check-fonts.ps1`. Veja [fontes, aliases e dependências do Windows](docs/fontes.md).
-
-Para copiar os wallpapers e o ícone, use `-Components VisualAssets`. Combine com `WindowsTerminal` para aplicar a referência do ícone. Veja [Recursos visuais](docs/recursos-visuais.md).
-
-Para configurar o desktop no próximo login, acrescente `-EnableStartup` depois de preparar Komorebi, YASB e whkd. Veja [Inicialização automática](docs/inicializacao.md) para a aplicação conjunta, os atalhos, o diagnóstico e a desativação.
-
-Para adaptar o ambiente a cada máquina, use `-DeviceConfig` com um JSON local. Ele pode selecionar componentes, destinos do Terminal e btop e pastas alternativas de configurações. Veja [Ajustes por dispositivo](docs/dispositivos.md) e o [exemplo](devices/example.json).
-
-Para atualizar as configurações, atualize o clone e repita o setup com sua seleção habitual. Para recuperar uma execução anterior, use `scripts/restore-backup.ps1 -BackupPath <pasta-do-backup>`, começando por `-Check` e `-WhatIf`. Veja [Atualização e restauração](docs/backups.md) para escolher o backup, lidar com conflitos e desfazer uma restauração.
-
-## Validar antes de usar em outro dispositivo
-
-Execute `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\validate.ps1` para rodar os testes isolados. Se tiver PowerShell 7, repita com `pwsh -NoProfile -File .\scripts\validate.ps1`. O comando gera relatórios locais e usa instalações e destinos simulados. Veja [Validação do setup](docs/validacao.md) para diagnóstico e para conferir a aplicação, a restauração e o login em outra máquina. Essa validação real continua pendente.
-
-## Tema do Windows Terminal
-
-O esquema de cores está em:
-
-```text
-config/windows-terminal/settings.json.example
-```
-
-Para aplicar as preferências automaticamente, com backup e preservação dos perfis locais:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\setup.ps1 -Components WindowsTerminal -Check
-powershell -ExecutionPolicy Bypass -File .\setup.ps1 -Components WindowsTerminal
-```
-
-Esse componente é opcional e não exige Fastfetch. Veja os [destinos, a seleção da edição e as preferências preservadas](docs/windows-terminal.md). A fonte precisa estar instalada no dispositivo.
-
-## Estrutura atual
-
-```text
-winux-setup/
-├── assets/
-│   ├── icons/
-│   ├── screenshots/
-│   ├── wallpapers/
-│   └── manifest.json
-├── config/
-│   ├── btop/
-│   ├── fastfetch/
-│   ├── komorebi/
-│   ├── powershell/
-│   ├── starship/
-│   ├── whkd/
-│   ├── windows-terminal/
-│   └── yasb/
-├── docs/
-│   ├── dispositivos.md
-│   ├── btop.md
-│   ├── chuva.md
-│   ├── backups.md
-│   ├── estrutura.md
-│   ├── fontes.md
-│   ├── inicializacao.md
-│   ├── inventario.md
-│   ├── komorebi.md
-│   ├── powershell.md
-│   ├── programas.md
-│   ├── recursos-visuais.md
-│   ├── starship.md
-│   ├── setup.md
-│   ├── validacao.md
-│   ├── whkd.md
-│   ├── windows-terminal.md
-│   └── yasb.md
-├── scripts/
-│   ├── btop.ps1
-│   ├── check-fonts.ps1
-│   ├── configuration.ps1
-│   ├── configure-startup.ps1
-│   ├── device.ps1
-│   ├── fonts.ps1
-│   ├── install-modules.ps1
-│   ├── install-programs.ps1
-│   ├── install-rain.ps1
-│   ├── install.ps1
-│   ├── restore-backup.ps1
-│   ├── restore.ps1
-│   ├── komorebi.ps1
-│   ├── starship.ps1
-│   ├── start-desktop.ps1
-│   ├── startup.ps1
-│   ├── validate.ps1
-│   ├── visual-assets.ps1
-│   ├── whkd.ps1
-│   ├── windows-terminal.ps1
-│   └── yasb.ps1
-├── tests/
-│   ├── btop.tests.ps1
-│   ├── configuration.tests.ps1
-│   ├── device.tests.ps1
-│   ├── fonts.tests.ps1
-│   ├── komorebi.tests.ps1
-│   ├── modules.tests.ps1
-│   ├── powershell.tests.ps1
-│   ├── rain.tests.ps1
-│   ├── restore.tests.ps1
-│   ├── starship.tests.ps1
-│   ├── startup.tests.ps1
-│   ├── visual-assets.tests.ps1
-│   ├── whkd.tests.ps1
-│   ├── windows-terminal.tests.ps1
-│   └── yasb.tests.ps1
-├── devices/
-│   └── example.json
-├── modules.psd1
-├── fonts.psd1
-├── packages.psd1
-├── portable-programs.psd1
-├── setup.ps1
-└── README.md
-```
-
-A organização das pastas e os caminhos de instalação estão descritos em [Estrutura do projeto](docs/estrutura.md).
-
-## Próximas etapas
-
-As mudanças serão feitas aos poucos, em commits separados:
-
-- [x] Inventariar as configurações e dependências do ambiente atual ([inventário](docs/inventario.md)).
-- [x] Organizar as configurações e os scripts para receber os demais componentes.
-- [x] Criar a entrada do setup com seleção de componentes, verificação de pré-requisitos e simulação.
-- [x] Automatizar a instalação dos programas do catálogo via WinGet.
-- [x] Aplicar as configurações com backup dos arquivos anteriores e registro das alterações.
-- [x] Incorporar os comandos dos perfis pessoais do PowerShell e a instalação opcional dos módulos.
-- [x] Incorporar as preferências pessoais do Windows Terminal e sua aplicação com backup.
-- [x] Registrar a base atual do Starship e sua aplicação opcional com backup.
-- [x] Incorporar as configurações pessoais do Komorebi, regras e barra alternativa.
-- [x] Incorporar a configuração e o CSS pessoais do YASB, preservando o visual.
-- [x] Incorporar os atalhos pessoais do whkd e a aplicação conjunta das configurações do desktop.
-- [x] Incorporar a configuração e o tema do btop4win, com instalação opcional.
-- [x] Adicionar a instalação portátil do Chuva e preservar os parâmetros do comando `rain`.
-- [x] Automatizar a Nerd Font e verificar as famílias usadas pelas configurações.
-- [x] Incluir os wallpapers pessoais e o ícone do Terminal, com aplicação e backup.
-- [x] Configurar a inicialização opcional do Komorebi com whkd e do YASB.
-- [x] Permitir ajustes específicos por dispositivo.
-- [x] Permitir atualizar o ambiente executando o setup novamente e restaurar backups.
-- [x] Reunir os testes isolados e documentar a validação em outro dispositivo.
-- [ ] Executar e registrar a aplicação, a recuperação e o login em outro dispositivo.
-
-## Personalização
-
-As configurações refletem meu uso pessoal. Você pode usá-las como base e adaptar temas, atalhos e ferramentas ao seu ambiente.
-
+[Programas](docs/programas.md) · [Por dispositivo](docs/dispositivos.md) · [Backups](docs/backups.md) · [Validação](docs/validacao.md)

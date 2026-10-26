@@ -72,7 +72,8 @@ Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são in
 | `scripts/restore-backup.ps1` | Restauração explícita com simulação e novo backup do estado atual. |
 | `tests/restore.tests.ps1` | Recuperação isolada de arquivos, remoções, conflitos, corrupção e aplicações parciais. |
 | `tests/configuration.tests.ps1` | Verificações isoladas da aplicação e dos backups. |
-| `assets/screenshots/terminal-preview.png` | Prévia exibida no README. |
+| `assets/screenshots/terminal-preview.png` | Prévia original do terminal, mantida como referência. |
+| `assets/screenshots/gallery/` | Seis capturas do README visual, com cantos de 16 px e imagens incorporadas nos SVGs. |
 | `assets/wallpapers/` | Coleção pessoal de 18 wallpapers, sem conversão. |
 | `assets/icons/terminal.ico` | Ícone Gengar do perfil do Windows PowerShell. |
 | `assets/manifest.json` | Arquivos de mídia selecionados e seus SHA-256. |
@@ -103,7 +104,7 @@ O componente opcional `WindowsTerminal` aplica suas preferências no `settings.j
 
 ## Recursos e arquivos locais
 
-As capturas públicas ficam em `assets/screenshots/`. O `.gitignore` mantém a exceção para a prévia do terminal já publicada; novas capturas precisam ser adicionadas de forma explícita. A coleção pessoal de wallpapers e o ícone ficam em `assets/wallpapers/` e `assets/icons/`, com seleção registrada em `assets/manifest.json`. A aplicação usa `$HOME/Pictures/wallpaper` e `$HOME/Pictures/winux-setup/terminal.ico`; veja [Recursos visuais](recursos-visuais.md).
+As capturas públicas ficam em `assets/screenshots/`. O README usa somente as seis imagens selecionadas de `assets/screenshots/gallery/`; os SVGs incorporam cada captura e aplicam um recorte de cantos de 16 px, sem depender de estilos do GitHub. O `.gitignore` mantém exceções para essas imagens e para a prévia original do terminal; novas capturas precisam ser adicionadas de forma explícita. A coleção pessoal de wallpapers e o ícone ficam em `assets/wallpapers/` e `assets/icons/`, com seleção registrada em `assets/manifest.json`. A aplicação usa `$HOME/Pictures/wallpaper` e `$HOME/Pictures/winux-setup/terminal.ico`; veja [Recursos visuais](recursos-visuais.md).
 
 Backups, logs, credenciais, binários e arquivos específicos de um dispositivo não fazem parte das configurações compartilhadas. A opção `-DeviceConfig` seleciona variantes locais para cada máquina; veja [Ajustes por dispositivo](dispositivos.md). Novos arquivos em `devices/` são ignorados pelo Git, exceto o exemplo público.
 

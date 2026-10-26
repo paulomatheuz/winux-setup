@@ -23,3 +23,13 @@ assets/screenshots/*.jpeg
 # Local device settings; keep only the shared example
 /devices/*
 !/devices/example.json
+
+# Selected README gallery
+/assets/screenshots/gallery/*
+!/assets/screenshots/gallery/desktop.svg
+!/assets/screenshots/gallery/layout.svg
+!/assets/screenshots/gallery/terminal.svg
+!/assets/screenshots/gallery/wallpapers.svg
+!/assets/screenshots/gallery/media.svg
+!/assets/screenshots/gallery/power.svg
+
