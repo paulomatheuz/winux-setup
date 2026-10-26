@@ -12,7 +12,7 @@ Meu Windows, do desktop ao terminal.
 
 ![Janelas organizadas pelo Komorebi, com btop, Chuva e spotify_player](assets/screenshots/gallery/layout.svg)
 
-Komorebi · whkd · btop4win · Chuva · spotify_player
+komorebi · whkd · btop4win · rain · spotify_player
 
 ## Terminal
 
