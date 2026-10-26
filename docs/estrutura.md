@@ -66,6 +66,8 @@ Cada ferramenta tem sua própria pasta em `config/` quando seus arquivos são in
 | `tests/startup.tests.ps1` | Atalhos e backups em pasta temporária, com início dos programas simulado. |
 | `scripts/install.ps1` | Aplicação dos arquivos da configuração atual do terminal. |
 | `scripts/configuration.ps1` | Planejamento, backups e registro das alterações dos arquivos. |
+| `scripts/validate.ps1` | Verificador com processos separados, limite por teste e relatórios locais. |
+| `docs/validacao.md` | Roteiro para testes isolados e conferência real em outro dispositivo. |
 | `scripts/restore.ps1` | Validação dos manifestos, integridade dos originais e planejamento da restauração. |
 | `scripts/restore-backup.ps1` | Restauração explícita com simulação e novo backup do estado atual. |
 | `tests/restore.tests.ps1` | Recuperação isolada de arquivos, remoções, conflitos, corrupção e aplicações parciais. |
